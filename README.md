@@ -39,3 +39,7 @@ cargo run -- serve --site HQ --port 7878     # http://127.0.0.1:7878 — keep it
 ---
 
 *© 2026 — Written & Maintained by Anthony P. Kuzub. MIT Licence.*
+
+<!-- wiki:smoke -->
+**Smoke test** — ✅ PASS 1/1 since 2026-10-31 13:12 EDT — [results](Documentation/%F0%9F%A7%A9Manual%20and%20Artifacts/SMOKE.md)
+<!-- /wiki:smoke -->

@@ -12,3 +12,7 @@ The documentation for `INTERCOM.Caster`, in the same lanes as the APK.audio mono
 | [🛣Roadmap](%F0%9F%9B%A3Roadmap/INDEX.md) | 0 | Plans are not kept here: every plan is a card in the APK.audio monorepo's `Documentation/🛣Roadmap/roadmap.htm`. |
 | [💡Notes and Ideas](%F0%9F%92%A1Notes%20and%20Ideas/INDEX.md) | 0 | Loose notes and ideas not yet filed. |
 <!-- /wiki:lanes -->
+
+<!-- wiki:smoke -->
+**Smoke test** — ✅ PASS 1/1 since 2026-10-31 13:12 EDT — [results](%F0%9F%A7%A9Manual%20and%20Artifacts/SMOKE.md)
+<!-- /wiki:smoke -->
