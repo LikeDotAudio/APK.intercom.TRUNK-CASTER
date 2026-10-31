@@ -4,6 +4,6 @@
 
 | | |
 |---|---|
-| **Image** | none yet — the rewrite onto the APK plugin SDK decides it |
+| **Image** | none — the caster and the simulators ship in the Discovery Engine's plugin image (`apk-plugins:local`) as `PLUGIN.TRUNK_CASTER` and `PLUGIN.TRUNK_SIM` |
 | **Repository** | https://github.com/LikeDotAudio/APK.intercom.TRUNK-CASTER (public), a submodule at `PODS/POD.THICK/INTERCOM.Caster` |
-| **Reference build** | `cd SRC/RUST-RUNTIME && cargo test` (stand-alone; the source's `SRC/Dockerfile` builds `caster` and `frame-sim` images, not used by APK.audio) |
+| **Build** | nothing to build here: the runtime retired (ROAD-3453). The Python matrix simulator runs as `python3 SRC/TRUNK-SIMULATOR/launch_all.py` |

@@ -7,6 +7,6 @@ Ecosystem rules live in the root: [Doctrine](../../../../../Documentation/%F0%9F
 
 | Principle | Kept by |
 |---|---|
-| **The reference stays verbatim.** `SRC/` is the source as imported; the rewrite reads it and does not patch it in place. | `SRC/` |
-| **Speak by protocol, not by brand.** Every switch is one Ward-Beck line. | `SRC/TRUNK-CASTER-SDK/src/wardbeck.rs` |
-| **Nothing runs on the bench until it is on the SDK.** The source's own compose claims 8080 and 1883, which belong to Storage-Portal and Broker-Mosquitto. | no `Docker/` stack here yet |
+| **One copy runs.** The runtime retired here once each piece had its replacement (ROAD-3453); what remains is read, not run. Where each module went is the ARCHITECTURE page. | `PLUGIN.TRUNK_CASTER`, `PLUGIN.TRUNK_SIM`, the soft app `INTERCOM.TRUNK-CASTER` |
+| **Speak by protocol, not by brand.** Every switch is one Ward-Beck line. | `contracts/` `trunk` (`renderWardBeckLine`, `parseWardBeckLine`) |
+| **Nothing here claims a port.** The imported compose claimed 8080 and 1883, which belong to Storage-Portal and Broker-Mosquitto; the plugins use the APK broker and only Ward-Beck 7879. | no `Docker/` stack here |

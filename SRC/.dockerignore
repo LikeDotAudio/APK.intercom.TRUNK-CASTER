@@ -1,9 +1,0 @@
-# Only the crates go into the image; everything else is mounted at run time.
-*
-!Dockerfile
-!TRUNK-CASTER-SDK/
-!RUST-RUNTIME/
-!TRUNK-SIMULATOR/frame-sim/
-**/target/
-**/target-*/
-**/*.tmp

@@ -1,5 +1,13 @@
 # Trunk-Caster SDK — what's up
 
+> **On APK.audio (ROAD-3453):** the crate and the runtime this page describes are retired. The
+> caster is `PODS/POD.THICK/PLUGINS/PLUGIN.TRUNK_CASTER` (this crate's model is its `src/sdk/`),
+> the frame simulators are `PLUGIN.TRUNK_SIM`, the pages are the Intercom soft apps, and the wire
+> shapes are the `trunk` contract (`contracts/TRUNK.md`). The vocabulary, the folder contract and
+> the plans below still describe how Trunk-Caster thinks; the commands, ports and folders that
+> name `RUST-RUNTIME/`, `frame-sim` or HTTP are history — see `INTERCOM.Caster`'s ARCHITECTURE
+> page for where each went.
+
 This folder is the home of the plan. It holds the one crate every Trunk-Caster component
 speaks through, the folder contract, the vendor policy, and a plan for each part of the system
 (`plans/`). If you want to know what Trunk-Caster is and how the pieces fit, start here.

@@ -2,72 +2,45 @@
 
 ← [Manual and Artifacts](INDEX.md) · [Repo README](../../README.md)
 
-**What is in `SRC/` today: the reference source the rewrite reads.** Nothing here runs under
-APK.audio yet. Line counts are as imported (2026-10-31).
+**The imported Trunk-Caster source, and where each piece went (ROAD-3440, ROAD-3453).** The
+runtime is retired: nothing here runs under APK.audio. The caster is `PLUGIN.TRUNK_CASTER`, the
+frame simulators are `PLUGIN.TRUNK_SIM`, the pages are the Intercom soft apps, and the wires they
+speak are the `trunk` contract (`contracts/TRUNK.md`).
 
-## The four wires the reference uses
+## The wires: then and now
 
-| Wire | Where | Who |
-|---|---|---|
-| **HTTP** `TRUNK_PORT` (8080 in its compose, 7878 by default) | 64 GET + 21 POST routes, plus the prefixes `/api/device/`, `/api/taps/`, `/api/voices/`, `/api/capture/`, `/api/analyze/`, `/voices/` | `http.rs` → `html.rs` pages, `runtime.rs` state |
-| **WebSocket** `/ws` on the same port | server→browser telemetry stream | `ws.rs`, fed by `runtime.rs` |
-| **Ward-Beck TCP** `TRUNK_WB_PORT` 7879 | newline lines: `CHECKIN` per hosted frame, then `CLOSE/OPEN` crosspoint lines both ways, each echoed back as the ack | `wb.rs` ↔ `frame-sim/main.rs` |
-| **MQTT** `TRUNK_MQTT` (root `trunk-caster/`) | `trunk-caster/<protocol>/<frame>/line` (caster→sim, a twin of each TCP line), `…/ack`, `…/reject` (`<reason>\|<line>`), `…/voice1`, `…/voice5` (sim voice chunks) | SDK `mqtt.rs` (hand-rolled MQTT 3.1.1, QoS 0); `wb.rs`, `voices.rs`, frame-sim |
-
-Also: SNMPv2c SET over UDP (`snmp.rs`, a port rename pushed to a vendor frame) and the frame-sim's
-plain HTTP GET of `/api/sites` from the caster (`voice.rs`).
-
-## `SRC/RUST-RUNTIME` — the caster (13,479 lines)
-
-| Module | Lines | Owns | Talks to |
-|---|---:|---|---|
-| `main.rs` | 335 | CLI and env (`TRUNK_ROOT SITE BIND PORT WB_PORT MQTT PUBLIC_URL VOICES_DIR`); commands `discover`, `advertise`, `compose`, `serve`, `status`, `simulate` | starts http, wb, voices, the tick loop |
-| `runtime.rs` | 2,833 | **the state**: the repertoire, the routing, the crosspoint log, the simulator clock, the folder contract; `tick()` is the heartbeat | every `TRUNK-*` folder under `/data`; broadcasts on `ws` |
-| `routing.rs` | 1,286 | trunks (caster A ↔ caster B, `capacity` channels) and connections (one conversation over 1+ hops); any-to-any routing, direct first | in-memory, through `runtime` |
-| `crosspoints.rs` | 400 | the closed crosspoints per frame, derived from live connections; the set/clear delta log; the Ward-Beck rendering | `TRUNK-CROSS POINTS/` (`crosspoints.json`, `deltas.jsonl`, `wardbeck.log`, `settings.json`, `seeks/`) |
-| `wb.rs` | 286 | the Ward-Beck TCP hub: remotes, CHECKIN, the resend on persistent mismatch, ack/reject counts | TCP 7879 listen; MQTT publish `…/line`, subscribe `…/+/+/ack`, `…/+/+/reject` |
-| `voices.rs` | 316 | reassembles the frames' voices from the two cuts and meters their bandwidth | MQTT subscribe `…/+/+/voice1`, `voice5`; `TRUNK_VOICES_DIR` (WAV per frame), `TRUNK-USAGE/voices.jsonl` |
-| `discover.rs` | 231 | the protocol repertoire, read off the `KNOWN PROTOCOLS/` tree (vendor / protocol / manuals, mixed) | reads `KNOWN PROTOCOLS/` |
-| `protocol.rs` | 182 | protocol identity: canonical names, families, manual reading ("by protocol, not by brand") | used by discover, frame |
-| `frame.rs` | 101 | fleet construction: frames per site by tier, protocol rotation, frame ids | `TRUNK-GLOBAL/sites.json` via SDK `sites` |
-| `interface.rs` | 56 | the file-drop API: `<id>.json` in, `<id>.reply.json` out; delete the request = release | `TRUNK-CASTER-INTERFACE/`, `TRUNK-CROSS POINTS/seeks` |
-| `bookings.rs` | 200 | the booking timeline: a port held for a program, start→end on the sim clock, daily re-arm | `TRUNK-USAGE/bookings.json` |
-| `relay.rs` | 112 | the relay hosted on this computer, as frames of protocol `relay` | `TRUNK-RELAY/relay.json`, `state.json` |
-| `trends.rs` | 379 | per-trunk use by day and hour, and "locked" trunks (held 1 h+) for the globe | `TRUNK-GLOBAL/trends.json` |
-| `recorder.rs` | 143 | runs: the span between two parameter changes, with their summaries | `TRUNK-SIMULATOR/runs/<id>.json`, `runs.json` |
-| `report.rs` | 150 | the run report as Markdown | serves `/api/report`, `/report.md` |
-| `analyzer.rs` | 232 | captures (START→STOP telemetry) and their hourly/30/15-min bucketing | `TRUNK-SIMULATOR/captures/<id>.json` |
-| `simulate.rs` | 235 | headless run of days of sim time in a scratch root, for a static replay site | copies the manuals and config into a scratch root |
-| `users.rs` | 123 | one JSON per request ever made, plus an HTML log | `TRUNK-USERS/` |
-| `snmp.rs` | 105 | SNMPv2c SET encoder (BER), one OctetString per call | UDP to a vendor frame |
-| `http.rs` | 702 | a tiny HTTP/1.1 server (std::net, one thread per connection), the route table | TCP `TRUNK_PORT`; `runtime`, `html` |
-| `ws.rs` | 201 | an RFC 6455 server (std only) | `/ws` upgrade on the http port |
-| `html.rs` | 4,702 | **every page**, written as static files into their folders and served live: `/` and `/globe`, `/home`, `/usage`, `/space`, `/racks`, `/relay`, `/users`, `/crosspoints`, `/simulator`, `/analyzer?id=`, `/overlord`, `/continents`, `/panels`, `/panels/editor`, `/editor`, `/lights`, `/discovery`, `/about` | `runtime` state; the in-page JS calls `api('/api/…')` and `/ws` with absolute paths |
-| `util.rs` | 169 | wall clock, ISO time, a seedable xorshift RNG, atomic JSON writes | — |
-
-## `SRC/TRUNK-SIMULATOR/frame-sim` — one protocol's frames (783 lines)
-
-| Module | Lines | Owns | Talks to |
-|---|---:|---|---|
-| `main.rs` | 377 | hosts one protocol's frames (`dante-01…10`) as local matrices; CHECKIN every `SIM_CHECKIN_SECONDS`; **double validation**: it applies a CLOSE/OPEN only once the same line has arrived over both TCP and MQTT within `SIM_VALIDATE_MS` | TCP to `SIM_CASTER` (7879); MQTT subscribe `…/<proto>/+/line`, publish `…/ack`, `…/reject` |
-| `voice.rs` | 406 | every frame speaks its identity, then its connections, through espeak-ng; the WAV is cut twice (1 s and 5 s) and both cuts are sent | MQTT publish `…/voice1`, `…/voice5`; HTTP GET `/api/sites` from the caster |
-
-Run as 28 containers (`SRC/docker-compose.sims.yml`, one per protocol, generated by `trunk-caster compose`).
-
-## `SRC/TRUNK-CASTER-SDK` — Trunk-Caster's own SDK crate (4,499 lines)
-
-`types.rs` (2,066: every JSON shape, frame/caster/trunk/connection/panel/crosspoint), `voice.rs` (613),
-`mqtt.rs` (438: the std-only MQTT 3.1.1 client and the topic builders), `sites.rs` (417),
-`client.rs` (351: `FileClient` over the folder contract, `HttpClient` over the HTTP port),
-`wardbeck.rs` (236: the line), `folders.rs` (209: the `TRUNK-*` names), `labels.rs` (149: 6/8/16-character panel labels).
-Its `README.md` and `plans/` describe the vocabulary and the folder contract.
-
-## Where the rewrite takes each wire
-
-| Today | On APK.audio |
+| Then (the imported runtime) | Now |
 |---|---|
-| own MQTT client, root `trunk-caster/` | the APK broker through `apk-plugin-runner`, topics under the contract's roots |
-| HTTP + WebSocket server and `html.rs` pages | the OS shell: soft apps reading the bus |
-| `TRUNK-*` folders under `/data` | state volume + retained topics |
-| 28 frame-sim containers | plugin-shaped agents on the SDK |
-| Ward-Beck TCP 7879 | kept as the wire real frames speak |
+| **HTTP** `TRUNK_PORT`: 64 GET + 21 POST routes, pages from `html.rs` | the 21 POSTs are the contract's verbs on `trunk/outgoing/command` → `trunk/incoming/result`; the state is retained documents (`trunk/Device/Frame/…`, `Trunk/…`, `Connection/…`, `Crosspoint/…`, `Booking/…`, `Site/…`, `Relay/…`); the GET-only views are retained `trunk/View/…` documents (`PLUGIN.TRUNK_CASTER` `src/views.rs`); the pages are the Intercom soft apps |
+| **WebSocket** `/ws` telemetry | the same retained documents and `trunk/Event/…`, read by the OS shell (`OS/Network/trunk-bus`) |
+| **Ward-Beck TCP** 7879 | kept: `PLUGIN.TRUNK_CASTER` `src/wb.rs` listens, `PLUGIN.TRUNK_SIM` and real frames connect |
+| **MQTT** `trunk-caster/<protocol>/<frame>/line\|ack\|reject\|voice1\|voice5` on its own broker | the APK broker, `trunk_sim/<protocol>/Frame/<frame>/…` (contract) |
+| `TRUNK-*` folders under `/data` | the caster's state volume `apk-audio-trunk-state` (`/var/lib/apkaudio/trunk`), laid from `PLUGIN.TRUNK_CASTER/SRC/data/seed/` at boot |
+
+## Where each module went
+
+| Imported (SRC/…) | Lines | Went to |
+|---|---:|---|
+| `RUST-RUNTIME/src/runtime.rs`, `routing.rs`, `crosspoints.rs`, `discover.rs`, `protocol.rs`, `frame.rs`, `bookings.rs`, `relay.rs`, `trends.rs`, `recorder.rs`, `analyzer.rs`, `users.rs`, `snmp.rs`, `voices.rs`, `wb.rs`, `util.rs` | 7,9xx | `PLUGIN.TRUNK_CASTER/SRC/src/` — the same modules, nearly verbatim |
+| `RUST-RUNTIME/src/report.rs`, `simulate.rs` | 385 | `PLUGIN.TRUNK_CASTER` `src/report.rs` (published as `trunk/View/Report`) and `src/simulate.rs` + the binary `apk-trunk_caster-simulate` |
+| `RUST-RUNTIME/src/main.rs` | 335 | the runner's `main!` (`src/bin/apk-trunk_caster.rs`), `config.ini`, `src/bus.rs`; `discover`/`advertise`/`status` are the retained documents; `compose` is gone (one `PLUGIN.TRUNK_SIM` container hosts every protocol) |
+| `RUST-RUNTIME/src/http.rs` | 702 | `src/command.rs` (the verbs) and `src/views.rs` (the GET views) |
+| `RUST-RUNTIME/src/ws.rs` | 201 | gone — the bus is the stream |
+| `RUST-RUNTIME/src/html.rs` | 4,702 | the Intercom soft apps' views (`INTERCOM.TRUNK-CASTER/js/trunk/views/`); `globe_data`'s trunk/call/trend part and `lights_json` are `src/views.rs` (`globe_message`, `lights`, `View/Globe`); the globe's layout is the Globe window's own |
+| `RUST-RUNTIME/src/interface.rs` | 56 | gone — the file-drop interface is the command envelope |
+| `RUST-RUNTIME/src/land.json` | — | the soft app's `data/land.json` |
+| `TRUNK-SIMULATOR/frame-sim/` | 783 | `PLUGIN.TRUNK_SIM` — one container, a simulator per protocol read off the caster's frames |
+| `TRUNK-CASTER-SDK/src/` | 4,499 | `PLUGIN.TRUNK_CASTER/SRC/src/sdk/` (the caster's model); the wire shapes the plugins share (Ward-Beck line, labels, command envelope, topics) are `contracts/` `trunk` |
+| `TRUNK-CASTER-SDK/vendor-policy.json`, `TRUNK-GLOBAL/`, `TRUNK-RELAY/`, `TRUNK-CROSS POINTS/settings.json` | — | `PLUGIN.TRUNK_CASTER/SRC/data/seed/` (identical copies) |
+| `PANELS/streamdeck-*.json`, `panel.schema.json` | — | the soft app's `data/decks/` (its Stream Deck windows) |
+| `TYPESCRIPT/` | — | gone — its pages, panels, routing and charts are the soft app's views |
+| `Dockerfile`, `docker-compose*.yml`, `rebuild.py`, `TRUNK-CASTER-INTERFACE/` | — | gone — the plugins are built by the Discovery Engine image; the public-snapshot publisher went with `trunk-caster-site` (ROAD-3440) |
+
+## What stays here
+
+| Kept | Why |
+|---|---|
+| `SRC/KNOWN PROTOCOLS/` | the manuals as imported; `TRUNK-SIMULATOR/launch_all.py` loads the vendor simulators some of them carry. The caster reads its own copy (`PLUGIN.TRUNK_CASTER/SRC/data/seed/KNOWN PROTOCOLS`) |
+| `SRC/TRUNK-CASTER-SDK/README.md`, `plans/` | Trunk-Caster's vocabulary, folder contract and plans — cited by the SDK wiki page and the plugins' wikis |
+| `SRC/TRUNK-SIMULATOR/*.py`, `README.md`, `emulators.json`, `fader.json`, `preview-fader.json`, `mqtt/`, `captures/` | the Python matrix simulator (typed ports `PNL01`, `IFB01` …, its own HTTP API on 8180) — a separate tool from the caster |
+| `SRC/PANELS/README.md`, `connect.json`, `streamdeck_emulator.py` | the panel model and the emulator that presses that simulator's keys |
