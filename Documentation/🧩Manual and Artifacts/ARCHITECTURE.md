@@ -9,7 +9,7 @@ APK.audio yet. Line counts are as imported (2026-10-31).
 
 | Wire | Where | Who |
 |---|---|---|
-| **HTTP** `TRUNK_PORT` (8080 in its compose, 7878 by default) | 66 GET + 21 POST routes, plus the prefixes `/api/device/`, `/api/taps/`, `/api/voices/`, `/api/capture/`, `/api/analyze/`, `/voices/` | `http.rs` → `html.rs` pages, `runtime.rs` state |
+| **HTTP** `TRUNK_PORT` (8080 in its compose, 7878 by default) | 64 GET + 21 POST routes, plus the prefixes `/api/device/`, `/api/taps/`, `/api/voices/`, `/api/capture/`, `/api/analyze/`, `/voices/` | `http.rs` → `html.rs` pages, `runtime.rs` state |
 | **WebSocket** `/ws` on the same port | server→browser telemetry stream | `ws.rs`, fed by `runtime.rs` |
 | **Ward-Beck TCP** `TRUNK_WB_PORT` 7879 | newline lines: `CHECKIN` per hosted frame, then `CLOSE/OPEN` crosspoint lines both ways, each echoed back as the ack | `wb.rs` ↔ `frame-sim/main.rs` |
 | **MQTT** `TRUNK_MQTT` (root `trunk-caster/`) | `trunk-caster/<protocol>/<frame>/line` (caster→sim, a twin of each TCP line), `…/ack`, `…/reject` (`<reason>\|<line>`), `…/voice1`, `…/voice5` (sim voice chunks) | SDK `mqtt.rs` (hand-rolled MQTT 3.1.1, QoS 0); `wb.rs`, `voices.rs`, frame-sim |
