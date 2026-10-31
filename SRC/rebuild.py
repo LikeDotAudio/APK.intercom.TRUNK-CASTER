@@ -26,8 +26,9 @@ caster to answer on its API again. Can also publish the public page snapshot.
 Publishing needs the GitHub CLI (`gh`) signed in. The main repository stays
 private: the static HTML the runtime writes into the TRUNK-* folders is copied,
 its links rewritten so the pages point at each other, and pushed to a separate
-public repository (--pages-repo, default trunk-caster-site) whose GitHub Pages
-site is the public link. The pages checkout lives in `.pages/` (ignored by git).
+public repository (--pages-repo, which has no default any more: the old
+snapshot site was retired in APK.audio ROAD-3440) whose GitHub Pages site is
+the public link. The pages checkout lives in `.pages/` (ignored by git).
 
 The replay: `trunk-caster simulate` runs the caster headless for days of
 simulated time with the demand in TRUNK-SIMULATOR/preview-fader.json, one
@@ -542,7 +543,7 @@ def main():
     ap.add_argument("--down", action="store_true", help="stop and remove all containers instead of rebuilding")
     ap.add_argument("--publish", action="store_true", help="push the static pages to the public site once healthy")
     ap.add_argument("--publish-only", action="store_true", help="publish the pages already on disk; no rebuild")
-    ap.add_argument("--pages-repo", default="trunk-caster-site", help="public pages repository (default %(default)s)")
+    ap.add_argument("--pages-repo", help="public pages repository to publish to (required with --publish / --publish-only)")
     ap.add_argument("--dry-run", action="store_true", help="with --publish: list the pages instead of pushing")
     ap.add_argument("--replay", type=int, nargs="?", const=365, metavar="DAYS",
                     help="simulate DAYS (default 365) for the public site's replay before publishing")
@@ -552,6 +553,9 @@ def main():
                     help="where the caster answers (default %(default)s)")
     ap.add_argument("--timeout", type=int, default=90, help="seconds to wait for the caster (default 90)")
     args = ap.parse_args()
+
+    if (args.publish or args.publish_only) and not args.pages_repo:
+        die("--publish needs --pages-repo: there is no default public site any more")
 
     if args.replay and not simulate_year(args.replay, args.replay_workers):
         die("the replay simulation did not finish; nothing published")

@@ -125,16 +125,14 @@ Configuration is by environment variable (flags still work): `TRUNK_ROOT` (`/dat
 
 ### Publishing a public snapshot
 
-The repository is private. `rebuild.py --publish` copies the static pages the runtime writes into the
-`TRUNK-*` folders, rewrites their links to point at each other, and pushes them to a separate public
-repository (`trunk-caster-site`) whose GitHub Pages site is the public link:
-https://onediversifiedanthony.github.io/trunk-caster-site/. Run it whenever you want the public
-snapshot refreshed; the pages are static copies, so live controls need the running caster.
+`rebuild.py --publish --pages-repo <repo>` copies the static pages the runtime writes into the
+`TRUNK-*` folders, rewrites their links to point at each other, and pushes them to that public
+repository. There is no default target any more: the old snapshot site was retired when APK.audio
+moved Trunk-Caster onto its plugin SDK (ROAD-3440), where every page became a window on the bus.
 
 ```
-python rebuild.py --publish                 # rebuild, wait for the caster, then publish
-python rebuild.py --publish-only            # publish the pages already on disk; no rebuild
-python rebuild.py --publish-only --dry-run  # list what would go
+python rebuild.py --publish --pages-repo <repo>                 # rebuild, wait for the caster, then publish
+python rebuild.py --publish-only --pages-repo <repo> --dry-run  # list what would go
 ```
 
 ### The globe (page one) and TRUNK-GLOBAL
