@@ -1,0 +1,4003 @@
+{
+ "dump_oids": "1.3.6.1.4.1.24287                    node         telex                                       \n1.3.6.1.4.1.24287.1                  node         telexModules                                \n1.3.6.1.4.1.24287.1.1                module       IMPORTS                                     \n1.3.6.1.4.1.24287.2                  node         objectGroups                                \n1.3.6.1.4.1.24287.2.4                node         tmObjGroups                                 \n1.3.6.1.4.1.24287.2.4.1              meta         tmArchGroup                                 \n1.3.6.1.4.1.24287.2.4.2              meta         tmCapabGroup                                \n1.3.6.1.4.1.24287.2.4.3              meta         tmConfigGroup                               \n1.3.6.1.4.1.24287.2.4.4              meta         tmStatusGroup                               \n1.3.6.1.4.1.24287.2.4.5              meta         tmEventObjs                                 \n1.3.6.1.4.1.24287.2.5                node         tmEventGroups                               \n1.3.6.1.4.1.24287.2.5.1              meta         tmBasicEventsGroup                          \n1.3.6.1.4.1.24287.2.6                node         rvonGroups                                  \n1.3.6.1.4.1.24287.2.6.1              meta         rvonDescrGroup                              \n1.3.6.1.4.1.24287.2.6.2              meta         rvonGpioGroup                               \n1.3.6.1.4.1.24287.2.6.3              meta         rvonPassthroughGroup                        \n1.3.6.1.4.1.24287.2.6.4              meta         rvonChanCfgGroup                            \n1.3.6.1.4.1.24287.2.6.5              meta         rvonIoGainGroup                             \n1.3.6.1.4.1.24287.2.6.6              meta         rvonChanStatGroup                           \n1.3.6.1.4.1.24287.2.6.7              meta         rvonVoipStatGroup                           \n1.3.6.1.4.1.24287.2.6.8              meta         rvonNwStatGroup                             \n1.3.6.1.4.1.24287.2.6.9              meta         rvonNwErrGroup                              \n1.3.6.1.4.1.24287.2.7                node         rvonEventGroups                             \n1.3.6.1.4.1.24287.2.7.1              meta         rvonBasicEventsGroup                        \n1.3.6.1.4.1.24287.3                  node         agentCapabs                                 \n1.3.6.1.4.1.24287.3.1                meta         telexADAMBasicCap                           \n1.3.6.1.4.1.24287.3.2                meta         tmBasicCap                                  \n1.3.6.1.4.1.24287.3.3                meta         telexRVONBasicCap                           \n1.3.6.1.4.1.24287.4                  node         compliance                                  \n1.3.6.1.4.1.24287.4.3                node         tmCompliance                                \n1.3.6.1.4.1.24287.4.3.1              meta         tmBasicCompliance                           \n1.3.6.1.4.1.24287.4.4                node         rvonCompliance                              \n1.3.6.1.4.1.24287.4.4.1              meta         rvonBasicCompliance                         \n1.3.6.1.4.1.24287.5                  node         telexExper                                  \n1.3.6.1.4.1.24287.5.1                node         telexModsExper                              \n1.3.6.1.4.1.24287.5.2                node         objGroupsExper                              \n1.3.6.1.4.1.24287.5.3                node         agentCapabsExper                            \n1.3.6.1.4.1.24287.5.4                node         complianceExper                             \n1.3.6.1.4.1.24287.5.6                node         icomExper                                   \n1.3.6.1.4.1.24287.5.6.4              node         tmExper                                     \n1.3.6.1.4.1.24287.6                  node         intercom                                    \n1.3.6.1.4.1.24287.6.1                node         objIdTree                                   \n1.3.6.1.4.1.24287.6.1.1              node         sysTypeMatrix                               \n1.3.6.1.4.1.24287.6.1.1.1            node         objIdMtx1Frame                              \n1.3.6.1.4.1.24287.6.1.1.2            node         objIdMtxBusExpanded                         \n1.3.6.1.4.1.24287.6.1.1.3            node         objIdMtxCronus                              \n1.3.6.1.4.1.24287.6.1.1.4            node         objIdMtxZeusIII                             \n1.3.6.1.4.1.24287.6.1.1.5            node         objIdMtxZeusIIILite                         \n1.3.6.1.4.1.24287.6.1.2              node         sysTypeRvon                                 \n1.3.6.1.4.1.24287.6.1.2.1            node         objIdRvon1                                  \n1.3.6.1.4.1.24287.6.1.2.2            node         objIdRvon8                                  \n1.3.6.1.4.1.24287.6.1.2.3            node         objIdRvonC                                  \n1.3.6.1.4.1.24287.6.1.2.4            node         objIdRvonIo                                 \n1.3.6.1.4.1.24287.6.1.2.5            node         objIdRvon16                                 \n1.3.6.1.4.1.24287.6.1.3              node         sysTypeTM2000                               \n1.3.6.1.4.1.24287.6.2                node         matrix                                      \n1.3.6.1.4.1.24287.6.3                node         rvon                                        \n1.3.6.1.4.1.24287.6.3.1              node         rvConfig                                    \n1.3.6.1.4.1.24287.6.3.1.2            scalar       numGpioInputs              read-only        Integer32\n1.3.6.1.4.1.24287.6.3.1.3            scalar       numGpioOutputs             read-only        Integer32\n1.3.6.1.4.1.24287.6.3.1.4            table        chanCfgTable               not-accessible   SEQUENCE OF ChanCfgEntry\n1.3.6.1.4.1.24287.6.3.1.4.1          row          chanCfgEntry               not-accessible   ChanCfgEntry\n1.3.6.1.4.1.24287.6.3.1.4.1.1        column       ccChan                     not-accessible   Integer32 (1..100)\n1.3.6.1.4.1.24287.6.3.1.4.1.2        column       ccPartnerIp                read-only        IpAddress\n1.3.6.1.4.1.24287.6.3.1.4.1.3        column       ccPartnerType              read-only        RvonDevice\n1.3.6.1.4.1.24287.6.3.1.4.1.4        column       ccPartnerChan              read-only        Integer32\n1.3.6.1.4.1.24287.6.3.1.4.1.5        column       ccCodec                    read-only        RvonCodec\n1.3.6.1.4.1.24287.6.3.1.4.1.6        column       ccPktSizeMsec              read-only        Integer32\n1.3.6.1.4.1.24287.6.3.1.4.1.7        column       ccPktSizeBytes             read-only        Integer32\n1.3.6.1.4.1.24287.6.3.1.4.1.8        column       ccVad                      read-only        TruthValue\n1.3.6.1.4.1.24287.6.3.1.4.1.9        column       ccVadThreshold             read-only        Integer32\n1.3.6.1.4.1.24287.6.3.1.4.1.10       column       ccDescription              read-only        RvonDescription\n1.3.6.1.4.1.24287.6.3.1.5            table        ioGainTable                not-accessible   SEQUENCE OF IoGainEntry\n1.3.6.1.4.1.24287.6.3.1.5.1          row          ioGainEntry                not-accessible   IoGainEntry\n1.3.6.1.4.1.24287.6.3.1.5.1.1        column       iogChan                    not-accessible   Integer32 (1..100)\n1.3.6.1.4.1.24287.6.3.1.5.1.2        column       iogGainNetRx               read-only        Integer32\n1.3.6.1.4.1.24287.6.3.1.5.1.3        column       iogGainNetTx               read-only        Integer32\n1.3.6.1.4.1.24287.6.3.1.6            table        passthroughCfgTable        not-accessible   SEQUENCE OF PassthroughCfgEntry\n1.3.6.1.4.1.24287.6.3.1.6.1          row          passthroughCfgEntry        not-accessible   PassthroughCfgEntry\n1.3.6.1.4.1.24287.6.3.1.6.1.1        column       ptcfgPort                  not-accessible   Integer32 (1..2)\n1.3.6.1.4.1.24287.6.3.1.6.1.2        column       ptcfgIp                    read-only        IpAddress\n1.3.6.1.4.1.24287.6.3.1.6.1.3        column       ptcfgSpeed                 read-only        Integer32\n1.3.6.1.4.1.24287.6.3.1.8            scalar       deviceDescription          read-only        RvonDescription\n1.3.6.1.4.1.24287.6.3.1.9            scalar       numPassthroughPorts        read-only        Integer32\n1.3.6.1.4.1.24287.6.3.2              node         rvStatus                                    \n1.3.6.1.4.1.24287.6.3.2.1            table        chanStatTable              not-accessible   SEQUENCE OF ChanStatEntry\n1.3.6.1.4.1.24287.6.3.2.1.1          row          chanStatEntry              not-accessible   ChanStatEntry\n1.3.6.1.4.1.24287.6.3.2.1.1.1        column       csChan                     not-accessible   Integer32 (1..100)\n1.3.6.1.4.1.24287.6.3.2.1.1.2        column       csPortNum                  read-only        Integer32\n1.3.6.1.4.1.24287.6.3.2.1.1.3        column       csIsUp                     read-only        TruthValue\n1.3.6.1.4.1.24287.6.3.2.1.1.4        column       csPanelPresent             read-only        TruthValue\n1.3.6.1.4.1.24287.6.3.2.1.1.5        column       csUpTime                   read-only        Unsigned32\n1.3.6.1.4.1.24287.6.3.2.1.1.6        column       csCodec                    read-only        RvonCodec\n1.3.6.1.4.1.24287.6.3.2.1.1.7        column       csPktSizeMsec              read-only        Integer32\n1.3.6.1.4.1.24287.6.3.2.1.1.8        column       csPktSizeBytes             read-only        Integer32\n1.3.6.1.4.1.24287.6.3.2.1.1.9        column       csVad                      read-only        TruthValue\n1.3.6.1.4.1.24287.6.3.2.1.1.10       column       csNumConnects              read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.1.1.11       column       csNumUnderruns             read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.1.1.12       column       csNumOverruns              read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.1.1.13       column       csNumMissedSeqPkts         read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.1.1.14       column       csNumReplayedPkts          read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.1.1.15       column       csAvgJitter                read-only        Integer32\n1.3.6.1.4.1.24287.6.3.2.1.1.16       column       csPlayoutBufferSize        read-only        Integer32\n1.3.6.1.4.1.24287.6.3.2.1.1.17       column       csNomPlayoutDelay          read-only        Integer32\n1.3.6.1.4.1.24287.6.3.2.1.1.18       column       csAvgPlayoutDelay          read-only        Integer32\n1.3.6.1.4.1.24287.6.3.2.1.1.19       column       csVoicePktsTxd             read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.1.1.20       column       csVoicePktsRxd             read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.1.1.21       column       csDtmfRelayPktsTxd         read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.1.1.22       column       csDtmfRelayPktsRxd         read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.1.1.23       column       csSilenceDetectedPktsTxd   read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.1.1.24       column       csSilenceDetectedPktsRxd   read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.1.1.25       column       csSuppressedSilencePktsTx  read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.1.1.26       column       csMinPktIntervalTimeRx     read-only        Integer32\n1.3.6.1.4.1.24287.6.3.2.1.1.27       column       csMaxPktIntervalTimeRx     read-only        Integer32\n1.3.6.1.4.1.24287.6.3.2.3            table        passthroughStatTable       not-accessible   SEQUENCE OF PassthroughStatEntry\n1.3.6.1.4.1.24287.6.3.2.3.1          row          passthroughStatEntry       not-accessible   PassthroughStatEntry\n1.3.6.1.4.1.24287.6.3.2.3.1.1        column       ptstatPort                 not-accessible   Integer32 (1..2)\n1.3.6.1.4.1.24287.6.3.2.3.1.2        column       ptstatSnBytes              read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.3.1.3        column       ptstatSnErrors             read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.3.1.4        column       ptstatNsBytes              read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.3.1.5        column       ptstatNsErrors             read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.4            node         gpioStat                                    \n1.3.6.1.4.1.24287.6.3.2.4.1          scalar       gsInputs                   read-only        OCTET STRING\n1.3.6.1.4.1.24287.6.3.2.4.2          scalar       gsOutputs                  read-only        OCTET STRING\n1.3.6.1.4.1.24287.6.3.2.5            table        nwErrTable                 not-accessible   SEQUENCE OF NwErrEntry\n1.3.6.1.4.1.24287.6.3.2.5.1          row          nwErrEntry                 not-accessible   NwErrEntry\n1.3.6.1.4.1.24287.6.3.2.5.1.1        column       nwChan                     not-accessible   Integer32 (1..100)\n1.3.6.1.4.1.24287.6.3.2.5.1.2        column       nweBadHeader               read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.5.1.3        column       nweBadMAC                  read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.5.1.4        column       nweBadSSRC                 read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.5.1.5        column       nweBadPayload              read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.5.1.6        column       nweBadDest                 read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.5.1.7        column       nweLostPkts                read-only        Counter32\n1.3.6.1.4.1.24287.6.3.2.5.1.8        column       nweMicroOverrun            read-only        Counter32\n1.3.6.1.4.1.24287.6.3.3              node         rvEvents                                    \n1.3.6.1.4.1.24287.6.3.3.0            node         rvonEventsV2                                \n1.3.6.1.4.1.24287.6.3.3.0.1          notification rvLinkStatChgd                              \n1.3.6.1.4.1.24287.6.3.3.0.2          notification rvPanelStatChgd                             \n1.3.6.1.4.1.24287.6.4                node         trunkMaster                                 \n1.3.6.1.4.1.24287.6.4.1              node         tmArch                                      \n1.3.6.1.4.1.24287.6.4.1.1            scalar       tmStdbyIpAddr              read-only        IpAddress\n1.3.6.1.4.1.24287.6.4.1.2            scalar       tmNumIcomPorts             read-only        Integer32\n1.3.6.1.4.1.24287.6.4.1.3            scalar       tmVdpEnabled               read-only        TruthValue\n1.3.6.1.4.1.24287.6.4.1.4            scalar       tmVersion                  read-only        OCTET STRING\n1.3.6.1.4.1.24287.6.4.2              node         tmCapabs                                    \n1.3.6.1.4.1.24287.6.4.2.1            scalar       tmNumIcoms                 read-only        Integer32\n1.3.6.1.4.1.24287.6.4.2.2            scalar       tmNumTrunks                read-only        Integer32\n1.3.6.1.4.1.24287.6.4.2.3            scalar       tmNumFnTypes               read-only        Integer32\n1.3.6.1.4.1.24287.6.4.2.4            scalar       tmNumGroups                read-only        Integer32\n1.3.6.1.4.1.24287.6.4.2.5            scalar       tmNumCapabs                read-only        Integer32\n1.3.6.1.4.1.24287.6.4.2.6            table        tmCapabTable               not-accessible   SEQUENCE OF TmCapabEntry\n1.3.6.1.4.1.24287.6.4.2.6.1          row          tmCapabEntry               not-accessible   TmCapabEntry\n1.3.6.1.4.1.24287.6.4.2.6.1.1        column       tmCapabIndex               not-accessible   TmCapabTypes\n1.3.6.1.4.1.24287.6.4.2.6.1.2        column       tmCapabPresent             read-only        TruthValue\n1.3.6.1.4.1.24287.6.4.3              node         tmConfig                                    \n1.3.6.1.4.1.24287.6.4.3.1            table        tmIcomTable                not-accessible   SEQUENCE OF TmIcomEntry\n1.3.6.1.4.1.24287.6.4.3.1.1          row          tmIcomEntry                not-accessible   TmIcomEntry\n1.3.6.1.4.1.24287.6.4.3.1.1.1        column       icomIndex                  not-accessible   Integer32 (1..256)\n1.3.6.1.4.1.24287.6.4.3.1.1.2        column       icomAlpha4                 read-only        Alpha4\n1.3.6.1.4.1.24287.6.4.3.1.1.3        column       icomAlpha6                 read-only        Alpha6\n1.3.6.1.4.1.24287.6.4.3.1.1.4        column       icomAlpha8                 read-only        Alpha8\n1.3.6.1.4.1.24287.6.4.3.1.1.5        column       icomAlpha8u                read-only        Alpha8U\n1.3.6.1.4.1.24287.6.4.3.1.1.6        column       icomComPort                read-only        Integer32\n1.3.6.1.4.1.24287.6.4.3.1.1.7        column       icomBaudRate               read-only        Integer32\n1.3.6.1.4.1.24287.6.4.3.2            table        tmTrunkTable               not-accessible   SEQUENCE OF TmTrunkEntry\n1.3.6.1.4.1.24287.6.4.3.2.1          row          tmTrunkEntry               not-accessible   TmTrunkEntry\n1.3.6.1.4.1.24287.6.4.3.2.1.1        column       tkNum                      not-accessible   Integer32 (1..10000)\n1.3.6.1.4.1.24287.6.4.3.2.1.2        column       tkFromIcom                 read-only        Integer32\n1.3.6.1.4.1.24287.6.4.3.2.1.3        column       tkFromPort                 read-only        Integer32\n1.3.6.1.4.1.24287.6.4.3.2.1.4        column       tkToIcom                   read-only        Integer32\n1.3.6.1.4.1.24287.6.4.3.2.1.5        column       tkToPort                   read-only        Integer32\n1.3.6.1.4.1.24287.6.4.3.2.1.6        column       tkCanCascade               read-only        TruthValue\n1.3.6.1.4.1.24287.6.4.3.2.1.7        column       tkFixed                    read-only        TruthValue\n1.3.6.1.4.1.24287.6.4.3.3            table        tmAlphaTable               not-accessible   SEQUENCE OF TmAlphaEntry\n1.3.6.1.4.1.24287.6.4.3.3.1          row          tmAlphaEntry               not-accessible   TmAlphaEntry\n1.3.6.1.4.1.24287.6.4.3.3.1.1        column       taIcomNum                  not-accessible   Integer32 (1..256)\n1.3.6.1.4.1.24287.6.4.3.3.1.2        column       taFnType                   not-accessible   Integer32 (1..100)\n1.3.6.1.4.1.24287.6.4.3.3.1.3        column       taFnNum                    not-accessible   Integer32 (1..10000)\n1.3.6.1.4.1.24287.6.4.3.3.1.4        column       taAlpha4                   read-only        Alpha4\n1.3.6.1.4.1.24287.6.4.3.3.1.5        column       taAlpha6                   read-only        Alpha6\n1.3.6.1.4.1.24287.6.4.3.3.1.6        column       taAlpha8                   read-only        Alpha8\n1.3.6.1.4.1.24287.6.4.3.3.1.7        column       taAlpha8u                  read-only        Alpha8U\n1.3.6.1.4.1.24287.6.4.3.4            node         tmGroups                                    \n1.3.6.1.4.1.24287.6.4.3.4.1          table        tmGroupNameTable           not-accessible   SEQUENCE OF TmGroupNameEntry\n1.3.6.1.4.1.24287.6.4.3.4.1.1        row          tmGroupNameEntry           not-accessible   TmGroupNameEntry\n1.3.6.1.4.1.24287.6.4.3.4.1.1.1      column       gnNum                      not-accessible   Integer32 (1..1000)\n1.3.6.1.4.1.24287.6.4.3.4.1.1.2      column       gnName                     read-only        OCTET STRING\n1.3.6.1.4.1.24287.6.4.3.4.2          table        tmGroupMembTable           not-accessible   SEQUENCE OF TmGroupMembEntry\n1.3.6.1.4.1.24287.6.4.3.4.2.1        row          tmGroupMembEntry           not-accessible   TmGroupMembEntry\n1.3.6.1.4.1.24287.6.4.3.4.2.1.1      column       gmGroupNum                 not-accessible   Integer32 (1..1000)\n1.3.6.1.4.1.24287.6.4.3.4.2.1.2      column       gmIcomNum                  not-accessible   Integer32 (1..256)\n1.3.6.1.4.1.24287.6.4.3.4.2.1.3      column       gmIsMember                 read-only        TruthValue\n1.3.6.1.4.1.24287.6.4.3.5            node         tmOptions                                   \n1.3.6.1.4.1.24287.6.4.3.5.1          scalar       optWaitForTalk             read-only        TruthValue\n1.3.6.1.4.1.24287.6.4.3.5.2          scalar       optDynamicAlloc            read-only        TruthValue\n1.3.6.1.4.1.24287.6.4.3.5.3          scalar       optAutoClear               read-only        TruthValue\n1.3.6.1.4.1.24287.6.4.3.5.4          scalar       optClearAllocTimeout       read-only        Unsigned32\n1.3.6.1.4.1.24287.6.4.3.5.5          scalar       optLogEnabled              read-only        TruthValue\n1.3.6.1.4.1.24287.6.4.4              node         tmStatus                                    \n1.3.6.1.4.1.24287.6.4.4.1            scalar       tmErrorsCleared            read-only        TimeTicks\n1.3.6.1.4.1.24287.6.4.4.2            node         thisTm                                      \n1.3.6.1.4.1.24287.6.4.4.2.1          scalar       thisTmActive               read-only        TruthValue\n1.3.6.1.4.1.24287.6.4.4.3            node         otherTm                                     \n1.3.6.1.4.1.24287.6.4.4.3.2          scalar       otPresent                  read-only        TruthValue\n1.3.6.1.4.1.24287.6.4.4.3.3          scalar       otActive                   read-only        TruthValue\n1.3.6.1.4.1.24287.6.4.4.3.4          scalar       otErrorsFrom               read-only        Counter32\n1.3.6.1.4.1.24287.6.4.4.3.5          scalar       otErrorsTo                 read-only        Counter32\n1.3.6.1.4.1.24287.6.4.4.3.6          scalar       otErrorRateFrom            read-only        ErrorRate\n1.3.6.1.4.1.24287.6.4.4.3.7          scalar       otErrorRateTo              read-only        ErrorRate\n1.3.6.1.4.1.24287.6.4.4.3.8          scalar       otThreshValue              read-write       ErrorRate\n1.3.6.1.4.1.24287.6.4.4.4            table        icomStatusTable            not-accessible   SEQUENCE OF IcomStatusEntry\n1.3.6.1.4.1.24287.6.4.4.4.1          row          icomStatusEntry            not-accessible   IcomStatusEntry\n1.3.6.1.4.1.24287.6.4.4.4.1.1        column       isIndex                    not-accessible   Integer32 (1..256)\n1.3.6.1.4.1.24287.6.4.4.4.1.2        column       isTalking                  read-only        TruthValue\n1.3.6.1.4.1.24287.6.4.4.4.1.3        column       isNewProtocol              read-only        TruthValue\n1.3.6.1.4.1.24287.6.4.4.4.1.4        column       isSize                     read-only        Integer32\n1.3.6.1.4.1.24287.6.4.4.4.1.5        column       isErrorsFrom               read-only        Counter32\n1.3.6.1.4.1.24287.6.4.4.4.1.6        column       isErrorsTo                 read-only        Counter32\n1.3.6.1.4.1.24287.6.4.4.4.1.7        column       isErrorRateFrom            read-only        ErrorRate\n1.3.6.1.4.1.24287.6.4.4.4.1.8        column       isErrorRateTo              read-only        ErrorRate\n1.3.6.1.4.1.24287.6.4.4.5            table        tkStatusTable              not-accessible   SEQUENCE OF TkStatusEntry\n1.3.6.1.4.1.24287.6.4.4.5.1          row          tkStatusEntry              not-accessible   TkStatusEntry\n1.3.6.1.4.1.24287.6.4.4.5.1.1        column       tsNum                      not-accessible   Integer32 (1..10000)\n1.3.6.1.4.1.24287.6.4.4.5.1.2        column       tsState                    read-only        TrunkState\n1.3.6.1.4.1.24287.6.4.4.6            scalar       icomThreshValue            read-write       ErrorRate\n1.3.6.1.4.1.24287.6.4.5              node         tmEvents                                    \n1.3.6.1.4.1.24287.6.4.5.0            node         tmEventsV2                                  \n1.3.6.1.4.1.24287.6.4.5.0.1          notification otStatusChgd                                \n1.3.6.1.4.1.24287.6.4.5.0.2          notification otErrorRateExceeded                         \n1.3.6.1.4.1.24287.6.4.5.0.3          notification icomStatusChgd                              \n1.3.6.1.4.1.24287.6.4.5.0.4          notification icomErrorRateExceeded                       \n1.3.6.1.4.1.24287.6.4.5.0.5          node         noTrunkInfo                                 \n1.3.6.1.4.1.24287.6.4.5.0.5.1        scalar       noTksFromIcom              accessible-for-notify Integer32\n1.3.6.1.4.1.24287.6.4.5.0.5.2        scalar       noTksToIcom                accessible-for-notify Integer32\n1.3.6.1.4.1.24287.6.4.5.0.6          notification noTrunksTrap                                \n-- 235 objects, 17 textual conventions, 7 modules\n",
+ "check_mibs": "modules found (by content):\n  Telex-ADAM-CAP         in Telex-RVON-CAP.mib   <-- filename does not match module\n  Telex-Icom-TC          in Telex-RVON-MIB.mib   <-- filename does not match module\n  Telex-REG              in Telex-TM-CAP.mib   <-- filename does not match module\n  Telex-RVON-CAP         in Telex-Icom-TC.mib   <-- filename does not match module\n  Telex-RVON-MIB         in Telex-REG.mib   <-- filename does not match module\n  Telex-TM-CAP           in Telex-Icom-MIB.mib   <-- filename does not match module\n  Telex-TM-MIB           in Telex-ADAM-CAP.mib   <-- filename does not match module\nmissing modules: Telex-Icom-MIB\n  (Telex-Icom-MIB describes the matrix frame itself; without it matrix devices only answer the system group)\n",
+ "tcs": {
+  "Alpha4": {
+   "base": "OCTET",
+   "enum": {}
+  },
+  "Alpha6": {
+   "base": "OCTET",
+   "enum": {}
+  },
+  "Alpha8": {
+   "base": "OCTET",
+   "enum": {}
+  },
+  "Alpha8U": {
+   "base": "OCTET",
+   "enum": {}
+  },
+  "Description": {
+   "base": "OCTET",
+   "enum": {}
+  },
+  "ErrorRate": {
+   "base": "Gauge32",
+   "enum": {}
+  },
+  "IcCapabTypes": {
+   "base": "INTEGER",
+   "enum": {
+    "standbyMc": 1,
+    "slaveFrameMc": 2,
+    "rvon": 3,
+    "unicode": 4,
+    "inputAlphas": 5
+   }
+  },
+  "IcDeviceSubType": {
+   "base": "INTEGER",
+   "enum": {}
+  },
+  "IcDeviceType": {
+   "base": "INTEGER",
+   "enum": {
+    "controller": 1,
+    "standbyController": 2,
+    "ioCard": 3,
+    "keypanel": 4,
+    "papLCP": 5,
+    "uio256": 6,
+    "trunkMaster": 7
+   }
+  },
+  "IcResourceTypes": {
+   "base": "INTEGER",
+   "enum": {
+    "ports": 1,
+    "partyLines": 2,
+    "ifbs": 3,
+    "specialLists": 4,
+    "relays": 5,
+    "cameraIsos": 6,
+    "uplResources": 7,
+    "assignGroups": 8,
+    "ifbSpecialLists": 9,
+    "groupsJ6": 10,
+    "autoDials": 11,
+    "dimTables": 12,
+    "digitalInputs": 13,
+    "papsLCPs": 14,
+    "uio256s": 15,
+    "ioCards": 16
+   }
+  },
+  "LinkAorB": {
+   "base": "INTEGER",
+   "enum": {
+    "linkA": 0,
+    "linkB": 1
+   }
+  },
+  "McSlot": {
+   "base": "INTEGER",
+   "enum": {
+    "left": 1,
+    "right": 2,
+    "unknown": 3
+   }
+  },
+  "RvonCodec": {
+   "base": "INTEGER",
+   "enum": {
+    "g711a": 1,
+    "g711u": 2,
+    "g729": 3,
+    "g726r16": 4,
+    "g726r24": 5,
+    "g726r32": 6,
+    "g726r40": 7,
+    "g723r5": 8,
+    "g723r6": 9
+   }
+  },
+  "RvonDescription": {
+   "base": "OCTET",
+   "enum": {}
+  },
+  "RvonDevice": {
+   "base": "INTEGER",
+   "enum": {
+    "rvon1": 1,
+    "rvon8": 2,
+    "rvonC": 3,
+    "rvonIo": 4,
+    "rvon16": 5
+   }
+  },
+  "TmCapabTypes": {
+   "base": "INTEGER",
+   "enum": {}
+  },
+  "TrunkState": {
+   "base": "INTEGER",
+   "enum": {
+    "undefined": 1,
+    "idle": 2,
+    "allocd": 3,
+    "inUse": 4,
+    "inMaintenanceMode": 5,
+    "outOfService": 6
+   }
+  }
+ },
+ "ber": [
+  {
+   "tag": 2,
+   "v": "0",
+   "hex": "020100"
+  },
+  {
+   "tag": 2,
+   "v": "127",
+   "hex": "02017f"
+  },
+  {
+   "tag": 2,
+   "v": "128",
+   "hex": "02020080"
+  },
+  {
+   "tag": 2,
+   "v": "-1",
+   "hex": "0201ff"
+  },
+  {
+   "tag": 2,
+   "v": "-129",
+   "hex": "0202ff7f"
+  },
+  {
+   "tag": 2,
+   "v": "2147483647",
+   "hex": "02047fffffff"
+  },
+  {
+   "tag": 2,
+   "v": "-2147483648",
+   "hex": "020480000000"
+  },
+  {
+   "tag": 65,
+   "v": "0",
+   "hex": "410100"
+  },
+  {
+   "tag": 65,
+   "v": "255",
+   "hex": "410200ff"
+  },
+  {
+   "tag": 65,
+   "v": "4294967295",
+   "hex": "410500ffffffff"
+  },
+  {
+   "tag": 65,
+   "v": "-1",
+   "hex": "410500ffffffff"
+  },
+  {
+   "tag": 66,
+   "v": "300",
+   "hex": "4202012c"
+  },
+  {
+   "tag": 67,
+   "v": "123456",
+   "hex": "430301e240"
+  },
+  {
+   "tag": 70,
+   "v": "18446744073709551615",
+   "hex": "460900ffffffffffffffff"
+  },
+  {
+   "tag": 70,
+   "v": "1099511627776",
+   "hex": "4606010000000000"
+  },
+  {
+   "tag": 6,
+   "oid": [
+    1,
+    3,
+    6,
+    1,
+    4,
+    1,
+    4400,
+    2147483653,
+    0
+   ],
+   "hex": "060d2b06010401a230888080800500"
+  },
+  {
+   "tag": 4,
+   "s": "héllo",
+   "hex": "040668c3a96c6c6f"
+  },
+  {
+   "tag": 64,
+   "s": "10.1.2.3",
+   "hex": "40040a010203"
+  }
+ ],
+ "message_hex": "304702010104067075626c6963a53a0202109202010002010a302e300a06062b06010201010500301006082b0601020101050004044c4f4e44300e06082b06010201010300430203e7",
+ "panels_default": {
+  "1": {
+   "alpha": "PNL01",
+   "type": "PANEL",
+   "keys": {
+    "1": 34,
+    "2": 25,
+    "3": 63,
+    "4": 73,
+    "5": 24,
+    "6": 9,
+    "7": 37,
+    "8": 44
+   },
+   "freq": 329.6275569128699
+  },
+  "2": {
+   "alpha": "PNL02",
+   "type": "PANEL",
+   "keys": {
+    "1": 34,
+    "2": 29,
+    "3": 71,
+    "4": 81,
+    "5": 7,
+    "6": 19,
+    "7": 42,
+    "8": 50
+   },
+   "freq": 493.8833012561241
+  },
+  "3": {
+   "alpha": "PNL03",
+   "type": "PANEL",
+   "keys": {
+    "1": 27,
+    "2": 26,
+    "3": 78,
+    "4": 67,
+    "5": 16,
+    "6": 5,
+    "7": 41,
+    "8": 48
+   },
+   "freq": 739.9888454232688
+  },
+  "4": {
+   "alpha": "PNL04",
+   "type": "PANEL",
+   "keys": {
+    "1": 28,
+    "2": 29,
+    "3": 60,
+    "4": 76,
+    "5": 24,
+    "6": 14,
+    "7": 40,
+    "8": 49
+   },
+   "freq": 1108.7305239074883
+  },
+  "5": {
+   "alpha": "PNL05",
+   "type": "PANEL",
+   "keys": {
+    "1": 29,
+    "2": 34,
+    "3": 67,
+    "4": 60,
+    "5": 10,
+    "6": 24,
+    "7": 41,
+    "8": 48
+   },
+   "freq": 1661.2187903197805
+  },
+  "6": {
+   "alpha": "PNL06",
+   "type": "PANEL",
+   "keys": {
+    "1": 28,
+    "2": 29,
+    "3": 76,
+    "4": 66,
+    "5": 18,
+    "6": 11,
+    "7": 39,
+    "8": 46
+   },
+   "freq": 311.1269837220809
+  },
+  "7": {
+   "alpha": "PNL07",
+   "type": "PANEL",
+   "keys": {
+    "1": 30,
+    "2": 32,
+    "3": 59,
+    "4": 75,
+    "5": 1,
+    "6": 22,
+    "7": 39,
+    "8": 44
+   },
+   "freq": 466.1637615180899
+  },
+  "8": {
+   "alpha": "PNL08",
+   "type": "PANEL",
+   "keys": {
+    "1": 32,
+    "2": 26,
+    "3": 64,
+    "4": 60,
+    "5": 9,
+    "6": 7,
+    "7": 37,
+    "8": 45
+   },
+   "freq": 698.4564628660078
+  },
+  "9": {
+   "alpha": "PNL09",
+   "type": "PANEL",
+   "keys": {
+    "1": 32,
+    "2": 30,
+    "3": 71,
+    "4": 67,
+    "5": 19,
+    "6": 16,
+    "7": 35,
+    "8": 50
+   },
+   "freq": 1046.5022612023945
+  },
+  "10": {
+   "alpha": "PNL10",
+   "type": "PANEL",
+   "keys": {
+    "1": 34,
+    "2": 25,
+    "3": 78,
+    "4": 75,
+    "5": 2,
+    "6": 1,
+    "7": 36,
+    "8": 49
+   },
+   "freq": 1567.9817439269973
+  },
+  "11": {
+   "alpha": "PNL11",
+   "type": "PANEL",
+   "keys": {
+    "1": 25,
+    "2": 31,
+    "3": 62,
+    "4": 60,
+    "5": 10,
+    "6": 13,
+    "7": 35,
+    "8": 48
+   },
+   "freq": 293.6647679174076
+  },
+  "12": {
+   "alpha": "PNL12",
+   "type": "PANEL",
+   "keys": {
+    "1": 34,
+    "2": 25,
+    "3": 68,
+    "4": 70,
+    "5": 18,
+    "6": 22,
+    "7": 40,
+    "8": 49
+   },
+   "freq": 440.0
+  },
+  "13": {
+   "alpha": "PNL13",
+   "type": "PANEL",
+   "keys": {
+    "1": 26,
+    "2": 30,
+    "3": 76,
+    "4": 78,
+    "5": 4,
+    "6": 8,
+    "7": 40,
+    "8": 46
+   },
+   "freq": 659.2551138257398
+  },
+  "14": {
+   "alpha": "PNL14",
+   "type": "PANEL",
+   "keys": {
+    "1": 27,
+    "2": 25,
+    "3": 82,
+    "4": 62,
+    "5": 12,
+    "6": 19,
+    "7": 39,
+    "8": 46
+   },
+   "freq": 987.766602512248
+  },
+  "15": {
+   "alpha": "PNL15",
+   "type": "PANEL",
+   "keys": {
+    "1": 28,
+    "2": 27,
+    "3": 65,
+    "4": 71,
+    "5": 20,
+    "6": 2,
+    "7": 39,
+    "8": 44
+   },
+   "freq": 1479.9776908465376
+  },
+  "16": {
+   "alpha": "PNL16",
+   "type": "PANEL",
+   "keys": {
+    "1": 29,
+    "2": 33,
+    "3": 74,
+    "4": 79,
+    "5": 5,
+    "6": 12,
+    "7": 37,
+    "8": 43
+   },
+   "freq": 277.1826309768721
+  },
+  "17": {
+   "alpha": "PNL17",
+   "type": "PANEL",
+   "keys": {
+    "1": 31,
+    "2": 28,
+    "3": 79,
+    "4": 64,
+    "5": 12,
+    "6": 22,
+    "7": 37,
+    "8": 43
+   },
+   "freq": 415.3046975799451
+  },
+  "18": {
+   "alpha": "PNL18",
+   "type": "PANEL",
+   "keys": {
+    "1": 31,
+    "2": 33,
+    "3": 62,
+    "4": 71,
+    "5": 21,
+    "6": 7,
+    "7": 42,
+    "8": 50
+   },
+   "freq": 622.2539674441618
+  },
+  "19": {
+   "alpha": "PNL19",
+   "type": "PANEL",
+   "keys": {
+    "1": 31,
+    "2": 25,
+    "3": 71,
+    "4": 79,
+    "5": 6,
+    "6": 18,
+    "7": 42,
+    "8": 49
+   },
+   "freq": 932.3275230361799
+  },
+  "20": {
+   "alpha": "PNL20",
+   "type": "PANEL",
+   "keys": {
+    "1": 32,
+    "2": 31,
+    "3": 77,
+    "4": 63,
+    "5": 14,
+    "6": 4,
+    "7": 40,
+    "8": 47
+   },
+   "freq": 1396.9129257320155
+  },
+  "21": {
+   "alpha": "PNL21",
+   "type": "PANEL",
+   "keys": {
+    "1": 34,
+    "2": 33,
+    "3": 61,
+    "4": 73,
+    "5": 23,
+    "6": 12,
+    "7": 40,
+    "8": 46
+   },
+   "freq": 261.6255653005986
+  },
+  "22": {
+   "alpha": "PNL22",
+   "type": "PANEL",
+   "keys": {
+    "1": 26,
+    "2": 31,
+    "3": 67,
+    "4": 80,
+    "5": 7,
+    "6": 23,
+    "7": 39,
+    "8": 45
+   },
+   "freq": 391.99543598174927
+  },
+  "23": {
+   "alpha": "PNL23",
+   "type": "PANEL",
+   "keys": {
+    "1": 26,
+    "2": 25,
+    "3": 73,
+    "4": 65,
+    "5": 15,
+    "6": 9,
+    "7": 38,
+    "8": 44
+   },
+   "freq": 587.3295358348151
+  },
+  "24": {
+   "alpha": "PNL24",
+   "type": "PANEL",
+   "keys": {
+    "1": 26,
+    "2": 28,
+    "3": 82,
+    "4": 72,
+    "5": 21,
+    "6": 19,
+    "7": 36,
+    "8": 45
+   },
+   "freq": 880.0
+  },
+  "25": {
+   "alpha": "CAM01",
+   "type": "CAM",
+   "keys": {
+    "1": 16,
+    "2": 8,
+    "3": 5,
+    "4": 30,
+    "5": 47,
+    "6": 36,
+    "7": 10,
+    "8": 74
+   },
+   "freq": 1318.51022765148
+  },
+  "26": {
+   "alpha": "CAM02",
+   "type": "CAM",
+   "keys": {
+    "1": 22,
+    "2": 16,
+    "3": 14,
+    "4": 33,
+    "5": 45,
+    "6": 37,
+    "7": 19,
+    "8": 81
+   },
+   "freq": 246.94165062806206
+  },
+  "27": {
+   "alpha": "CAM03",
+   "type": "CAM",
+   "keys": {
+    "1": 7,
+    "2": 2,
+    "3": 3,
+    "4": 29,
+    "5": 45,
+    "6": 35,
+    "7": 9,
+    "8": 65
+   },
+   "freq": 369.9944227116344
+  },
+  "28": {
+   "alpha": "CAM04",
+   "type": "CAM",
+   "keys": {
+    "1": 14,
+    "2": 11,
+    "3": 10,
+    "4": 33,
+    "5": 50,
+    "6": 42,
+    "7": 19,
+    "8": 72
+   },
+   "freq": 554.3652619537442
+  },
+  "29": {
+   "alpha": "CAM05",
+   "type": "CAM",
+   "keys": {
+    "1": 20,
+    "2": 19,
+    "3": 22,
+    "4": 27,
+    "5": 49,
+    "6": 42,
+    "7": 5,
+    "8": 79
+   },
+   "freq": 830.6093951598903
+  },
+  "30": {
+   "alpha": "CAM06",
+   "type": "CAM",
+   "keys": {
+    "1": 2,
+    "2": 4,
+    "3": 10,
+    "4": 32,
+    "5": 49,
+    "6": 39,
+    "7": 18,
+    "8": 62
+   },
+   "freq": 1244.5079348883237
+  },
+  "31": {
+   "alpha": "CAM07",
+   "type": "CAM",
+   "keys": {
+    "1": 9,
+    "2": 12,
+    "3": 17,
+    "4": 25,
+    "5": 48,
+    "6": 38,
+    "7": 3,
+    "8": 69
+   },
+   "freq": 233.08188075904496
+  },
+  "32": {
+   "alpha": "CAM08",
+   "type": "CAM",
+   "keys": {
+    "1": 17,
+    "2": 20,
+    "3": 3,
+    "4": 30,
+    "5": 47,
+    "6": 37,
+    "7": 15,
+    "8": 77
+   },
+   "freq": 349.2282314330039
+  },
+  "33": {
+   "alpha": "CAM09",
+   "type": "CAM",
+   "keys": {
+    "1": 24,
+    "2": 3,
+    "3": 13,
+    "4": 25,
+    "5": 46,
+    "6": 38,
+    "7": 5,
+    "8": 59
+   },
+   "freq": 523.2511306011972
+  },
+  "34": {
+   "alpha": "CAM10",
+   "type": "CAM",
+   "keys": {
+    "1": 6,
+    "2": 12,
+    "3": 24,
+    "4": 29,
+    "5": 45,
+    "6": 37,
+    "7": 15,
+    "8": 67
+   },
+   "freq": 783.9908719634985
+  },
+  "35": {
+   "alpha": "LGT01",
+   "type": "LIGHT",
+   "keys": {
+    "1": 13,
+    "2": 22,
+    "3": 37,
+    "4": 42,
+    "5": 25,
+    "6": 6,
+    "7": 50,
+    "8": 57
+   },
+   "freq": 1174.65907166963
+  },
+  "36": {
+   "alpha": "LGT02",
+   "type": "LIGHT",
+   "keys": {
+    "1": 20,
+    "2": 4,
+    "3": 41,
+    "4": 42,
+    "5": 27,
+    "6": 17,
+    "7": 49,
+    "8": 57
+   },
+   "freq": 220.0
+  },
+  "37": {
+   "alpha": "LGT03",
+   "type": "LIGHT",
+   "keys": {
+    "1": 5,
+    "2": 15,
+    "3": 35,
+    "4": 38,
+    "5": 28,
+    "6": 4,
+    "7": 47,
+    "8": 56
+   },
+   "freq": 329.6275569128699
+  },
+  "38": {
+   "alpha": "LGT04",
+   "type": "LIGHT",
+   "keys": {
+    "1": 12,
+    "2": 22,
+    "3": 37,
+    "4": 39,
+    "5": 30,
+    "6": 14,
+    "7": 46,
+    "8": 54
+   },
+   "freq": 493.8833012561241
+  },
+  "39": {
+   "alpha": "LGT05",
+   "type": "LIGHT",
+   "keys": {
+    "1": 19,
+    "2": 6,
+    "3": 42,
+    "4": 37,
+    "5": 30,
+    "6": 22,
+    "7": 47,
+    "8": 54
+   },
+   "freq": 739.9888454232688
+  },
+  "40": {
+   "alpha": "LGT06",
+   "type": "LIGHT",
+   "keys": {
+    "1": 2,
+    "2": 16,
+    "3": 36,
+    "4": 38,
+    "5": 31,
+    "6": 9,
+    "7": 44,
+    "8": 51
+   },
+   "freq": 1108.7305239074883
+  },
+  "41": {
+   "alpha": "LGT07",
+   "type": "LIGHT",
+   "keys": {
+    "1": 8,
+    "2": 22,
+    "3": 42,
+    "4": 38,
+    "5": 31,
+    "6": 19,
+    "7": 43,
+    "8": 51
+   },
+   "freq": 1661.2187903197805
+  },
+  "42": {
+   "alpha": "LGT08",
+   "type": "LIGHT",
+   "keys": {
+    "1": 16,
+    "2": 7,
+    "3": 36,
+    "4": 35,
+    "5": 32,
+    "6": 4,
+    "7": 43,
+    "8": 51
+   },
+   "freq": 311.1269837220809
+  },
+  "43": {
+   "alpha": "AUD01",
+   "type": "AUDIO",
+   "keys": {
+    "1": 22,
+    "2": 16,
+    "3": 69,
+    "4": 64,
+    "5": 49,
+    "6": 58,
+    "7": 29,
+    "8": 4
+   },
+   "freq": 466.1637615180899
+  },
+  "44": {
+   "alpha": "AUD02",
+   "type": "AUDIO",
+   "keys": {
+    "1": 6,
+    "2": 1,
+    "3": 77,
+    "4": 73,
+    "5": 50,
+    "6": 57,
+    "7": 29,
+    "8": 16
+   },
+   "freq": 698.4564628660078
+  },
+  "45": {
+   "alpha": "AUD03",
+   "type": "AUDIO",
+   "keys": {
+    "1": 13,
+    "2": 9,
+    "3": 59,
+    "4": 82,
+    "5": 48,
+    "6": 58,
+    "7": 29,
+    "8": 24
+   },
+   "freq": 1046.5022612023945
+  },
+  "46": {
+   "alpha": "AUD04",
+   "type": "AUDIO",
+   "keys": {
+    "1": 20,
+    "2": 15,
+    "3": 68,
+    "4": 64,
+    "5": 43,
+    "6": 57,
+    "7": 32,
+    "8": 10
+   },
+   "freq": 1567.9817439269973
+  },
+  "47": {
+   "alpha": "AUD05",
+   "type": "AUDIO",
+   "keys": {
+    "1": 2,
+    "2": 24,
+    "3": 75,
+    "4": 74,
+    "5": 46,
+    "6": 56,
+    "7": 33,
+    "8": 21
+   },
+   "freq": 293.6647679174076
+  },
+  "48": {
+   "alpha": "AUD06",
+   "type": "AUDIO",
+   "keys": {
+    "1": 9,
+    "2": 8,
+    "3": 81,
+    "4": 80,
+    "5": 49,
+    "6": 55,
+    "7": 33,
+    "8": 5
+   },
+   "freq": 440.0
+  },
+  "49": {
+   "alpha": "AUD07",
+   "type": "AUDIO",
+   "keys": {
+    "1": 17,
+    "2": 19,
+    "3": 63,
+    "4": 67,
+    "5": 43,
+    "6": 54,
+    "7": 33,
+    "8": 15
+   },
+   "freq": 659.2551138257398
+  },
+  "50": {
+   "alpha": "AUD08",
+   "type": "AUDIO",
+   "keys": {
+    "1": 24,
+    "2": 3,
+    "3": 71,
+    "4": 76,
+    "5": 47,
+    "6": 51,
+    "7": 34,
+    "8": 2
+   },
+   "freq": 987.766602512248
+  },
+  "51": {
+   "alpha": "FLD01",
+   "type": "FIELD",
+   "keys": {
+    "1": 5,
+    "2": 11,
+    "3": 46,
+    "4": 61,
+    "5": 13,
+    "6": 29,
+    "7": 53,
+    "8": 2
+   },
+   "freq": 1479.9776908465376
+  },
+  "52": {
+   "alpha": "FLD02",
+   "type": "FIELD",
+   "keys": {
+    "1": 12,
+    "2": 20,
+    "3": 44,
+    "4": 69,
+    "5": 23,
+    "6": 31,
+    "7": 55,
+    "8": 11
+   },
+   "freq": 277.1826309768721
+  },
+  "53": {
+   "alpha": "FLD03",
+   "type": "FIELD",
+   "keys": {
+    "1": 19,
+    "2": 2,
+    "3": 45,
+    "4": 74,
+    "5": 8,
+    "6": 30,
+    "7": 51,
+    "8": 1
+   },
+   "freq": 415.3046975799451
+  },
+  "54": {
+   "alpha": "FLD04",
+   "type": "FIELD",
+   "keys": {
+    "1": 4,
+    "2": 13,
+    "3": 50,
+    "4": 59,
+    "5": 18,
+    "6": 33,
+    "7": 53,
+    "8": 12
+   },
+   "freq": 622.2539674441618
+  },
+  "55": {
+   "alpha": "FLD05",
+   "type": "FIELD",
+   "keys": {
+    "1": 11,
+    "2": 19,
+    "3": 43,
+    "4": 65,
+    "5": 4,
+    "6": 34,
+    "7": 58,
+    "8": 23
+   },
+   "freq": 932.3275230361799
+  },
+  "56": {
+   "alpha": "FLD06",
+   "type": "FIELD",
+   "keys": {
+    "1": 17,
+    "2": 4,
+    "3": 49,
+    "4": 72,
+    "5": 13,
+    "6": 34,
+    "7": 51,
+    "8": 10
+   },
+   "freq": 1396.9129257320155
+  },
+  "57": {
+   "alpha": "FLD07",
+   "type": "FIELD",
+   "keys": {
+    "1": 1,
+    "2": 13,
+    "3": 47,
+    "4": 80,
+    "5": 2,
+    "6": 34,
+    "7": 54,
+    "8": 23
+   },
+   "freq": 261.6255653005986
+  },
+  "58": {
+   "alpha": "FLD08",
+   "type": "FIELD",
+   "keys": {
+    "1": 8,
+    "2": 22,
+    "3": 47,
+    "4": 63,
+    "5": 9,
+    "6": 26,
+    "7": 51,
+    "8": 10
+   },
+   "freq": 391.99543598174927
+  },
+  "59": {
+   "alpha": "IFB01",
+   "type": "IFB",
+   "keys": {},
+   "freq": 587.3295358348151
+  },
+  "60": {
+   "alpha": "IFB02",
+   "type": "IFB",
+   "keys": {},
+   "freq": 880.0
+  },
+  "61": {
+   "alpha": "IFB03",
+   "type": "IFB",
+   "keys": {},
+   "freq": 1318.51022765148
+  },
+  "62": {
+   "alpha": "IFB04",
+   "type": "IFB",
+   "keys": {},
+   "freq": 246.94165062806206
+  },
+  "63": {
+   "alpha": "IFB05",
+   "type": "IFB",
+   "keys": {},
+   "freq": 369.9944227116344
+  },
+  "64": {
+   "alpha": "IFB06",
+   "type": "IFB",
+   "keys": {},
+   "freq": 554.3652619537442
+  },
+  "65": {
+   "alpha": "IFB07",
+   "type": "IFB",
+   "keys": {},
+   "freq": 830.6093951598903
+  },
+  "66": {
+   "alpha": "IFB08",
+   "type": "IFB",
+   "keys": {},
+   "freq": 1244.5079348883237
+  },
+  "67": {
+   "alpha": "IFB09",
+   "type": "IFB",
+   "keys": {},
+   "freq": 233.08188075904496
+  },
+  "68": {
+   "alpha": "IFB10",
+   "type": "IFB",
+   "keys": {},
+   "freq": 349.2282314330039
+  },
+  "69": {
+   "alpha": "IFB11",
+   "type": "IFB",
+   "keys": {},
+   "freq": 523.2511306011972
+  },
+  "70": {
+   "alpha": "IFB12",
+   "type": "IFB",
+   "keys": {},
+   "freq": 783.9908719634985
+  },
+  "71": {
+   "alpha": "IFB13",
+   "type": "IFB",
+   "keys": {},
+   "freq": 1174.65907166963
+  },
+  "72": {
+   "alpha": "IFB14",
+   "type": "IFB",
+   "keys": {},
+   "freq": 220.0
+  },
+  "73": {
+   "alpha": "IFB15",
+   "type": "IFB",
+   "keys": {},
+   "freq": 329.6275569128699
+  },
+  "74": {
+   "alpha": "IFB16",
+   "type": "IFB",
+   "keys": {},
+   "freq": 493.8833012561241
+  },
+  "75": {
+   "alpha": "IFB17",
+   "type": "IFB",
+   "keys": {},
+   "freq": 739.9888454232688
+  },
+  "76": {
+   "alpha": "IFB18",
+   "type": "IFB",
+   "keys": {},
+   "freq": 1108.7305239074883
+  },
+  "77": {
+   "alpha": "IFB19",
+   "type": "IFB",
+   "keys": {},
+   "freq": 1661.2187903197805
+  },
+  "78": {
+   "alpha": "IFB20",
+   "type": "IFB",
+   "keys": {},
+   "freq": 311.1269837220809
+  },
+  "79": {
+   "alpha": "IFB21",
+   "type": "IFB",
+   "keys": {},
+   "freq": 466.1637615180899
+  },
+  "80": {
+   "alpha": "IFB22",
+   "type": "IFB",
+   "keys": {},
+   "freq": 698.4564628660078
+  },
+  "81": {
+   "alpha": "IFB23",
+   "type": "IFB",
+   "keys": {},
+   "freq": 1046.5022612023945
+  },
+  "82": {
+   "alpha": "IFB24",
+   "type": "IFB",
+   "keys": {},
+   "freq": 1567.9817439269973
+  },
+  "83": {
+   "alpha": "WLS01",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 293.6647679174076
+  },
+  "84": {
+   "alpha": "WLS02",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 440.0
+  },
+  "85": {
+   "alpha": "WLS03",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 659.2551138257398
+  },
+  "86": {
+   "alpha": "WLS04",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 987.766602512248
+  },
+  "87": {
+   "alpha": "WLS05",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 1479.9776908465376
+  },
+  "88": {
+   "alpha": "WLS06",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 277.1826309768721
+  },
+  "89": {
+   "alpha": "WLS07",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 415.3046975799451
+  },
+  "90": {
+   "alpha": "WLS08",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 622.2539674441618
+  },
+  "91": {
+   "alpha": "WLS09",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 932.3275230361799
+  },
+  "92": {
+   "alpha": "WLS10",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 1396.9129257320155
+  },
+  "93": {
+   "alpha": "WLS11",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 261.6255653005986
+  },
+  "94": {
+   "alpha": "WLS12",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 391.99543598174927
+  },
+  "95": {
+   "alpha": "WLS13",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 587.3295358348151
+  },
+  "96": {
+   "alpha": "WLS14",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 880.0
+  },
+  "97": {
+   "alpha": "WLS15",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 1318.51022765148
+  },
+  "98": {
+   "alpha": "WLS16",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 246.94165062806206
+  },
+  "99": {
+   "alpha": "WLS17",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 369.9944227116344
+  },
+  "100": {
+   "alpha": "WLS18",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 554.3652619537442
+  },
+  "101": {
+   "alpha": "WLS19",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 830.6093951598903
+  },
+  "102": {
+   "alpha": "WLS20",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 1244.5079348883237
+  },
+  "103": {
+   "alpha": "WLS21",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 233.08188075904496
+  },
+  "104": {
+   "alpha": "WLS22",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 349.2282314330039
+  },
+  "105": {
+   "alpha": "WLS23",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 523.2511306011972
+  },
+  "106": {
+   "alpha": "WLS24",
+   "type": "WLESS",
+   "keys": {},
+   "freq": 783.9908719634985
+  }
+ },
+ "panels_small": {
+  "1": {
+   "alpha": "PNL01",
+   "type": "PANEL",
+   "keys": {
+    "1": 6,
+    "2": 5,
+    "3": 8,
+    "4": 7,
+    "5": 4,
+    "6": 3,
+    "7": 2
+   },
+   "freq": 329.6275569128699
+  },
+  "2": {
+   "alpha": "PNL02",
+   "type": "PANEL",
+   "keys": {
+    "1": 6,
+    "2": 5,
+    "3": 8,
+    "4": 7,
+    "5": 3,
+    "6": 1,
+    "7": 4
+   },
+   "freq": 493.8833012561241
+  },
+  "3": {
+   "alpha": "PNL03",
+   "type": "PANEL",
+   "keys": {
+    "1": 5,
+    "2": 6,
+    "3": 8,
+    "4": 7,
+    "5": 1,
+    "6": 4,
+    "7": 2
+   },
+   "freq": 739.9888454232688
+  },
+  "4": {
+   "alpha": "PNL04",
+   "type": "PANEL",
+   "keys": {
+    "1": 6,
+    "2": 5,
+    "3": 8,
+    "4": 3,
+    "5": 2,
+    "6": 1,
+    "7": 7
+   },
+   "freq": 1108.7305239074883
+  },
+  "5": {
+   "alpha": "CAM01",
+   "type": "CAM",
+   "keys": {
+    "1": 4,
+    "2": 2,
+    "3": 1,
+    "4": 6,
+    "5": 3,
+    "6": 7,
+    "7": 8
+   },
+   "freq": 1661.2187903197805
+  },
+  "6": {
+   "alpha": "CAM02",
+   "type": "CAM",
+   "keys": {
+    "1": 4,
+    "2": 2,
+    "3": 3,
+    "4": 5,
+    "5": 7,
+    "6": 1,
+    "7": 8
+   },
+   "freq": 311.1269837220809
+  },
+  "7": {
+   "alpha": "FLD01",
+   "type": "FIELD",
+   "keys": {
+    "1": 3,
+    "2": 1,
+    "3": 2,
+    "4": 8,
+    "5": 4,
+    "6": 5,
+    "7": 6
+   },
+   "freq": 466.1637615180899
+  },
+  "8": {
+   "alpha": "IFB01",
+   "type": "IFB",
+   "keys": {},
+   "freq": 698.4564628660078
+  }
+ },
+ "hsl": [
+  [
+   0,
+   0.75,
+   0.55,
+   "#e23636"
+  ],
+  [
+   200,
+   0.75,
+   0.55,
+   "#36a8e2"
+  ],
+  [
+   359.9,
+   0.55,
+   0.7,
+   "#dc8888"
+  ],
+  [
+   61.4,
+   0.75,
+   0.55,
+   "#dee236"
+  ],
+  [
+   300,
+   0.5,
+   0.5,
+   "#bf3fbf"
+  ]
+ ],
+ "world_config": {
+  "bind": "0.0.0.0",
+  "community": "public",
+  "trap_targets": [],
+  "chaos": 0.15,
+  "map_port": 8181,
+  "vendor": "Riedel",
+  "devices": [
+   {
+    "type": "tm2000",
+    "name": "TM-RIEDEL",
+    "snmp_port": 16100,
+    "console_port": 17100,
+    "lat": 38.9172,
+    "lon": -77.0269,
+    "city": "Washington",
+    "country": "United States",
+    "continent": "North America",
+    "coverage_m": 250,
+    "color": "#ffffff",
+    "trunks_per_pair": 1,
+    "iso2": "us",
+    "site_kind": "trunkmaster"
+   },
+   {
+    "type": "matrix",
+    "subtype": "adam",
+    "name": "WASH",
+    "alpha": "WASH",
+    "alpha8": "WASHINGT",
+    "city": "Washington",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "capital",
+    "lat": 38.9072,
+    "lon": -77.0369,
+    "coverage_m": 400,
+    "color": "#36a8e2",
+    "plan": [
+     [
+      "PANEL",
+      24
+     ],
+     [
+      "CAM",
+      10
+     ],
+     [
+      "LIGHT",
+      8
+     ],
+     [
+      "AUDIO",
+      8
+     ],
+     [
+      "FIELD",
+      8
+     ],
+     [
+      "IFB",
+      24
+     ],
+     [
+      "WLESS",
+      24
+     ]
+    ],
+    "snmp_port": 16101,
+    "console_port": 17101,
+    "series": 20256
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-AL",
+    "alpha": "U-AL",
+    "alpha8": "US-AL",
+    "city": "Montgomery, Alabama",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 32.3792,
+    "lon": -86.3077,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36001,
+    "console_port": 37001,
+    "series": 43016
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-AK",
+    "alpha": "U-AK",
+    "alpha8": "US-AK",
+    "city": "Juneau, Alaska",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 58.3019,
+    "lon": -134.4197,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36002,
+    "console_port": 37002,
+    "series": 43032
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-AZ",
+    "alpha": "U-AZ",
+    "alpha8": "US-AZ",
+    "city": "Phoenix, Arizona",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 33.4484,
+    "lon": -112.074,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36003,
+    "console_port": 37003,
+    "series": 43048
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-AR",
+    "alpha": "U-AR",
+    "alpha8": "US-AR",
+    "city": "Little Rock, Arkansas",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 34.7465,
+    "lon": -92.2896,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36004,
+    "console_port": 37004,
+    "series": 43064
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-CA",
+    "alpha": "U-CA",
+    "alpha8": "US-CA",
+    "city": "Sacramento, California",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 38.5816,
+    "lon": -121.4944,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36005,
+    "console_port": 37005,
+    "series": 43080
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-CO",
+    "alpha": "U-CO",
+    "alpha8": "US-CO",
+    "city": "Denver, Colorado",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 39.7392,
+    "lon": -104.9903,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36006,
+    "console_port": 37006,
+    "series": 43096
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-CT",
+    "alpha": "U-CT",
+    "alpha8": "US-CT",
+    "city": "Hartford, Connecticut",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 41.7658,
+    "lon": -72.6734,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36007,
+    "console_port": 37007,
+    "series": 43112
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-DE",
+    "alpha": "U-DE",
+    "alpha8": "US-DE",
+    "city": "Dover, Delaware",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 39.1582,
+    "lon": -75.5244,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36008,
+    "console_port": 37008,
+    "series": 43128
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-FL",
+    "alpha": "U-FL",
+    "alpha8": "US-FL",
+    "city": "Tallahassee, Florida",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 30.4383,
+    "lon": -84.2807,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36009,
+    "console_port": 37009,
+    "series": 43144
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-GA",
+    "alpha": "U-GA",
+    "alpha8": "US-GA",
+    "city": "Atlanta, Georgia",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 33.749,
+    "lon": -84.388,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36010,
+    "console_port": 37010,
+    "series": 43160
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-HI",
+    "alpha": "U-HI",
+    "alpha8": "US-HI",
+    "city": "Honolulu, Hawaii",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 21.3069,
+    "lon": -157.8583,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36011,
+    "console_port": 37011,
+    "series": 43176
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-ID",
+    "alpha": "U-ID",
+    "alpha8": "US-ID",
+    "city": "Boise, Idaho",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 43.615,
+    "lon": -116.2023,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36012,
+    "console_port": 37012,
+    "series": 43192
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-IL",
+    "alpha": "U-IL",
+    "alpha8": "US-IL",
+    "city": "Springfield, Illinois",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 39.7817,
+    "lon": -89.6501,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36013,
+    "console_port": 37013,
+    "series": 43208
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-IN",
+    "alpha": "U-IN",
+    "alpha8": "US-IN",
+    "city": "Indianapolis, Indiana",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 39.7684,
+    "lon": -86.1581,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36014,
+    "console_port": 37014,
+    "series": 43224
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-IA",
+    "alpha": "U-IA",
+    "alpha8": "US-IA",
+    "city": "Des Moines, Iowa",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 41.5868,
+    "lon": -93.625,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36015,
+    "console_port": 37015,
+    "series": 43240
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-KS",
+    "alpha": "U-KS",
+    "alpha8": "US-KS",
+    "city": "Topeka, Kansas",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 39.0473,
+    "lon": -95.6752,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36016,
+    "console_port": 37016,
+    "series": 43256
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-KY",
+    "alpha": "U-KY",
+    "alpha8": "US-KY",
+    "city": "Frankfort, Kentucky",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 38.2009,
+    "lon": -84.8733,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36017,
+    "console_port": 37017,
+    "series": 43272
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-LA",
+    "alpha": "U-LA",
+    "alpha8": "US-LA",
+    "city": "Baton Rouge, Louisiana",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 30.4515,
+    "lon": -91.1871,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36018,
+    "console_port": 37018,
+    "series": 43288
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-ME",
+    "alpha": "U-ME",
+    "alpha8": "US-ME",
+    "city": "Augusta, Maine",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 44.3106,
+    "lon": -69.7795,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36019,
+    "console_port": 37019,
+    "series": 43304
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-MD",
+    "alpha": "U-MD",
+    "alpha8": "US-MD",
+    "city": "Annapolis, Maryland",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 38.9784,
+    "lon": -76.4922,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36020,
+    "console_port": 37020,
+    "series": 43320
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-MA",
+    "alpha": "U-MA",
+    "alpha8": "US-MA",
+    "city": "Boston, Massachusetts",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 42.3601,
+    "lon": -71.0589,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36021,
+    "console_port": 37021,
+    "series": 43336
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-MI",
+    "alpha": "U-MI",
+    "alpha8": "US-MI",
+    "city": "Lansing, Michigan",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 42.7325,
+    "lon": -84.5555,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36022,
+    "console_port": 37022,
+    "series": 43352
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-MN",
+    "alpha": "U-MN",
+    "alpha8": "US-MN",
+    "city": "Saint Paul, Minnesota",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 44.9537,
+    "lon": -93.09,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36023,
+    "console_port": 37023,
+    "series": 43368
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-MS",
+    "alpha": "U-MS",
+    "alpha8": "US-MS",
+    "city": "Jackson, Mississippi",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 32.2988,
+    "lon": -90.1848,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36024,
+    "console_port": 37024,
+    "series": 43384
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-MO",
+    "alpha": "U-MO",
+    "alpha8": "US-MO",
+    "city": "Jefferson City, Missouri",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 38.5767,
+    "lon": -92.1735,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36025,
+    "console_port": 37025,
+    "series": 43400
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-MT",
+    "alpha": "U-MT",
+    "alpha8": "US-MT",
+    "city": "Helena, Montana",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 46.5891,
+    "lon": -112.0391,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36026,
+    "console_port": 37026,
+    "series": 43416
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-NE",
+    "alpha": "U-NE",
+    "alpha8": "US-NE",
+    "city": "Lincoln, Nebraska",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 40.8136,
+    "lon": -96.7026,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36027,
+    "console_port": 37027,
+    "series": 43432
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-NV",
+    "alpha": "U-NV",
+    "alpha8": "US-NV",
+    "city": "Carson City, Nevada",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 39.1638,
+    "lon": -119.7674,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36028,
+    "console_port": 37028,
+    "series": 43448
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-NH",
+    "alpha": "U-NH",
+    "alpha8": "US-NH",
+    "city": "Concord, New Hampshire",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 43.2081,
+    "lon": -71.5376,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36029,
+    "console_port": 37029,
+    "series": 43464
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-NJ",
+    "alpha": "U-NJ",
+    "alpha8": "US-NJ",
+    "city": "Trenton, New Jersey",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 40.2206,
+    "lon": -74.7597,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36030,
+    "console_port": 37030,
+    "series": 43480
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-NM",
+    "alpha": "U-NM",
+    "alpha8": "US-NM",
+    "city": "Santa Fe, New Mexico",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 35.687,
+    "lon": -105.9378,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36031,
+    "console_port": 37031,
+    "series": 43496
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-NY",
+    "alpha": "U-NY",
+    "alpha8": "US-NY",
+    "city": "Albany, New York",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 42.6526,
+    "lon": -73.7562,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36032,
+    "console_port": 37032,
+    "series": 43512
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-NC",
+    "alpha": "U-NC",
+    "alpha8": "US-NC",
+    "city": "Raleigh, North Carolina",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 35.7796,
+    "lon": -78.6382,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36033,
+    "console_port": 37033,
+    "series": 43528
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-ND",
+    "alpha": "U-ND",
+    "alpha8": "US-ND",
+    "city": "Bismarck, North Dakota",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 46.8083,
+    "lon": -100.7837,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36034,
+    "console_port": 37034,
+    "series": 43544
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-OH",
+    "alpha": "U-OH",
+    "alpha8": "US-OH",
+    "city": "Columbus, Ohio",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 39.9612,
+    "lon": -82.9988,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36035,
+    "console_port": 37035,
+    "series": 43560
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-OK",
+    "alpha": "U-OK",
+    "alpha8": "US-OK",
+    "city": "Oklahoma City, Oklahoma",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 35.4676,
+    "lon": -97.5164,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36036,
+    "console_port": 37036,
+    "series": 43576
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-OR",
+    "alpha": "U-OR",
+    "alpha8": "US-OR",
+    "city": "Salem, Oregon",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 44.9429,
+    "lon": -123.0351,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36037,
+    "console_port": 37037,
+    "series": 43592
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-PA",
+    "alpha": "U-PA",
+    "alpha8": "US-PA",
+    "city": "Harrisburg, Pennsylvania",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 40.2732,
+    "lon": -76.8867,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36038,
+    "console_port": 37038,
+    "series": 43608
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-RI",
+    "alpha": "U-RI",
+    "alpha8": "US-RI",
+    "city": "Providence, Rhode Island",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 41.824,
+    "lon": -71.4128,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36039,
+    "console_port": 37039,
+    "series": 43624
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-SC",
+    "alpha": "U-SC",
+    "alpha8": "US-SC",
+    "city": "Columbia, South Carolina",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 34.0007,
+    "lon": -81.0348,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36040,
+    "console_port": 37040,
+    "series": 43640
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-SD",
+    "alpha": "U-SD",
+    "alpha8": "US-SD",
+    "city": "Pierre, South Dakota",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 44.3683,
+    "lon": -100.351,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36041,
+    "console_port": 37041,
+    "series": 43656
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-TN",
+    "alpha": "U-TN",
+    "alpha8": "US-TN",
+    "city": "Nashville, Tennessee",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 36.1627,
+    "lon": -86.7816,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36042,
+    "console_port": 37042,
+    "series": 43672
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-TX",
+    "alpha": "U-TX",
+    "alpha8": "US-TX",
+    "city": "Austin, Texas",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 30.2672,
+    "lon": -97.7431,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36043,
+    "console_port": 37043,
+    "series": 43688
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-UT",
+    "alpha": "U-UT",
+    "alpha8": "US-UT",
+    "city": "Salt Lake City, Utah",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 40.7608,
+    "lon": -111.891,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36044,
+    "console_port": 37044,
+    "series": 43704
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-VT",
+    "alpha": "U-VT",
+    "alpha8": "US-VT",
+    "city": "Montpelier, Vermont",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 44.2601,
+    "lon": -72.5754,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36045,
+    "console_port": 37045,
+    "series": 43720
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-VA",
+    "alpha": "U-VA",
+    "alpha8": "US-VA",
+    "city": "Richmond, Virginia",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 37.5407,
+    "lon": -77.436,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36046,
+    "console_port": 37046,
+    "series": 43736
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-WA",
+    "alpha": "U-WA",
+    "alpha8": "US-WA",
+    "city": "Olympia, Washington",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 47.0379,
+    "lon": -122.9007,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36047,
+    "console_port": 37047,
+    "series": 43752
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-WV",
+    "alpha": "U-WV",
+    "alpha8": "US-WV",
+    "city": "Charleston, West Virginia",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 38.3498,
+    "lon": -81.6326,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36048,
+    "console_port": 37048,
+    "series": 43768
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-WI",
+    "alpha": "U-WI",
+    "alpha8": "US-WI",
+    "city": "Madison, Wisconsin",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 43.0731,
+    "lon": -89.4012,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36049,
+    "console_port": 37049,
+    "series": 43784
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "US-WY",
+    "alpha": "U-WY",
+    "alpha8": "US-WY",
+    "city": "Cheyenne, Wyoming",
+    "country": "United States",
+    "continent": "North America",
+    "iso2": "us",
+    "site_kind": "state",
+    "parent": "WASH",
+    "lat": 41.14,
+    "lon": -104.8202,
+    "coverage_m": 160.0,
+    "color": "#88c0dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36050,
+    "console_port": 37050,
+    "series": 43800
+   },
+   {
+    "type": "matrix",
+    "subtype": "adam",
+    "name": "LOND",
+    "alpha": "LOND",
+    "alpha8": "LONDON",
+    "city": "London",
+    "country": "United Kingdom",
+    "continent": "Europe",
+    "iso2": "gb",
+    "site_kind": "capital",
+    "lat": 51.5074,
+    "lon": -0.1278,
+    "coverage_m": 400,
+    "color": "#5636e2",
+    "plan": [
+     [
+      "PANEL",
+      24
+     ],
+     [
+      "CAM",
+      10
+     ],
+     [
+      "LIGHT",
+      8
+     ],
+     [
+      "AUDIO",
+      8
+     ],
+     [
+      "FIELD",
+      8
+     ],
+     [
+      "IFB",
+      24
+     ],
+     [
+      "WLESS",
+      24
+     ]
+    ],
+    "snmp_port": 16109,
+    "console_port": 17109,
+    "series": 22304
+   },
+   {
+    "type": "matrix",
+    "subtype": "adam",
+    "name": "CANB",
+    "alpha": "CANB",
+    "alpha8": "CANBERRA",
+    "city": "Canberra",
+    "country": "Australia",
+    "continent": "Oceania",
+    "iso2": "au",
+    "site_kind": "capital",
+    "lat": -35.2809,
+    "lon": 149.13,
+    "coverage_m": 400,
+    "color": "#36cde2",
+    "plan": [
+     [
+      "PANEL",
+      24
+     ],
+     [
+      "CAM",
+      10
+     ],
+     [
+      "LIGHT",
+      8
+     ],
+     [
+      "AUDIO",
+      8
+     ],
+     [
+      "FIELD",
+      8
+     ],
+     [
+      "IFB",
+      24
+     ],
+     [
+      "WLESS",
+      24
+     ]
+    ],
+    "snmp_port": 16155,
+    "console_port": 17155,
+    "series": 34080
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "AU-NSW",
+    "alpha": "A-NS",
+    "alpha8": "AU-NSW",
+    "city": "Sydney, New South Wales",
+    "country": "Australia",
+    "continent": "Oceania",
+    "iso2": "au",
+    "site_kind": "state",
+    "parent": "CANB",
+    "lat": -33.8688,
+    "lon": 151.2093,
+    "coverage_m": 160.0,
+    "color": "#88d2dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36064,
+    "console_port": 37064,
+    "series": 44024
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "AU-VIC",
+    "alpha": "A-VI",
+    "alpha8": "AU-VIC",
+    "city": "Melbourne, Victoria",
+    "country": "Australia",
+    "continent": "Oceania",
+    "iso2": "au",
+    "site_kind": "state",
+    "parent": "CANB",
+    "lat": -37.8136,
+    "lon": 144.9631,
+    "coverage_m": 160.0,
+    "color": "#88d2dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36065,
+    "console_port": 37065,
+    "series": 44040
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "AU-QLD",
+    "alpha": "A-QL",
+    "alpha8": "AU-QLD",
+    "city": "Brisbane, Queensland",
+    "country": "Australia",
+    "continent": "Oceania",
+    "iso2": "au",
+    "site_kind": "state",
+    "parent": "CANB",
+    "lat": -27.4698,
+    "lon": 153.0251,
+    "coverage_m": 160.0,
+    "color": "#88d2dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36066,
+    "console_port": 37066,
+    "series": 44056
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "AU-WA",
+    "alpha": "A-WA",
+    "alpha8": "AU-WA",
+    "city": "Perth, Western Australia",
+    "country": "Australia",
+    "continent": "Oceania",
+    "iso2": "au",
+    "site_kind": "state",
+    "parent": "CANB",
+    "lat": -31.9505,
+    "lon": 115.8605,
+    "coverage_m": 160.0,
+    "color": "#88d2dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36067,
+    "console_port": 37067,
+    "series": 44072
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "AU-SA",
+    "alpha": "A-SA",
+    "alpha8": "AU-SA",
+    "city": "Adelaide, South Australia",
+    "country": "Australia",
+    "continent": "Oceania",
+    "iso2": "au",
+    "site_kind": "state",
+    "parent": "CANB",
+    "lat": -34.9285,
+    "lon": 138.6007,
+    "coverage_m": 160.0,
+    "color": "#88d2dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36068,
+    "console_port": 37068,
+    "series": 44088
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "AU-TAS",
+    "alpha": "A-TA",
+    "alpha8": "AU-TAS",
+    "city": "Hobart, Tasmania",
+    "country": "Australia",
+    "continent": "Oceania",
+    "iso2": "au",
+    "site_kind": "state",
+    "parent": "CANB",
+    "lat": -42.8821,
+    "lon": 147.3272,
+    "coverage_m": 160.0,
+    "color": "#88d2dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36069,
+    "console_port": 37069,
+    "series": 44104
+   },
+   {
+    "type": "matrix",
+    "subtype": "zeus3lite",
+    "name": "AU-NT",
+    "alpha": "A-NT",
+    "alpha8": "AU-NT",
+    "city": "Darwin, Northern Territory",
+    "country": "Australia",
+    "continent": "Oceania",
+    "iso2": "au",
+    "site_kind": "state",
+    "parent": "CANB",
+    "lat": -12.4634,
+    "lon": 130.8456,
+    "coverage_m": 160.0,
+    "color": "#88d2dc",
+    "plan": [
+     [
+      "PANEL",
+      4
+     ],
+     [
+      "CAM",
+      2
+     ],
+     [
+      "FIELD",
+      1
+     ],
+     [
+      "IFB",
+      1
+     ]
+    ],
+    "snmp_port": 36070,
+    "console_port": 37070,
+    "series": 44120
+   }
+  ]
+ },
+ "spawn_config": {
+  "bind": "0.0.0.0",
+  "community": "public",
+  "trap_targets": [
+   "127.0.0.1:16200"
+  ],
+  "chaos": 0.0,
+  "map_port": 8080,
+  "devices": [
+   {
+    "type": "tm2000",
+    "name": "TM1",
+    "snmp_port": 16100,
+    "console_port": 17100,
+    "lat": 40.7128,
+    "lon": -73.92684
+   },
+   {
+    "type": "matrix",
+    "subtype": "adam",
+    "name": "ADM1",
+    "alpha": "ADM1",
+    "plan": [
+     [
+      "PANEL",
+      24
+     ],
+     [
+      "CAM",
+      10
+     ],
+     [
+      "LIGHT",
+      8
+     ],
+     [
+      "AUDIO",
+      8
+     ],
+     [
+      "FIELD",
+      8
+     ],
+     [
+      "IFB",
+      24
+     ],
+     [
+      "WLESS",
+      24
+     ]
+    ],
+    "series": 40512,
+    "snmp_port": 16101,
+    "console_port": 17101,
+    "lat": 40.78888,
+    "lon": -73.97339
+   },
+   {
+    "type": "matrix",
+    "subtype": "cronus",
+    "name": "CRO1",
+    "alpha": "CRO1",
+    "plan": [
+     [
+      "PANEL",
+      24
+     ],
+     [
+      "CAM",
+      10
+     ],
+     [
+      "LIGHT",
+      8
+     ],
+     [
+      "AUDIO",
+      8
+     ],
+     [
+      "FIELD",
+      8
+     ],
+     [
+      "IFB",
+      24
+     ],
+     [
+      "WLESS",
+      24
+     ]
+    ],
+    "series": 40768,
+    "snmp_port": 16102,
+    "console_port": 17102,
+    "lat": 40.77158,
+    "lon": -74.11273
+   },
+   {
+    "type": "rvon",
+    "subtype": "rvon16",
+    "name": "RVON16-1",
+    "snmp_port": 16103,
+    "console_port": 17103,
+    "lat": 40.67753,
+    "lon": -74.07004,
+    "partner": "RVON16-2"
+   },
+   {
+    "type": "rvon",
+    "subtype": "rvon16",
+    "name": "RVON16-2",
+    "snmp_port": 16104,
+    "console_port": 17104,
+    "lat": 40.63672,
+    "lon": -73.97339,
+    "partner": "RVON16-1"
+   }
+  ]
+ },
+ "tc": {
+  "hello": "54430101000000070000436f6e74726f6c20726f6f6d205043",
+  "hello_ack": "544301020005000100007b22706f7274223a352c22616c706861223a22504e4c3035222c226d6174726978223a224c4f4e44222c22747a223a225a5c753030666372696368222c22736572696573223a32323330342c22736f636b6574223a32323330392c22706f727473223a5b5d7d",
+  "key": "5443010400050009000001117001",
+  "bye": "54430106000300020000",
+  "state": "544301050001000100007b2274616c6b696e675f746f223a5b322c335d2c227573657273223a35367d"
+ }
+}

@@ -1,0 +1,109 @@
+{
+  "_comment": "Registry of every vendor emulator and the capitals each one is responsible for. launch_all.py starts them all. A vendor with no working emulator yet is stood in for by the RTS emulator (labelled with that vendor's name on the map) so all 56 capitals are live. Emulator map ports avoid 8081: another local service (a uvicorn API) lives there. Combined map avoids 8080 too: another local service bound 127.0.0.1:8080.",
+  "combined_map_port": 8180,
+  "stand_in": "RTS",
+  "chaos": 0.15,
+  "vendors": [
+    {
+      "vendor": "RTS",
+      "emulator": "KNOWN PROTOCOLS/VENDOR/RTS/SIMULATOR/rts_intercom_sim.py",
+      "base_port": 16100,
+      "map_port": 8181,
+      "capitals": [
+        "WASH",
+        "OTTA",
+        "MEXC",
+        "BRAS",
+        "BUEN",
+        "SANT",
+        "LIMA",
+        "BOGO",
+        "CANB",
+        "WELL"
+      ],
+      "region": "Americas and Oceania"
+    },
+    {
+      "vendor": "Riedel",
+      "emulator": "KNOWN PROTOCOLS/VENDOR/Riedel/SIMULATOR/riedel_intercom_sim.py",
+      "base_port": 16300,
+      "map_port": 8182,
+      "capitals": [
+        "LOND",
+        "PARI",
+        "BERL",
+        "MADR",
+        "LISB",
+        "ROME",
+        "AMST",
+        "BRUS",
+        "BERN",
+        "VIEN",
+        "PRAG",
+        "WARS",
+        "BUDA",
+        "STOC",
+        "OSLO",
+        "COPE",
+        "HELS",
+        "DUBL",
+        "ATHE",
+        "ANKA",
+        "MOSC",
+        "KYIV"
+      ],
+      "region": "Europe"
+    },
+    {
+      "vendor": "Clear-Com",
+      "emulator": "KNOWN PROTOCOLS/VENDOR/Clear-Com/SIMULATOR/clearcom_intercom_sim.py",
+      "base_port": 19100,
+      "map_port": 8183,
+      "capitals": [
+        "CAIR",
+        "NAIR",
+        "ABUJ",
+        "PRET",
+        "ADDI",
+        "ACCR",
+        "RABA",
+        "RIYA",
+        "ABUD",
+        "DOHA",
+        "TEHR",
+        "BAGH"
+      ],
+      "region": "Africa and Middle East"
+    },
+    {
+      "vendor": "Intracom",
+      "emulator": "KNOWN PROTOCOLS/VENDOR/Intracom/SIMULATOR/intracom_intercom_sim.py",
+      "base_port": 16700,
+      "map_port": 8184,
+      "capitals": [
+        "DELH",
+        "ISLA",
+        "DHAK"
+      ],
+      "region": "South Asia"
+    },
+    {
+      "vendor": "Telos-Infinity",
+      "emulator": "KNOWN PROTOCOLS/VENDOR/Telos-Infinity/SIMULATOR/telos_intercom_sim.py",
+      "base_port": 16900,
+      "map_port": 8185,
+      "capitals": [
+        "BEIJ",
+        "TOKY",
+        "SEOU",
+        "BANG",
+        "HANO",
+        "JAKA",
+        "KUAL",
+        "SING",
+        "MANI"
+      ],
+      "region": "East and South-East Asia"
+    }
+  ]
+}

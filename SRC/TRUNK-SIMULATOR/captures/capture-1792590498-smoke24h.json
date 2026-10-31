@@ -1,0 +1,229 @@
+{
+  "wire_version": 1,
+  "id": "capture-1792590498-smoke24h",
+  "note": "smoke 24h",
+  "started_at": "2026-10-21T13:48:18Z",
+  "started_sim": 3629782.1417331723,
+  "started_clock": "17:00:00",
+  "ended_at": "2026-10-21T13:48:37Z",
+  "ended_sim": 3637936.0411731726,
+  "fader": {
+    "speed": 120.0,
+    "requests_per_minute": 6000.0,
+    "mean_hold_seconds": 121.0,
+    "crosscheck_every_seconds": 5.1,
+    "sample_every_seconds": 11.1,
+    "running": true,
+    "seed": 7,
+    "day": {
+      "enabled": true,
+      "start_hour": 17.0,
+      "hourly_news": 3.0,
+      "radio_prep": 2.0,
+      "newscasts": [
+        {
+          "hour": 6.0,
+          "peak": 4.0
+        },
+        {
+          "hour": 12.0,
+          "peak": 4.0
+        },
+        {
+          "hour": 18.0,
+          "peak": 6.0
+        }
+      ],
+      "overnight": 1.0,
+      "blackout": {
+        "enabled": true,
+        "start_hour": 11.0,
+        "end_hour": 12.0
+      }
+    },
+    "round_robin_seconds": 60.0,
+    "lease_seconds": 900.0,
+    "preset": "",
+    "productions": []
+  },
+  "frames": 696,
+  "sites": 172,
+  "summary": {
+    "samples": 2,
+    "duration_sim_seconds": 4543.191180000082,
+    "granted": 197,
+    "granted_via": 0,
+    "denied": 5,
+    "released": 1,
+    "peak_live": 398,
+    "avg_live": 300.0,
+    "peak_muted": 188,
+    "avg_channel_utilization": 0.12515743073047858,
+    "max_channel_utilization": 0.1253148614609572,
+    "avg_caster_utilization": 0.11192077727952168,
+    "crosschecks_failed": 0,
+    "blackout_samples": 0
+  },
+  "buckets": {
+    "hour": [
+      {
+        "start_sim": 3633382.1344851726,
+        "clock": "18:00",
+        "samples": 1,
+        "avg_live": 202.0,
+        "peak_live": 202,
+        "avg_muted": 1.0,
+        "granted": 0,
+        "denied": 0,
+        "released": 0,
+        "avg_channel_utilization": 0.125,
+        "max_channel_utilization": 0.125,
+        "avg_load": 6.0,
+        "blackout": false,
+        "crosschecks_failed": 0
+      },
+      {
+        "start_sim": 3636982.1344851726,
+        "clock": "19:00",
+        "samples": 1,
+        "avg_live": 398.0,
+        "peak_live": 398,
+        "avg_muted": 188.0,
+        "granted": 0,
+        "denied": 0,
+        "released": 0,
+        "avg_channel_utilization": 0.1253148614609572,
+        "max_channel_utilization": 0.1253148614609572,
+        "avg_load": 1.0,
+        "blackout": false,
+        "crosschecks_failed": 0
+      }
+    ],
+    "half_hour": [
+      {
+        "start_sim": 3633382.1344851726,
+        "clock": "18:00",
+        "samples": 1,
+        "avg_live": 202.0,
+        "peak_live": 202,
+        "avg_muted": 1.0,
+        "granted": 0,
+        "denied": 0,
+        "released": 0,
+        "avg_channel_utilization": 0.125,
+        "max_channel_utilization": 0.125,
+        "avg_load": 6.0,
+        "blackout": false,
+        "crosschecks_failed": 0
+      },
+      {
+        "start_sim": 3636982.1344851726,
+        "clock": "19:00",
+        "samples": 1,
+        "avg_live": 398.0,
+        "peak_live": 398,
+        "avg_muted": 188.0,
+        "granted": 0,
+        "denied": 0,
+        "released": 0,
+        "avg_channel_utilization": 0.1253148614609572,
+        "max_channel_utilization": 0.1253148614609572,
+        "avg_load": 1.0,
+        "blackout": false,
+        "crosschecks_failed": 0
+      }
+    ],
+    "quarter_hour": [
+      {
+        "start_sim": 3633382.1344851726,
+        "clock": "18:00",
+        "samples": 1,
+        "avg_live": 202.0,
+        "peak_live": 202,
+        "avg_muted": 1.0,
+        "granted": 0,
+        "denied": 0,
+        "released": 0,
+        "avg_channel_utilization": 0.125,
+        "max_channel_utilization": 0.125,
+        "avg_load": 6.0,
+        "blackout": false,
+        "crosschecks_failed": 0
+      },
+      {
+        "start_sim": 3637882.1344851726,
+        "clock": "19:15",
+        "samples": 1,
+        "avg_live": 398.0,
+        "peak_live": 398,
+        "avg_muted": 188.0,
+        "granted": 0,
+        "denied": 0,
+        "released": 0,
+        "avg_channel_utilization": 0.1253148614609572,
+        "max_channel_utilization": 0.1253148614609572,
+        "avg_load": 1.0,
+        "blackout": false,
+        "crosschecks_failed": 0
+      }
+    ]
+  },
+  "samples": [
+    {
+      "sim_time": 3633392.8499931726,
+      "wall_time": "2026-10-21T13:48:22Z",
+      "active": 202,
+      "active_via": 0,
+      "trunks": 202,
+      "granted_total": 1998427,
+      "granted_via_total": 76,
+      "denied_total": 7047,
+      "released_total": 1997936,
+      "channel_utilization": 0.125,
+      "caster_utilization": 0.07548579970104634,
+      "crosschecks_ok": 204,
+      "crosschecks_failed": 0,
+      "time_of_day": 64810.715507999994,
+      "load_multiplier": 6.0,
+      "muted": 1,
+      "blackout": false,
+      "continents": {
+        "Africa": 18,
+        "Asia": 86,
+        "Europe": 146,
+        "North America": 61,
+        "Oceania": 21,
+        "Other": 3,
+        "South America": 19
+      }
+    },
+    {
+      "sim_time": 3637936.0411731726,
+      "wall_time": "2026-10-21T13:48:30Z",
+      "active": 398,
+      "active_via": 0,
+      "trunks": 397,
+      "granted_total": 1998624,
+      "granted_via_total": 76,
+      "denied_total": 7052,
+      "released_total": 1997937,
+      "channel_utilization": 0.1253148614609572,
+      "caster_utilization": 0.148355754857997,
+      "crosschecks_ok": 602,
+      "crosschecks_failed": 0,
+      "time_of_day": 69353.90668800008,
+      "load_multiplier": 1.0,
+      "muted": 188,
+      "blackout": false,
+      "continents": {
+        "Africa": 37,
+        "Asia": 177,
+        "Europe": 260,
+        "North America": 125,
+        "Oceania": 59,
+        "Other": 4,
+        "South America": 44
+      }
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+{ "who": "Andrey", "from": "relay-a", "to": "sip-03", "from_port": 0, "why": "my mic to studio B", "where": "Desk", "gpio": [ { "pin": 2, "state": true, "note": "call light" } ] }

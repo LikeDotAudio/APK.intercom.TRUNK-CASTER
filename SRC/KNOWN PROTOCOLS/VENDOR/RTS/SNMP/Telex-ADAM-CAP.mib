@@ -1,0 +1,1083 @@
+Telex-TM-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	MODULE-IDENTITY, NOTIFICATION-TYPE, OBJECT-TYPE,
+	Counter32, IpAddress, Integer32, TimeTicks, Unsigned32
+		FROM SNMPv2-SMI
+	TruthValue
+		FROM SNMPv2-TC
+	MODULE-COMPLIANCE, NOTIFICATION-GROUP, OBJECT-GROUP
+		FROM SNMPv2-CONF
+	compliance, objectGroups, telexModules, trunkMaster
+		FROM Telex-REG
+	Alpha4, Alpha6, Alpha8, Alpha8U,
+	ErrorRate, TmCapabTypes, TrunkState
+		FROM Telex-Icom-TC;
+
+telexTmMIB MODULE-IDENTITY
+	LAST-UPDATED	"200602021700Z"
+	ORGANIZATION	"Telex Communications, Inc."
+	CONTACT-INFO
+		"James Puttick
+		Kerr Vayne Systems Ltd.
+		1 Valleywood Drive, Suite 201
+		Markham, Ontario
+		L3R 5L9
+		Canada
+
+		Phone:  +1 905 475 6161
+		Email:  snmp_info@kvs.com"
+	DESCRIPTION
+		"The MIB module for the TM-2000 Trunk Master.
+
+		Copyright 2006 by Telex Communications, Inc. All
+		rights reserved. Reproduction, in whole or in part,
+		without prior written permission from Telex is prohibited."
+
+	REVISION
+		"200602021700Z"
+	DESCRIPTION
+		"Initial implementation."
+	::= { telexModules 5 }
+
+
+--------------------------------------------------------------------------------
+-- Top Level of Trunk Master MIB
+--------------------------------------------------------------------------------
+
+tmArch		OBJECT IDENTIFIER ::= { trunkMaster 1 }
+tmCapabs	OBJECT IDENTIFIER ::= { trunkMaster 2 }
+tmConfig	OBJECT IDENTIFIER ::= { trunkMaster 3 }
+tmStatus	OBJECT IDENTIFIER ::= { trunkMaster 4 }
+tmEvents	OBJECT IDENTIFIER ::= { trunkMaster 5 }
+
+--------------------------------------------------------------------------------
+-- Trunk Master - Architecture
+--------------------------------------------------------------------------------
+
+tmStdbyIpAddr OBJECT-TYPE
+	SYNTAX		IpAddress
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The IP address of the Trunk Master which is the active/standby
+		partner of this device. tmStdbyIpAddr is 0 if the Trunk Master
+		is configured for stand-alone operation."
+	::= { tmArch 1 }
+
+tmNumIcomPorts OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of physical RS-485 ports available for
+		communications with intercoms. This is determined by the
+		number of installed serial cards; also, VDP support (if
+		enabled) uses the first channel of the first serial card."
+	::= { tmArch 2 }
+
+tmVdpEnabled OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"Indicates whether or not VDP support is enabled. If enabled,
+		the first RS-485 port normally used for communications with
+		intercoms is instead reserved for communications with a
+		VDP controller."
+	::= { tmArch 3 }
+
+tmVersion OBJECT-TYPE
+	SYNTAX		OCTET STRING
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"A text string describing the TM-2000 firmware version."
+	::= { tmArch 4}
+
+--------------------------------------------------------------------------------
+-- Trunk Master - Capabilities
+--------------------------------------------------------------------------------
+
+tmNumIcoms OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The maximum number of intercoms which can be trunked together."
+	::= { tmCapabs 1 }
+
+tmNumTrunks OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The maximum number of trunks which can be defined."
+	::= { tmCapabs 2 }
+
+tmNumFnTypes OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of scrollable function types supported by the
+		Trunk Master."
+	::= { tmCapabs 3 }
+
+tmNumGroups OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of intercom groups which are supported.
+
+		Intercom groups are used in connection with keypanels' trunk
+		priorities for controlling access to remote scroll lists.
+
+		A keypanel with a trunk priority of 0 cannot access any remote
+		scroll lists.
+
+		A keypanel with a trunk priority of 10 can access any remote
+		scroll list.
+
+		A keypanel connected to intercom X, with a trunk priority
+		between 1 and 9, can access scroll lists for intercom Y if
+		there is at least one intercom group of which both X and Y
+		are members."
+	::= { tmCapabs 4 }
+
+tmNumCapabs OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of entries in the Capabilities table."
+	::= { tmCapabs 5 }
+
+tmCapabTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF TmCapabEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION
+		"A table indicating what capabilities are supported by the
+		Trunk Master."
+	::= { tmCapabs 6 }
+
+tmCapabEntry OBJECT-TYPE
+	SYNTAX		TmCapabEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION
+		"A capability entry denoting whether the Trunk Master supports
+		a specific capability."
+	INDEX		{ tmCapabIndex }
+	::= { tmCapabTable 1 }
+
+TmCapabEntry ::= SEQUENCE
+		{
+			tmCapabIndex	TmCapabTypes,
+			tmCapabPresent	TruthValue
+		}
+
+tmCapabIndex OBJECT-TYPE
+	SYNTAX		TmCapabTypes
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The capability."
+	::= { tmCapabEntry 1 }
+
+tmCapabPresent OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"Does the Trunk Master support the specified capability?"
+	::= { tmCapabEntry 2 }
+
+--------------------------------------------------------------------------------
+-- Trunk Master - Configuration
+--------------------------------------------------------------------------------
+
+tmIcomTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF TmIcomEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"A table of intercom definitions."
+	::= { tmConfig 1 }
+
+tmIcomEntry OBJECT-TYPE
+	SYNTAX		TmIcomEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION
+		"One intercom definition.
+
+		The entry contains the alphas for the intercom, as well as
+		details of how it connects to the Trunk Master (the COM port
+		and baud rate). If the intercom is not defined, icomAlpha4
+		will be 4 bytes of 0."
+	INDEX		{ icomIndex }
+	::= { tmIcomTable 1 }
+
+TmIcomEntry ::= SEQUENCE
+		{
+			icomIndex	Integer32,
+			icomAlpha4	Alpha4,
+			icomAlpha6	Alpha6,
+			icomAlpha8	Alpha8,
+			icomAlpha8u	Alpha8U,
+			icomComPort	Integer32,
+			icomBaudRate	Integer32
+		}
+
+icomIndex OBJECT-TYPE
+	SYNTAX		Integer32 (1..256)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION
+		"The intercom number."
+	::= { tmIcomEntry 1 }
+
+icomAlpha4 OBJECT-TYPE
+	SYNTAX		Alpha4
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The 4-character intercom name. An intercom is defined
+		if and only if the 4-character name is not all 0's."
+	::= { tmIcomEntry 2 }
+
+icomAlpha6 OBJECT-TYPE
+	SYNTAX		Alpha6
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The 6-character intercom name."
+	::= { tmIcomEntry 3 }
+
+icomAlpha8 OBJECT-TYPE
+	SYNTAX		Alpha8
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The 8-character intercom name."
+	::= { tmIcomEntry 4 }
+
+icomAlpha8u OBJECT-TYPE
+	SYNTAX		Alpha8U
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The Unicode intercom name."
+	::= { tmIcomEntry 5 }
+
+icomComPort OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The RS-485 port to which this intercom is connected. It is
+		possible for an intercom to be defined, but for the COM port
+		to be 0 (not defined), in which case the intercom communication
+		status 'isTalking' will be false."
+	::= { tmIcomEntry 6 }
+
+icomBaudRate OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The baud rate at which the Trunk Master communicates with
+		the intercom. Typical baud rates are 38400 for a locally-
+		connected intercom and 9600 baud for a remote intercom."
+	::= { tmIcomEntry 7 }
+
+tmTrunkTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF TmTrunkEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"A table of trunk definitions."
+	::= { tmConfig 2 }
+
+tmTrunkEntry OBJECT-TYPE
+	SYNTAX		TmTrunkEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION
+		"One trunk definition.
+
+		A trunk is a bi-directional audio connection between one port
+		in one intercom and one port in a different intercom.
+
+		The two ends of the trunk are arbitrarily designated 'from'
+		and 'to'. The ends correspond to how the trunk is defined
+		in TrunkEdit.
+
+		A trunk is not defined unless there are (non-0) definitions
+		for tkFromIcom, tkFromPort, tkToIcom, and tkToPort.
+		TrunkEdit can partially define trunks; however, only
+		complete trunk definitions appear in tmTrunkTable.
+
+		Trunks can be marked as cascadable. A trunk from intercom A
+		to intercom B can be cascaded with a trunk from intercom B
+		to intercom C, to create a virtual trunk going from intercom
+		A to intercom C."
+	INDEX		{ tkNum }
+	::= { tmTrunkTable 1 }
+
+TmTrunkEntry ::= SEQUENCE
+		{
+			tkNum		Integer32,
+			tkFromIcom	Integer32,
+			tkFromPort	Integer32,
+			tkToIcom	Integer32,
+			tkToPort	Integer32,
+			tkCanCascade	TruthValue,
+			tkFixed		TruthValue
+		}
+
+tkNum OBJECT-TYPE
+	SYNTAX		Integer32 (1..10000)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The trunk number."
+	::= { tmTrunkEntry 1 }
+
+tkFromIcom OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The intercom number to which the first end of the trunk is
+		connected."
+	::= { tmTrunkEntry 2 }
+
+tkFromPort OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The port in tkFromIcom to which the first end of the trunk is
+		connected."
+	::= { tmTrunkEntry 3 }
+
+tkToIcom OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The intercom number to which the second end of the trunk is
+		connected."
+	::= { tmTrunkEntry 4 }
+
+tkToPort OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The port in tkToIcom to which the second end of the trunk is
+		connected."
+	::= { tmTrunkEntry 5 }
+
+tkCanCascade OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"A flag indicating whether this trunk can be cascaded with
+		another trunk to create a virtual trunk."
+	::= { tmTrunkEntry 6 }
+
+tkFixed OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"A flag indicating whether this trunk is fixed at either end.
+		If a trunk is fixed at one end, it can only be used for that
+		specific assignment. (Most trunks are not fixed.)
+
+		The tmTrunkTable does not provide a method of querying what
+		function(s) a trunk is fixed to."
+	::= { tmTrunkEntry 7 }
+
+tmAlphaTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF TmAlphaEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION
+		"The table of alphas for scrollable intercom resources.
+
+		This table is sparse. For a given intercom and function
+		type, the various entries need not have contiguous
+		function numbers."
+	::= { tmConfig 3 }
+
+tmAlphaEntry OBJECT-TYPE
+	SYNTAX		TmAlphaEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The alphas for a single intercom resource."
+	INDEX		{ taIcomNum, taFnType, taFnNum }
+	::= { tmAlphaTable 1 }
+
+TmAlphaEntry ::= SEQUENCE
+		{
+			taIcomNum	Integer32,
+			taFnType	Integer32,
+			taFnNum		Integer32,
+			taAlpha4	Alpha4,
+			taAlpha6	Alpha6,
+			taAlpha8	Alpha8,
+			taAlpha8u	Alpha8U
+		}
+
+taIcomNum OBJECT-TYPE
+	SYNTAX		Integer32 (1..256)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The intercom number."
+	::= { tmAlphaEntry 1 }
+
+taFnType OBJECT-TYPE
+	SYNTAX		Integer32 (1..100)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The function type."
+	::= { tmAlphaEntry 2 }
+
+taFnNum OBJECT-TYPE
+	SYNTAX		Integer32 (1..10000)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The function number."
+	::= { tmAlphaEntry 3 }
+
+taAlpha4 OBJECT-TYPE
+	SYNTAX		Alpha4
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The 4-character alpha."
+	::= { tmAlphaEntry 4 }
+
+taAlpha6 OBJECT-TYPE
+	SYNTAX		Alpha6
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The 6-character alpha."
+	::= { tmAlphaEntry 5 }
+
+taAlpha8 OBJECT-TYPE
+	SYNTAX		Alpha8
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The 8-character alpha."
+	::= { tmAlphaEntry 6 }
+
+taAlpha8u OBJECT-TYPE
+	SYNTAX		Alpha8U
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The Unicode alpha."
+	::= { tmAlphaEntry 7 }
+
+tmGroups OBJECT IDENTIFIER ::= { tmConfig 4 }
+
+tmGroupNameTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF TmGroupNameEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"A table of intercom group names."
+	::= { tmGroups 1 }
+
+tmGroupNameEntry OBJECT-TYPE
+	SYNTAX		TmGroupNameEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"One intercom group name."
+	INDEX		{ gnNum }
+	::= { tmGroupNameTable 1 }
+
+TmGroupNameEntry ::= SEQUENCE
+		{
+			gnNum		Integer32,
+			gnName		OCTET STRING
+		}
+
+gnNum OBJECT-TYPE
+	SYNTAX		Integer32 (1..1000)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The intercom group number."
+	::= { tmGroupNameEntry 1 }
+
+gnName OBJECT-TYPE
+	SYNTAX		OCTET STRING
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The intercom group name. This is a sequence of characters,
+		either ASCII or Unicode, transmitted via UTF-8 encoding."
+	::= { tmGroupNameEntry 2 }
+
+tmGroupMembTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF TmGroupMembEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The intercom group membership table."
+	::= { tmGroups 2 }
+
+tmGroupMembEntry OBJECT-TYPE
+	SYNTAX		TmGroupMembEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION
+		"Membership of one intercom in one group.
+
+		One intercom can be a member of zero, one, or multiple groups.
+		See the description of tmNumGroups for how intercom groups
+		are used."
+	INDEX		{ gmGroupNum, gmIcomNum }
+	::= { tmGroupMembTable 1 }
+
+TmGroupMembEntry ::= SEQUENCE
+		{
+			gmGroupNum	Integer32,
+			gmIcomNum	Integer32,
+			gmIsMember	TruthValue
+		}
+
+gmGroupNum OBJECT-TYPE
+	SYNTAX		Integer32 (1..1000)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The intercom group number."
+	::= { tmGroupMembEntry 1 }
+
+gmIcomNum OBJECT-TYPE
+	SYNTAX		Integer32 (1..256)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The intercom number."
+	::= { tmGroupMembEntry 2 }
+
+gmIsMember OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"Indicates whether the specified intercom is a member
+		of the specified group."
+	::= { tmGroupMembEntry 3 }
+
+tmOptions OBJECT IDENTIFIER ::= { tmConfig 5 }
+
+optWaitForTalk OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"Indicates if wait-for-talk is enabled.
+
+		If wait-for-talk is enabled, then an audio path is not
+		necessarily established when a listen key is turned on."
+	::= { tmOptions 1 }
+
+optDynamicAlloc OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"Indicates if dynamic allocation is in enabled.
+
+		If dynamic allocation is enabled, then a trunk is deallocated
+		as soon as it stops being used (trunks never have allocations
+		on them unless they are being used actively)."
+	::= { tmOptions 2 }
+
+optAutoClear OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"Indicates if auto-clear is enabled.
+
+		If auto-clear is enabled, once a trunk stops being used, the
+		allocations on that trunk are automatically cleared after
+		a timeout.
+
+		This flag is ignored if Dynamic Allocation is in effect."
+	::= { tmOptions 3 }
+
+optClearAllocTimeout OBJECT-TYPE
+	SYNTAX		Unsigned32
+	UNITS		"seconds"
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The timeout after a trunk allocation stops being used, before
+		the trunk allocation is cleared. This timeout is ignored
+		if dynamic allocation is enabled (trunks are cleared
+		immediately) or if auto-clear is disabled (trunks aren't
+		automatically cleared).	"
+	::= { tmOptions 4 }
+
+optLogEnabled OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"Indicates whether trunk logging is enabled.
+
+		If logging is enabled, there must be a TrunkEdit session
+		connected to the Trunk Master via the serial port in order
+		to upload the log messages and save them to disk."
+	::= { tmOptions 5 }
+
+--------------------------------------------------------------------------------
+-- Trunk Master - Status
+--------------------------------------------------------------------------------
+
+tmErrorsCleared OBJECT-TYPE
+	SYNTAX		TimeTicks
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"Indicates the value of sysUpTime when any error counters
+		were last cleared. This can cause a discontinuity in error
+		counter values (ot/isErrorsFrom/To) and error rates
+		(ot/isErrorRateFrom/To)."
+	::= { tmStatus 1 }
+
+thisTm OBJECT IDENTIFIER ::= { tmStatus 2 }
+
+thisTmActive OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"Is this Trunk Master the active one?"
+	::= { thisTm 1}
+
+otherTm OBJECT IDENTIFIER ::= { tmStatus 3 }
+
+otPresent OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"Is the other Trunk Master (if any defined) communicating"
+	::= { otherTm 2 }
+
+otActive OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"Is the other Trunk Master (if any defined) active?"
+	::= { otherTm 3 }
+
+otErrorsFrom OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"A count of the number of errors which have occurred in
+		messages received from the other Trunk Master.
+
+		tmErrorsCleared can be used to determine whether there has
+		been a possible discontinuity because some error counters
+		were cleared."
+	::= { otherTm 4 }
+
+otErrorsTo OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"A count of the number of errors which have occurred in
+		messages sent to the other Trunk Master.
+
+		tmErrorsCleared can be used to determine whether there has
+		been a possible discontinuity because some error counters
+		were cleared."
+	::= { otherTm 5 }
+
+otErrorRateFrom OBJECT-TYPE
+	SYNTAX		ErrorRate
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"A gauge indicating how many errors have occurred recently
+		in messages sent to the other Trunk Master."
+	::= { otherTm 6 }
+
+otErrorRateTo OBJECT-TYPE
+	SYNTAX		ErrorRate
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"A gauge indicating how many errors have occurred recently
+		in messages received from the other Trunk Master."
+	::= { otherTm 7 }
+
+otThreshValue OBJECT-TYPE
+	SYNTAX		ErrorRate
+	MAX-ACCESS	read-write
+	STATUS		current
+	DESCRIPTION
+		"The threshold for the error rate for communications with
+		the other TM. A notification will be generated only when the
+		error rate to/from the other TM exceeds the threshold value.
+
+		Note that the error rate is pro-rated for the first 10 minutes
+		after start-up or after the errors are cleared. Hence,
+		if a single error occurs within a minute after the errors
+		are cleared, the corresponding error rate will be 10. Hence,
+		the threshold should be set to a value greater than 10 if
+		it is desired that isolated errors do not trigger a
+		notification."
+	::= { otherTm 8 }
+
+icomStatusTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF IcomStatusEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"Status of the various intercoms."
+	::= { tmStatus 4 }
+
+icomStatusEntry OBJECT-TYPE
+	SYNTAX		IcomStatusEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"An entry providing the status for one intercom."
+	INDEX		{ isIndex }
+	::= { icomStatusTable 1 }
+
+IcomStatusEntry ::= SEQUENCE
+		{
+			isIndex		Integer32,
+			isTalking	TruthValue,
+			isNewProtocol	TruthValue,
+			isSize		Integer32,
+			isErrorsFrom	Counter32,
+			isErrorsTo	Counter32,
+			isErrorRateFrom	ErrorRate,
+			isErrorRateTo	ErrorRate
+		}
+
+isIndex OBJECT-TYPE
+	SYNTAX		Integer32 (1..256)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The intercom number."
+	::= { icomStatusEntry 1 }
+
+isTalking OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"Is the Trunk Master communicating with the intercom?"
+	::= { icomStatusEntry 2 }
+
+isNewProtocol OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"Does the intercom support the new trunking protocol?
+
+		A new trunking protocol was introduced in June 2000,
+		beginning with ADAM MC version 9.10.1."
+	::= { icomStatusEntry 3 }
+
+isSize OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The number of ports in the intercom."
+	::= { icomStatusEntry 4 }
+
+isErrorsFrom OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"A count of the number of errors which have occurred in
+		messages received from the intercom.
+
+		tmErrorsCleared can be used to determine whether there has
+		been a possible discontinuity because some error counters
+		were cleared."
+	::= { icomStatusEntry 5 }
+
+isErrorsTo OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"A count of the number of errors which have occurred in
+		messages sent to the intercom.
+
+		tmErrorsCleared can be used to determine whether there has
+		been a possible discontinuity because some error counters
+		were cleared."
+	::= { icomStatusEntry 6 }
+
+isErrorRateFrom OBJECT-TYPE
+	SYNTAX		ErrorRate
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The recent error rate for messages received from the intercom."
+	::= { icomStatusEntry 7 }
+
+isErrorRateTo OBJECT-TYPE
+	SYNTAX		ErrorRate
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The recent error rate for messages sent to the intercom."
+	::= { icomStatusEntry 8 }
+
+tkStatusTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF TkStatusEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The status of all trunks."
+	::= { tmStatus 5 }
+
+tkStatusEntry OBJECT-TYPE
+	SYNTAX		TkStatusEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The status of one trunk."
+	INDEX		{ tsNum }
+	::= { tkStatusTable 1 }
+
+TkStatusEntry ::= SEQUENCE
+		{
+			tsNum		Integer32,
+			tsState		TrunkState
+		}
+
+tsNum OBJECT-TYPE
+	SYNTAX		Integer32 (1..10000)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The trunk number."
+	::= { tkStatusEntry 1 }
+
+tsState OBJECT-TYPE
+	SYNTAX		TrunkState
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The current state of the trunk."
+	::= { tkStatusEntry 2 }
+
+icomThreshValue OBJECT-TYPE
+	SYNTAX		ErrorRate
+	MAX-ACCESS	read-write
+	STATUS		current
+	DESCRIPTION
+		"The threshold for the error rate for intercoms.
+		A notification will be generated only when the intercom error
+		rate exceeds the threshold value.
+
+		Note that the error rate is pro-rated for the first 10 minutes
+		after start-up or after the errors are cleared. Hence,
+		if a single error occurs within a minute after the errors
+		are cleared, the corresponding error rate will be 10. Hence,
+		the threshold should be set to a value greater than 10 if
+		it is desired that isolated errors do not trigger a
+		notification."
+	::= { tmStatus 6 }
+
+--------------------------------------------------------------------------------
+-- Trunk Master - Notifications
+--------------------------------------------------------------------------------
+
+tmEventsV2 OBJECT IDENTIFIER ::= { tmEvents 0 }
+
+otStatusChgd NOTIFICATION-TYPE
+	OBJECTS		{ otPresent }
+	STATUS		current
+	DESCRIPTION
+		"A notification that the other Trunk Master has started
+		or stopped communicating.
+
+		This notification will be generated at most once per minute."
+	::= { tmEventsV2 1 }
+
+otErrorRateExceeded NOTIFICATION-TYPE
+	OBJECTS		{ otErrorRateFrom, otErrorRateTo }
+	STATUS		current
+	DESCRIPTION
+		"A notification that either otErrorRateFrom or otErrorRateTo
+		has exceeded the threshold set in otThreshValue.
+
+		This notification will be sent whenever the error rate
+		exceeds the threshold."
+	::= { tmEventsV2 2 }
+
+icomStatusChgd NOTIFICATION-TYPE
+	OBJECTS		{ isTalking }
+	STATUS		current
+	DESCRIPTION
+		"A notification that the Trunk Master has started or stopped
+		communicating with an intercom. The specific intercom can
+		be determined based on the isTalking instance.
+
+		This notification will be generated at most once per minute."
+	::= { tmEventsV2 3 }
+
+icomErrorRateExceeded NOTIFICATION-TYPE
+	OBJECTS		{ isErrorRateFrom, isErrorRateTo }
+	STATUS		current
+	DESCRIPTION
+		"A notification that either isErrorRateFrom or isErrorRateTo
+		has exceeded the threshold set in icomThreshValue. The
+		specific intercom can be determined based on the
+		isErrRate* instance.
+
+		This notification will be sent whenever the error rate
+		exceeds the threshold."
+	::= { tmEventsV2 4 }
+
+noTrunkInfo OBJECT IDENTIFIER ::= { tmEventsV2 5 }
+
+noTksFromIcom OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	accessible-for-notify
+	STATUS		current
+	DESCRIPTION	"The requester's intercom."
+	::= { noTrunkInfo 1 }
+
+noTksToIcom OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	accessible-for-notify
+	STATUS		current
+	DESCRIPTION	"The target intercom."
+	::= { noTrunkInfo 2 }
+
+noTrunksTrap NOTIFICATION-TYPE
+	OBJECTS		{ noTksFromIcom, noTksToIcom }
+	STATUS		current
+	DESCRIPTION
+		"This notification is generated when a trunking request
+		cannot be satisfied because there are no available trunks.
+		noTksFromIcom identifies which intercom initiated the request;
+		noTksToIcom identify the target intercom which cannot be
+		reached.
+
+		This notification will be generated at most once per minute."
+	::= { tmEventsV2 6 }
+
+--------------------------------------------------------------------------------
+-- Object groups
+--------------------------------------------------------------------------------
+
+tmObjGroups OBJECT IDENTIFIER ::= { objectGroups 4 }
+
+tmArchGroup OBJECT-GROUP
+	OBJECTS
+		{
+			tmStdbyIpAddr, tmNumIcomPorts, tmVdpEnabled, tmVersion
+		}
+	STATUS		current
+	DESCRIPTION
+		"The objects which define the Trunk Master's architecture."
+	::= { tmObjGroups 1 }
+
+tmCapabGroup OBJECT-GROUP
+	OBJECTS
+		{
+			tmNumIcoms, tmNumTrunks, tmNumFnTypes, tmNumGroups,
+			tmNumCapabs, tmCapabPresent
+		}
+	STATUS		current
+	DESCRIPTION
+		"The objects which can be used to determine the capabilities
+		of the Trunk Master."
+	::= { tmObjGroups 2 }
+
+tmConfigGroup OBJECT-GROUP
+	OBJECTS
+		{
+			icomAlpha4, icomAlpha6, icomAlpha8, icomAlpha8u,
+			icomComPort, icomBaudRate,
+			tkFromIcom, tkFromPort, tkToIcom, tkToPort,
+			tkCanCascade, tkFixed,
+			taAlpha4, taAlpha6, taAlpha8, taAlpha8u,
+			gnName,
+			gmIsMember,
+			optWaitForTalk, optDynamicAlloc, optAutoClear,
+			optClearAllocTimeout, optLogEnabled
+		}
+	STATUS		current
+	DESCRIPTION
+		"The objects which reflect the current configuration of
+		the Trunk Master. These items can be changed during system
+		operation via TrunkEdit."
+	::= { tmObjGroups 3 }
+
+tmStatusGroup OBJECT-GROUP
+	OBJECTS
+		{
+			tmErrorsCleared, thisTmActive,
+			otPresent, otActive, otErrorsFrom, otErrorsTo,
+			otErrorRateFrom, otErrorRateTo,
+			otThreshValue,
+			isTalking, isNewProtocol, isSize,
+			isErrorsFrom, isErrorsTo,
+			isErrorRateFrom, isErrorRateTo,
+			tsState,
+			icomThreshValue
+		}
+	STATUS		current
+	DESCRIPTION
+		"The objects which provide status of the Trunk Master."
+	::= { tmObjGroups 4 }
+
+tmEventObjs OBJECT-GROUP
+	OBJECTS
+		{
+			noTksFromIcom, noTksToIcom
+		}
+	STATUS		current
+	DESCRIPTION
+		"The accessible-for-notify objects."
+	::= { tmObjGroups 5 }
+
+tmEventGroups OBJECT IDENTIFIER ::= { objectGroups 5 }
+
+tmBasicEventsGroup NOTIFICATION-GROUP
+	NOTIFICATIONS
+		{
+			otStatusChgd, otErrorRateExceeded,
+			icomStatusChgd, icomErrorRateExceeded,
+			noTrunksTrap
+		}
+	STATUS		current
+	DESCRIPTION
+		"The event notifications reported by the Trunk Master."
+	::= { tmEventGroups 1 }
+
+--------------------------------------------------------------------------------
+-- Compliance
+--------------------------------------------------------------------------------
+
+tmCompliance OBJECT IDENTIFIER ::= { compliance 3 }
+
+tmBasicCompliance MODULE-COMPLIANCE
+	STATUS		current
+	DESCRIPTION
+		"The basic implementation requirements for TM-2000
+		Trunk Masters."
+	MODULE		-- This module
+	    MANDATORY-GROUPS
+		{
+			tmArchGroup, tmCapabGroup, tmConfigGroup,
+			tmStatusGroup,
+			tmEventObjs,
+			tmBasicEventsGroup
+		}
+	::= { tmCompliance 1 }
+
+END

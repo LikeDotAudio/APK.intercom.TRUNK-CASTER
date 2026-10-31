@@ -1,0 +1,175 @@
+<title>TS · Config and build</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column, a verdict band up top, then scope → findings → built → integrate → risks → next. Palette borrows Trunk-Caster's own tokens. */
+:root{
+  --bg:#f6f7f9;--panel:#ffffff;--ink:#1b1f24;--muted:#5f6873;--line:#e3e6ea;
+  --accent:#1f6feb;--ok:#1a7f37;--warn:#9a5200;--bad:#c62828;--chip:#eef2f8;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1115;--panel:#171a21;--ink:#e6e8eb;--muted:#9aa3ad;--line:#2a2f38;
+  --accent:#5a9bff;--ok:#3fb950;--warn:#e3a35a;--bad:#ff6b6b;--chip:#1f2633;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1115;--panel:#171a21;--ink:#e6e8eb;--muted:#9aa3ad;--line:#2a2f38;
+  --accent:#5a9bff;--ok:#3fb950;--warn:#e3a35a;--bad:#ff6b6b;--chip:#1f2633;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+header{display:flex;flex-direction:column;gap:8px}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:28px;line-height:1.2;margin:0;text-wrap:balance}
+h2{font-size:17px;margin:0 0 8px;text-wrap:balance}
+h3{font-size:14px;margin:14px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+p{margin:0 0 10px;max-width:68ch}
+.verdict{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:14px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;background:var(--panel)}
+.verdict p{margin:0;flex:1 1 320px;min-width:0}
+.pill{font:600 12px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.pill.convert{color:var(--ok)}.pill.partial{color:var(--warn)}.pill.keep{color:var(--bad)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.fact{padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+.fact b{display:block;font:600 20px/1.2 var(--mono);font-variant-numeric:tabular-nums}
+.fact span{font-size:12px;color:var(--muted)}
+section{min-width:0}
+ul,ol{margin:0 0 10px;padding-left:20px}li{margin:3px 0}
+code{font:13px var(--mono);background:var(--chip);padding:1px 5px;border-radius:4px}
+pre{font:12.5px/1.5 var(--mono);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px;overflow-x:auto;margin:0 0 10px}
+pre code{background:none;padding:0}
+.table{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.muted{color:var(--muted)}
+footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+</style>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Trunk-Caster → TypeScript · area 10 of 10</span>
+    <h1>Config, build and infra</h1>
+  </header>
+  <div class="verdict"><span class="pill convert">Convert</span><p><b>Typed config and the build pipeline: convert.</b> All 8 hand-edited configs and 7 JSONL line shapes now have TS types and dependency-free validators that behave like serde. One CLI checks them plus 5 cross-file rules. The build bundles the 5 <code>const *_JS</code> strings of html.rs from TS behind a <code>ts-bundles</code> cargo feature, with a node stage in Docker. <b>rebuild.py stays in Python</b> and gains a <code>ts_build()</code> step. Nothing outside <code>TYPESCRIPT/config/</code> was changed. All integration is 8 patches that pass <code>git apply --check</code>.</p></div>
+  <div class="facts">
+    <div class="fact"><b>~2,100</b><span>source lines audited (Rust, Python, Docker)</span></div>
+    <div class="fact"><b>1,770</b><span>TS lines written</span></div>
+    <div class="fact"><b class="ok">pass</b><span>tsc -p config · tsc -b all 10</span></div>
+    <div class="fact"><b class="ok">18/18</b><span>node --test</span></div>
+    <div class="fact"><b class="bad">3,989</b><span>glued JSONL records on disk</span></div>
+    <div class="fact"><b class="warn">3</b><span>configs overwritten on a typo</span></div>
+  </div>
+
+  <section><h2>Scope</h2>
+    <div class="table"><table>
+      <tr><th>File</th><th>Lines</th><th>What</th></tr>
+      <tr><td><code>TRUNK-CASTER-SDK/src/types.rs</code></td><td>285-330, 376-570, 708-736, 819-866, 905-1315, 1438-1480, 1590-1680</td><td>Fader, GlobeConfig, RelayConfig, VendorPolicy, CrosspointSettings, Preference, LabelEvent, RenameDispatch, GpioEvent, CrosspointEvent, RelayEvent, GainEvent</td></tr>
+      <tr><td><code>TRUNK-CASTER-SDK/src/{sites,labels,folders}.rs</code></td><td>1-80, 146-160 · 1-40 · 95-210</td><td>Site/Tier/slugify, Label, every path</td></tr>
+      <tr><td><code>RUST-RUNTIME/src/runtime.rs</code></td><td>120-325, 1130-1160, 1236-1325, 1376-1382, 1480-1500</td><td>boot reads, defaults written back, every <code>append_line_capped</code></td></tr>
+      <tr><td><code>RUST-RUNTIME/src/{relay,crosspoints,util,simulate}.rs</code></td><td>10-30 · 40-80 · 118-138 · 1-60</td><td>relay.json overwrite, settings.json, log cap, scratch copy</td></tr>
+      <tr><td><code>RUST-RUNTIME/src/html.rs</code></td><td>5 JS consts + their <code>format!</code> sites</td><td>what the bundles replace</td></tr>
+      <tr><td><code>TRUNK-SIMULATOR/launch_all.py</code></td><td>90-112, 216-226</td><td>the only reader of emulators.json</td></tr>
+      <tr><td>Dockerfile, .dockerignore, build.rs, Cargo.toml, docker-compose*.yml, rebuild.py</td><td>all (55 + 9 + 12 + 15 + 501 + 499)</td><td>build and infra</td></tr>
+      <tr><td>Data on disk</td><td>8 configs, 5 logs</td><td>263 MB, 722,792 JSONL lines scanned</td></tr>
+    </table></div>
+  </section>
+
+  <section><h2>Findings</h2>
+    <h3>Config handling</h3>
+    <ol>
+      <li><b class="bad">Hand-edits are destroyed on a parse error.</b> <code>runtime.rs:134-149</code> (sites, globe) and <code>relay.rs:16-26</code> write the built-in default over a file that fails to parse. One trailing comma in sites.json replaces 179 sites, and nothing is logged.</li>
+      <li><b class="warn">The other configs silently fall back to defaults.</b> fader.json (re-read every tick; the next POST writes the defaults back), vendor-policy.json and settings.json.</li>
+      <li><b class="warn">Unknown fields are ignored.</b> No <code>deny_unknown_fields</code>, so a misspelt key does nothing. The validator warns on every unknown key (none today).</li>
+      <li><b class="warn">Two capital lists disagree.</b> emulators.json / the Python world table have 56 capitals. sites.json has 54 capital-tier sites, and 11 emulator capitals have none: ABUJ PRET ADDI ACCR RABA ABUD DOHA TEHR BAGH ISLA DHAK.</li>
+      <li><b>Accented names give mangled slugs</b> (<code>bras-lia</code>, <code>bogot</code>, <code>krak-w</code>, <code>medell-n</code>, <code>s-o-paulo</code>) from the ASCII-only <code>slugify</code>. They are already referenced by fader.json.</li>
+      <li>4 of 5 emulator scripts missing (RTS stand-in). The RTS rename OID is a 99999 placeholder with no target. Doc drift on <code>projection</code>, <code>Preference.kind</code> and the sites.json location.</li>
+    </ol>
+    <h3>JSONL logs (real results)</h3>
+    <ol start="7">
+      <li><b class="bad">3,989 glued records</b> (labels 69, renames 3,865, gpio 55): <code>{"seq":3243,…}{"seq":1852407,…}</code> from two runtime boots appending at once. Cause: <code>util.rs:133</code> <code>writeln!</code> on an unbuffered <code>File</code> writes the text and the newline separately. Fix in <code>patches/util.rs.patch</code>.</li>
+      <li><b class="warn">LOG_CAP did not hold:</b> renames.jsonl is 206 MB against a 100 MB cap, with no <code>.1</code>. The rename error is swallowed.</li>
+      <li>About 260 MB of stale simulated lines (98.5-99.9%) that the current runtime no longer writes. Safe to archive.</li>
+      <li><code>seq</code> restarts at 1 every boot (renames: 29,902 resets), so it is not a key.</li>
+    </ol>
+    <h3>Build</h3>
+    <ol start="11">
+      <li>The bundles must be classic-script IIFEs: the core shares <code>TC</code>, <code>api</code>, <code>esc</code> with GLOBE_JS and <code>onclick=</code>, and reads the Rust-injected <code>REFRESH_MS</code>/<code>BUILD</code>. <code>build.ts</code> refuses any output containing <code>&lt;/script</code>.</li>
+      <li><code>rerun-if-changed</code> on a missing directory reruns build.rs on every build, which re-stamps <code>TC_BUILD</code> and reloads every page. The patch watches the 5 named files only when the feature is on. Node is never run from build.rs.</li>
+      <li>4 areas write <code>.tsbuildinfo</code> into their source folders. Unify on <code>node_modules/.cache/tsbuildinfo/</code>.</li>
+    </ol>
+  </section>
+
+  <section><h2>What was built</h2>
+    <div class="table"><table>
+      <tr><th>File</th><th>Lines</th><th>Does</th><th>Status</th></tr>
+      <tr><td><code>src/check.ts</code></td><td class="num">231</td><td>validator combinators with serde semantics</td><td class="ok">done</td></tr>
+      <tr><td><code>src/types.ts</code></td><td class="num">356</td><td>8 config types + 7 log line types, each with its Rust file:line</td><td class="ok">done (dedup with sdk/)</td></tr>
+      <tr><td><code>src/schemas.ts</code></td><td class="num">511</td><td>per-file validators + semantic rules</td><td class="ok">done</td></tr>
+      <tr><td><code>src/jsonl.ts</code></td><td class="num">119</td><td>streaming scan, folded issue patterns, glued-record diagnosis</td><td class="ok">done</td></tr>
+      <tr><td><code>src/registry.ts</code></td><td class="num">59</td><td>path, check, reader and on-invalid behaviour per file</td><td class="ok">done</td></tr>
+      <tr><td><code>validate-config.ts</code></td><td class="num">209</td><td>CLI + 5 cross-file rules; <code>--no-logs --quick --json --strict</code></td><td class="ok">run on real tree</td></tr>
+      <tr><td><code>build.ts</code></td><td class="num">129</td><td>esbuild IIFE bundles to dist/web + manifest.json</td><td class="ok">9/9 built (to scratch)</td></tr>
+      <tr><td><code>src/*.test.ts</code></td><td class="num">156</td><td>18 tests</td><td class="ok">18 pass</td></tr>
+      <tr><td><code>tsconfig.solution.json</code></td><td class="num">19</td><td>references all 10 areas (paths relative to TYPESCRIPT/)</td><td class="ok">tsc -b exit 0</td></tr>
+      <tr><td><code>patches/*.patch</code> ×8</td><td class="num">255</td><td>html.rs, Cargo.toml, build.rs, util.rs, Dockerfile, .dockerignore, rebuild.py, package.json</td><td class="ok">all apply --check</td></tr>
+      <tr><td><code>tools/mkpatch.cjs</code></td><td class="num">~180</td><td>regenerates the patches by anchor</td><td class="ok">done</td></tr>
+    </table></div>
+    <h3>Bundle sizes (bytes)</h3>
+    <div class="table"><table>
+      <tr><th>Bundle</th><th>Replaces</th><th>Inline today</th><th>TS bundle</th><th>Minified</th></tr>
+      <tr><td><code>core.js</code></td><td>JS</td><td class="num">29,396</td><td class="num">35,978</td><td class="num">22,023</td></tr>
+      <tr><td><code>globe.js</code></td><td>GLOBE_JS</td><td class="num">45,243</td><td class="num">67,291</td><td class="num">39,504</td></tr>
+      <tr><td><code>page-globe.js</code></td><td>DISCOVERY_JS</td><td class="num">5,076</td><td class="num">6,284</td><td class="num">4,398</td></tr>
+      <tr><td><code>page-panel-editor.js</code></td><td>EDITOR_JS</td><td class="num">1,128</td><td class="num">1,582</td><td class="num">1,054</td></tr>
+      <tr><td><code>page-relay.js</code></td><td>RELAY_JS</td><td class="num">6,880</td><td class="num">9,186</td><td class="num">6,065</td></tr>
+    </table></div>
+    <h3>Output</h3>
+<pre><code>$ node node_modules/typescript/bin/tsc -p config          exit 0
+$ node --test --experimental-strip-types config/src/*.test.ts
+ℹ tests 18  pass 18  fail 0
+$ tsc -b &lt;solution, 10 references&gt;                        exit 0
+
+$ node --experimental-strip-types config/validate-config.ts     (exit 0, ~11 s)
+CONFIG FILES  8 OK (sites 5 warnings, vendor-policy 2 warnings), 0 errors
+CROSS-FILE    11 capitals missing from sites.json; 4 emulator scripts missing
+JSONL LOGS
+  OK       preferences.jsonl   244 lines, 15 seq resets
+  INVALID  labels.jsonl        41.0 MB, 148,696 lines, 69 glued, 99.9% simulated
+  INVALID  renames.jsonl      206.4 MB, 519,234 lines, 3,865 glued, over LOG_CAP
+  INVALID  gpio.jsonl          14.4 MB, 53,618 lines, 55 glued
+  OK       deltas.jsonl        1,000 lines
+  ABSENT   TRUNK-RELAY/events.jsonl, TRUNK-USAGE/gains.jsonl</code></pre>
+  </section>
+
+  <section><h2>How to wire it in</h2>
+    <p class="muted">Nothing below has been applied.</p>
+    <ol>
+      <li>Promote <code>config/tsconfig.solution.json</code> to <code>TYPESCRIPT/tsconfig.json</code>.</li>
+      <li><code>git apply patches/package.json.patch</code>, which adds <code>build</code>, <code>build:min</code>, <code>validate-config</code> and <code>validate-logs</code>. Add <code>TYPESCRIPT/dist/</code> to .gitignore.</li>
+      <li><code>git apply --ignore-whitespace</code> the Cargo.toml, build.rs and html.rs patches. Plain <code>cargo build</code> is unchanged; <code>--features ts-bundles</code> serves the TS bundles. A/B each page; each <code>#[cfg]</code> pair can flip on its own.</li>
+      <li>Apply the Dockerfile and dockerignore patches: a <code>node:24-bookworm-slim</code> web stage (<code>npm ci</code>, typecheck, build), then cargo with the feature.</li>
+      <li>Apply rebuild.py.patch: <code>ts_build()</code> runs typecheck, validate-config and build before <code>cargo check --features ts-bundles</code>, and skips TS when npm is absent.</li>
+      <li><b>First and independently:</b> apply util.rs.patch, then stop the overwrite-on-parse-error in <code>runtime.rs:134-149</code> and <code>relay.rs:16-26</code>.</li>
+    </ol>
+  </section>
+
+  <section><h2>Risks and open questions</h2>
+    <ul>
+      <li>Parity depends on areas 01-03. The feature flag keeps the inline JS as the default until A/B passes. Unminified bundles are larger (globe 67 KB vs 45 KB), so use <code>build:min</code> in Docker if page weight matters.</li>
+      <li>The patches target today's working tree, which another session is editing. They are anchored on const names; regenerate with <code>tools/mkpatch.cjs</code>.</li>
+      <li><code>types.ts</code> mirrors Rust by hand and will drift. Dedup with <code>sdk/</code> (agent 04) and add a golden round-trip of Rust defaults.</li>
+      <li>Open: which capital list is canonical (54 vs 56)? Migrate accented slugs or freeze them? Move bad configs aside or only refuse to write? Why did two runtimes share one TRUNK root at 13:23Z?</li>
+    </ul>
+  </section>
+
+  <section><h2>Next steps</h2>
+    <ul>
+      <li>util.rs fix first, then the build patches behind the feature, then A/B per page.</li>
+      <li>Re-export the config types from <code>TYPESCRIPT/sdk/</code> once it publishes them.</li>
+      <li>Archive the ~260 MB of stale simulated log lines out of OneDrive.</li>
+      <li>Serve the same rules from the runtime (<code>/api/config/validate</code>) or port them to Rust so the caster refuses, not overwrites.</li>
+    </ul>
+  </section>
+  <footer>Built 2026-10-21 · source of truth: <code>TYPESCRIPT/config/HANDOFF.md</code></footer>
+</div>

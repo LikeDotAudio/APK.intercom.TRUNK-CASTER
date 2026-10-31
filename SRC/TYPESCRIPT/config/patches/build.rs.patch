@@ -1,0 +1,26 @@
+diff --git a/RUST-RUNTIME/build.rs b/RUST-RUNTIME/build.rs
+index f00efa3..4613c5d 100644
+--- a/RUST-RUNTIME/build.rs
++++ b/RUST-RUNTIME/build.rs
+@@ -9,4 +9,21 @@ fn main() {
+     println!("cargo:rerun-if-changed=src");
+     println!("cargo:rerun-if-changed=Cargo.toml");
+     println!("cargo:rerun-if-changed=../TRUNK-CASTER-SDK/src");
++
++    // With the ts-bundles feature the page scripts come from TYPESCRIPT/dist/web
++    // (include_str! in html.rs). A new bundle must give a new TC_BUILD so open
++    // pages flush their cache and reload. Node is NOT run from here: the Docker
++    // image builds the bundles in its own stage and rebuild.py runs npm run build.
++    // Watching named files (not the directory) keeps a missing dist/ from
++    // re-running this script, and so re-stamping TC_BUILD, on every build.
++    if std::env::var_os("CARGO_FEATURE_TS_BUNDLES").is_some() {
++        let dist = std::path::Path::new("../TYPESCRIPT/dist/web");
++        for f in ["core.js", "globe.js", "page-globe.js", "page-panel-editor.js", "page-relay.js"] {
++            let p = dist.join(f);
++            if !p.is_file() {
++                panic!("feature ts-bundles: {} is missing; run npm run build in TYPESCRIPT/ first", p.display());
++            }
++            println!("cargo:rerun-if-changed={}", p.display());
++        }
++    }
+ }

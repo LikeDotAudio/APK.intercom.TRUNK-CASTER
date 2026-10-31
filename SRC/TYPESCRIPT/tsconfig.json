@@ -1,0 +1,19 @@
+{
+  // Solution file for the whole TypeScript migration. Promote to
+  // TYPESCRIPT/tsconfig.json (paths are relative to TYPESCRIPT/, not config/);
+  // then `npm run typecheck` (= `tsc -b`) checks all ten areas incrementally.
+  // Order: the wire contract first, then the browser core, then its users.
+  "files": [],
+  "references": [
+    { "path": "./sdk" },
+    { "path": "./api" },
+    { "path": "./web-core" },
+    { "path": "./globe" },
+    { "path": "./charts" },
+    { "path": "./pages" },
+    { "path": "./routing" },
+    { "path": "./panels" },
+    { "path": "./simulator" },
+    { "path": "./config" }
+  ]
+}

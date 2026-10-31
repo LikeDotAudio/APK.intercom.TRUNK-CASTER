@@ -1,0 +1,19 @@
+diff --git a/RUST-RUNTIME/src/util.rs b/RUST-RUNTIME/src/util.rs
+index ebf0c5e..ec1ee2c 100644
+--- a/RUST-RUNTIME/src/util.rs
++++ b/RUST-RUNTIME/src/util.rs
+@@ -130,7 +130,13 @@ pub fn append_line_capped(path: &Path, line: &str, max_bytes: u64) -> io::Result
+     }
+     use std::io::Write;
+     let mut f = fs::OpenOptions::new().create(true).append(true).open(path)?;
+-    writeln!(f, "{line}")
++    // One write_all of line + newline: writeln! issues the text and the newline
++    // as separate writes, and two runtimes appending to the same file glued
++    // records together (3,989 such lines in labels/renames/gpio.jsonl, 2026-10-21).
++    let mut buf = String::with_capacity(line.len() + 1);
++    buf.push_str(line);
++    buf.push('\n');
++    f.write_all(buf.as_bytes())
+ }
+ 
+ /// Default cap for the append-only logs: 100 MB each, then rotated once

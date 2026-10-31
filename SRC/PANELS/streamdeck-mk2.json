@@ -1,0 +1,25 @@
+{
+  "name": "Camera position MK2",
+  "device": {"model": "streamdeck-mk2", "rows": 3, "cols": 5, "key_px": 72},
+  "matrix": "LOND",
+  "port": 25,
+  "api": "http://127.0.0.1:8180",
+  "name_on_matrix": "Stream Deck MK2 (CAM01)",
+  "buttons": [
+    {"row": 0, "col": 0, "label": "DIR",    "action": "talk", "target": "PNL01"},
+    {"row": 0, "col": 1, "label": "TD",     "action": "talk", "target": "PNL02"},
+    {"row": 0, "col": 2, "label": "PROD",   "action": "talk", "target": "PNL03"},
+    {"row": 0, "col": 3, "label": "EIC",    "action": "talk", "target": "PNL07"},
+    {"row": 0, "col": 4, "label": "REPLY",  "action": "reply", "colors": {"idle": "#1f3b57"}},
+    {"row": 1, "col": 0, "label": "CAM 2",  "action": "talk", "target": "CAM02"},
+    {"row": 1, "col": 1, "label": "CAM 3",  "action": "talk", "target": "CAM03"},
+    {"row": 1, "col": 2, "label": "AUDIO",  "action": "talk", "target": "AUD01"},
+    {"row": 1, "col": 3, "label": "LX",     "action": "talk", "target": "LGT01"},
+    {"row": 1, "col": 4, "label": "",       "action": "none"},
+    {"row": 2, "col": 0, "label": "MON\nDIR", "action": "listen", "target": "PNL01", "mode": "latch", "colors": {"active": "#2e9e4f"}},
+    {"row": 2, "col": 1, "label": "MON\nPL",  "action": "listen", "target": "IFB01", "mode": "latch", "colors": {"active": "#2e9e4f"}},
+    {"row": 2, "col": 2, "label": "",       "action": "none"},
+    {"row": 2, "col": 3, "label": "",       "action": "none"},
+    {"row": 2, "col": 4, "label": "",       "action": "none"}
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "_comment": "What a Stream Deck (or anything like it) needs to reach the buttons. Replace host and matrix for your setup. All requests are GET or POST, no auth, lab network only.",
+  "api": {
+    "base_url": "http://127.0.0.1:8180",
+    "help": "GET {base_url}/api/help",
+    "content_type": "application/json responses; requests are query strings or JSON bodies"
+  },
+  "discover": {
+    "list_matrices": "GET {base_url}/api/matrices",
+    "list_ports": "GET {base_url}/api/ports?matrix={matrix}",
+    "map_feed": "GET {base_url}/geojson",
+    "whole_state": "GET {base_url}/state"
+  },
+  "lifecycle": {
+    "claim_a_port": "GET {base_url}/api/claim?matrix={matrix}&port=0&name=Stream%20Deck",
+    "claim_specific_port": "GET {base_url}/api/claim?matrix={matrix}&port={port}&name=Stream%20Deck",
+    "release": "GET {base_url}/api/release?matrix={matrix}&port={port}"
+  },
+  "buttons": {
+    "talk_press":    "GET {base_url}/api/key?matrix={matrix}&port={port}&kind=talk&target={target}&state=1",
+    "talk_release":  "GET {base_url}/api/key?matrix={matrix}&port={port}&kind=talk&target={target}&state=0",
+    "listen_on":     "GET {base_url}/api/key?matrix={matrix}&port={port}&kind=listen&target={target}&state=1",
+    "listen_off":    "GET {base_url}/api/key?matrix={matrix}&port={port}&kind=listen&target={target}&state=0",
+    "trunk_call":    "GET {base_url}/api/call?matrix={matrix}&port={port}&icom={remote_icom}&remote={remote_port}",
+    "hangup":        "GET {base_url}/api/hangup?matrix={matrix}&port={port}"
+  },
+  "feedback": {
+    "poll": "GET {base_url}/api/port?matrix={matrix}&port={port}",
+    "poll_interval_ms": 1000,
+    "fields": {
+      "incoming": "list of {port, alpha, since}: light the key whose target matches 'port' amber",
+      "talking_to": "list of port numbers: light those keys red",
+      "listening": "list of port numbers: light those keys green",
+      "users": "users on the matrix", "users_calling": "users currently making calls"
+    }
+  },
+  "bitfocus_companion": {
+    "connection": "Generic: HTTP Requests",
+    "press_action": "HTTP GET  -> buttons.talk_press",
+    "release_action": "HTTP GET -> buttons.talk_release",
+    "feedback": "Generic HTTP connection -> poll feedback.poll into a variable and use 'variable contains' feedbacks on each button",
+    "note": "Companion runs on the same machine as the Stream Deck; it does not need to run where the simulator runs."
+  },
+  "streamdeck_app_native": {
+    "action": "System > Open (URL) or Website",
+    "limitation": "press only, no release and no feedback. Use mode=latch buttons."
+  },
+  "audio_for_the_operator": {
+    "note": "A Stream Deck has no microphone or speaker. Run TRUNK-SIMULATOR/trunk_panel.py on the same port number so the deck presses the keys and the computer carries the voice.",
+    "command": "python ../TRUNK-SIMULATOR/trunk_panel.py --matrix {host}:{series_plus_port}   (series = 20000 + 256 x capital number; London port 5 = 22309)"
+  }
+}

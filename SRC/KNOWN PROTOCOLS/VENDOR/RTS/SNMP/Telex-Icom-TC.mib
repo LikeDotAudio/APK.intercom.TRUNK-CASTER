@@ -1,0 +1,120 @@
+Telex-RVON-CAP DEFINITIONS ::= BEGIN
+
+IMPORTS
+	MODULE-IDENTITY
+		FROM SNMPv2-SMI
+	DisplayString
+		FROM SNMPv2-TC
+	AGENT-CAPABILITIES
+		FROM SNMPv2-CONF
+	agentCapabs, telexModules
+		FROM Telex-REG;
+
+telexRVONCap MODULE-IDENTITY
+	LAST-UPDATED	"200610301700Z"
+	ORGANIZATION	"Telex Communications, Inc."
+	CONTACT-INFO
+		"James Puttick
+		Kerr Vayne Systems Ltd.
+		1 Valleywood Drive, Suite 201
+		Markham, Ontario
+		L3R 5L9
+		Canada
+
+		Phone:  +1 905 475 6161
+		Email:  snmp_info@kvs.com"
+	DESCRIPTION
+		"Capabilities for the ADAM Intercom.
+
+		Copyright 2006 by Telex Communications, Inc. All
+		rights reserved. Reproduction, in whole or in part,
+		without prior written permission from Telex is prohibited."
+
+	REVISION
+		"200610301700Z"
+	DESCRIPTION
+		"Initial implementation."
+	::= { telexModules 8 }
+
+--------------------------------------------------------------------------------
+-- RVON Defines - Basic capabilities
+--------------------------------------------------------------------------------
+
+telexRVONBasicCap AGENT-CAPABILITIES
+	PRODUCT-RELEASE	"SNMP agent version 0.1"
+	STATUS		current
+	DESCRIPTION	"SNMP agent for RVON devices."
+
+	SUPPORTS	SNMPv2-MIB
+	    INCLUDES
+		{
+			snmpGroup, snmpSetGroup, systemGroup,
+			snmpBasicNotificationsGroup,
+			snmpCommunityGroup,
+			snmpNotificationGroup
+		}
+	    VARIATION		sysName
+		SYNTAX		DisplayString (SIZE (0..100))
+		DESCRIPTION	"Limited to 100 characters"
+	    VARIATION		sysLocation
+		SYNTAX		DisplayString (SIZE (0..100))
+		DESCRIPTION	"Limited to 100 characters"
+	    VARIATION		sysContact
+		SYNTAX		DisplayString (SIZE (0..100))
+		DESCRIPTION	"Limited to 100 characters"
+
+	SUPPORTS	IF-MIB
+	    INCLUDES
+		{
+			ifGeneralInformationGroup,
+			linkUpDownNotificationsGroup,
+			ifHCPacketGroup,
+			ifCounterDiscontinuityGroup,
+			ifRcvAddressGroup
+		}
+	    VARIATION		ifAdminStatus
+	        ACCESS		read-only
+		DESCRIPTION	"ifAdminStatus not writable"
+	    VARIATION		ifPromiscuousMode
+	        ACCESS		read-only
+		DESCRIPTION	"ifPromiscuousMode not writable"
+	    VARIATION		ifAlias
+	        ACCESS		read-only
+		DESCRIPTION	"ifAlias not writable"
+
+	SUPPORTS	IP-MIB
+	    INCLUDES
+		{
+			ipGroup, icmpGroup
+		}
+	    VARIATION		ipForwarding
+	        ACCESS		read-only
+		DESCRIPTION	"ipForwarding not writable"
+	    VARIATION		ipDefaultTTL
+	        ACCESS		read-only
+		DESCRIPTION	"ipDefaultTTL not writable"
+
+	SUPPORTS	TCP-MIB
+	    INCLUDES
+		{
+			tcpGroup
+		}
+
+	SUPPORTS	UDP-MIB
+	    INCLUDES
+		{
+			udpGroup
+		}
+
+	SUPPORTS	Telex-RVON-MIB
+	    INCLUDES
+		{
+			rvonDescrGroup, rvonGpioGroup, rvonPassthroughGroup,
+			rvonChanCfgGroup, rvonIoGainGroup, rvonChanStatGroup,
+			rvonVoipStatGroup, rvonNwStatGroup, rvonNwErrGroup,
+			rvonBasicEventsGroup
+		}
+
+	::= { agentCapabs 3 }
+
+END

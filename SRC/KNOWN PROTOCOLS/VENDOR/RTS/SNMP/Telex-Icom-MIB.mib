@@ -1,0 +1,231 @@
+Telex-TM-CAP DEFINITIONS ::= BEGIN
+
+IMPORTS
+	MODULE-IDENTITY
+		FROM SNMPv2-SMI
+	AGENT-CAPABILITIES
+		FROM SNMPv2-CONF
+	agentCapabs, telexModules
+		FROM Telex-REG;
+
+telexTmCap MODULE-IDENTITY
+	LAST-UPDATED	"200604051700Z"
+	ORGANIZATION	"Telex Communications, Inc."
+	CONTACT-INFO
+		"James Puttick
+		Kerr Vayne Systems Ltd.
+		1 Valleywood Drive, Suite 201
+		Markham, Ontario
+		L3R 5L9
+		Canada
+
+		Phone:  +1 905 475 6161
+		Email:  snmp_info@kvs.com"
+	DESCRIPTION
+		"Capabilities for the TM-2000 Trunk Master.
+
+		Copyright 2006 by Telex Communications, Inc. All
+		rights reserved. Reproduction, in whole or in part,
+		without prior written permission from Telex is prohibited."
+
+	REVISION
+		"200604051700Z"
+	DESCRIPTION
+		"Initial implementation."
+	::= { telexModules 7 }
+
+tmBasicCap AGENT-CAPABILITIES
+	PRODUCT-RELEASE	"TM-2000 v8.7.0"
+	STATUS		current
+	DESCRIPTION	"SNMP agent for TM-2000 Trunk Master."
+
+	SUPPORTS	SNMPv2-MIB
+	    INCLUDES
+		{
+			snmpGroup, snmpCommunityGroup, snmpSetGroup,
+			systemGroup,
+			snmpBasicNotificationsGroup,
+			snmpNotificationGroup
+		}
+
+	SUPPORTS	IF-MIB
+	    INCLUDES
+		{
+			ifGeneralInformationGroup, ifHCPacketGroup,
+			ifCounterDiscontinuityGroup,
+			linkUpDownNotificationsGroup
+		}
+	    VARIATION	ifPromiscuousMode
+	        ACCESS		read-only
+		DESCRIPTION	"Not settable via SNMP."
+	    VARIATION	ifLinkUpDownTrapEnable
+	        ACCESS		read-only
+		DESCRIPTION	"Not settable via SNMP."
+
+	SUPPORTS	IP-MIB
+	    INCLUDES
+		{
+			ipGroup, icmpGroup
+		}
+	    VARIATION	ipForwarding
+	        ACCESS		read-only
+		DESCRIPTION	"Write access not implemented."
+	    VARIATION	ipDefaultTTL
+	        ACCESS		read-only
+		DESCRIPTION	"Write access not implemented."
+	    VARIATION	ipAdEntReasmMaxSize
+	        ACCESS		not-implemented
+		DESCRIPTION	"Not implemented."
+	    VARIATION	ipNetToMediaIfIndex
+	        ACCESS		read-only
+		DESCRIPTION	"Write access not implemented."
+	    VARIATION	ipNetToMediaPhysAddress
+	        ACCESS		read-only
+		DESCRIPTION	"Write access not implemented."
+	    VARIATION	ipNetToMediaNetAddress
+	        ACCESS		read-only
+		DESCRIPTION	"Write access not implemented."
+	    VARIATION	ipNetToMediaType
+	        ACCESS		read-only
+		DESCRIPTION	"Write access not implemented."
+
+	SUPPORTS	TCP-MIB
+	    INCLUDES
+		{
+			tcpGroup
+		}
+	    VARIATION	tcpConnState
+	        ACCESS		read-only
+		DESCRIPTION	"Write access not implemented."
+
+	SUPPORTS	UDP-MIB
+	    INCLUDES
+		{
+			udpGroup
+		}
+
+	SUPPORTS	IP-FORWARD-MIB
+	    INCLUDES
+		{
+			ipForwardCidrRouteGroup,
+			inetForwardCidrRouteGroup
+		}
+	    VARIATION		ipCidrRouteNumber
+		ACCESS		not-implemented
+		DESCRIPTION	"Not implemented."
+	    VARIATION		ipCidrRouteAge
+		ACCESS		not-implemented
+		DESCRIPTION	"Not implemented."
+	    VARIATION		inetCidrRouteDiscards
+		ACCESS		not-implemented
+		DESCRIPTION	"Not implemented."
+	    VARIATION		inetCidrRouteNumber
+		ACCESS		not-implemented
+		DESCRIPTION	"Not implemented."
+
+	SUPPORTS	HOST-RESOURCES-MIB
+	    INCLUDES
+		{
+			hrSystemGroup, hrStorageGroup, hrDeviceGroup,
+			hrSWRunGroup, hrSWRunPerfGroup
+		}
+	    VARIATION		hrStorageSize
+	        ACCESS		read-only
+		DESCRIPTION	"Write access not implemented."
+	    VARIATION		hrStorageAllocationFailures
+		ACCESS		not-implemented
+		DESCRIPTION	"Not implemented."
+	    VARIATION		hrDeviceStatus
+		ACCESS		not-implemented
+		DESCRIPTION	"Not implemented."
+	    VARIATION		hrDeviceErrors
+		ACCESS		not-implemented
+		DESCRIPTION	"Not implemented."
+	    VARIATION		hrProcessorLoad
+		ACCESS		not-implemented
+		DESCRIPTION	"Not implemented."
+	    VARIATION		hrPrinterDetectedErrorState
+		ACCESS		not-implemented
+		DESCRIPTION	"Not implemented."
+	    VARIATION		hrSWOSIndex
+		ACCESS		not-implemented
+		DESCRIPTION	"Not implemented."
+
+--	SUPPORTS	DISMAN-EVENT-MIB
+--	    INCLUDES
+--		{
+--			dismanEventResourceGroup,
+--			dismanEventTriggerGroup,
+--			dismanEventObjectsGroup,
+--			dismanEventEventGroup,
+--			dismanEventNotificationObjectGroup,
+--			dismanEventNotificationGroup
+--		}
+
+--	SUPPORTS	NOTIFICATION-LOG-MIB
+--	    INCLUDES
+--		{
+--		}
+
+	SUPPORTS	SNMP-FRAMEWORK-MIB
+	    INCLUDES
+		{
+			snmpEngineGroup
+		}
+
+	SUPPORTS	SNMP-MPD-MIB
+	    INCLUDES
+		{
+			snmpMPDGroup
+		}
+
+	SUPPORTS	SNMP-TARGET-MIB
+	    INCLUDES
+		{
+			snmpTargetBasicGroup,
+			snmpTargetResponseGroup,
+			snmpTargetCommandResponderGroup
+		}
+
+	SUPPORTS	SNMP-NOTIFICATION-MIB
+	    INCLUDES
+		{
+			snmpNotifyGroup
+		}
+
+	SUPPORTS	SNMP-USER-BASED-SM-MIB
+	    INCLUDES
+		{
+			usmMIBBasicGroup
+		}
+
+	SUPPORTS	SNMP-VIEW-BASED-ACM-MIB
+	    INCLUDES
+		{
+			vacmBasicGroup
+		}
+
+	SUPPORTS	NET-SNMP-AGENT-MIB
+	    INCLUDES
+		{
+			nsModuleGroup, nsCacheGroup,
+			nsDebugGroup, nsLoggingGroup
+		}
+
+	SUPPORTS	Telex-TM-MIB
+	    INCLUDES
+		{
+			tmArchGroup, tmCapabGroup, tmConfigGroup,
+			tmStatusGroup,
+			tmEventObjs,
+			tmBasicEventsGroup
+		}
+
+	-- The following MIBs are implemented, but don't define any
+	-- object groups.
+--	SUPPORTS	UCD-SNMP-MIB
+--	SUPPORTS	UCD-DLMOD-MIB
+
+	::= { agentCapabs 2 }
+
+END

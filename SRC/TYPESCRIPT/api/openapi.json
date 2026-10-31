@@ -1,0 +1,3494 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Trunk-Caster runtime HTTP API",
+    "version": "1",
+    "description": "Generated from TYPESCRIPT/api/routes.ts. Every response carries Cache-Control: no-store, Access-Control-Allow-Origin: *, Connection: close. Non-GET methods on any path without a handler return 405 (so OPTIONS preflight fails). Request bodies are capped at 4 MiB."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8080"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "Globe page (home).",
+        "x-source": "RUST-RUNTIME/src/http.rs:140",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/globe": {
+      "get": {
+        "summary": "Globe page.",
+        "x-source": "RUST-RUNTIME/src/http.rs:140",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-alias-of": "/"
+      }
+    },
+    "/home": {
+      "get": {
+        "summary": "Index / about page.",
+        "x-source": "RUST-RUNTIME/src/http.rs:144",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/about": {
+      "get": {
+        "summary": "Index / about page.",
+        "x-source": "RUST-RUNTIME/src/http.rs:144",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-alias-of": "/home"
+      }
+    },
+    "/usage": {
+      "get": {
+        "summary": "Usage page.",
+        "x-source": "RUST-RUNTIME/src/http.rs:152",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Users page.",
+        "x-source": "RUST-RUNTIME/src/http.rs:156",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/crosspoints": {
+      "get": {
+        "summary": "Crosspoints page.",
+        "x-source": "RUST-RUNTIME/src/http.rs:160",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/simulator": {
+      "get": {
+        "summary": "Simulator page.",
+        "x-source": "RUST-RUNTIME/src/http.rs:164",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/space": {
+      "get": {
+        "summary": "Space page.",
+        "x-source": "RUST-RUNTIME/src/http.rs:168",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/overlord": {
+      "get": {
+        "summary": "Overlord page.",
+        "x-source": "RUST-RUNTIME/src/http.rs:172",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/racks": {
+      "get": {
+        "summary": "Racks page.",
+        "x-source": "RUST-RUNTIME/src/http.rs:176",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/relay": {
+      "get": {
+        "summary": "Relay page.",
+        "x-source": "RUST-RUNTIME/src/http.rs:180",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analyzer": {
+      "get": {
+        "summary": "Analyzer page; ?id= selects a capture or run (NOT percent-decoded, unlike /panels/editor).",
+        "x-source": "RUST-RUNTIME/src/http.rs:210",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/panels": {
+      "get": {
+        "summary": "Panels / light board.",
+        "x-source": "RUST-RUNTIME/src/http.rs:285",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/lights": {
+      "get": {
+        "summary": "Panels / light board.",
+        "x-source": "RUST-RUNTIME/src/http.rs:285",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-alias-of": "/panels"
+      }
+    },
+    "/panels/editor": {
+      "get": {
+        "summary": "Panel editor; ?frame=&port=U<nn> (percent-decoded).",
+        "x-source": "RUST-RUNTIME/src/http.rs:289",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "frame",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "port",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      }
+    },
+    "/editor": {
+      "get": {
+        "summary": "Panel editor.",
+        "x-source": "RUST-RUNTIME/src/http.rs:289",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "frame",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "port",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "x-alias-of": "/panels/editor"
+      }
+    },
+    "/continents": {
+      "get": {
+        "summary": "Continents / discovery page.",
+        "x-source": "RUST-RUNTIME/src/http.rs:323",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/discovery": {
+      "get": {
+        "summary": "Continents / discovery page.",
+        "x-source": "RUST-RUNTIME/src/http.rs:323",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/html; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/html)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-alias-of": "/continents"
+      }
+    },
+    "/api/globe": {
+      "get": {
+        "summary": "Full globe data: nodes, clusters, trunks, calls, history, config.",
+        "x-source": "RUST-RUNTIME/src/http.rs:148",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "GlobeData",
+                  "type": "object",
+                  "required": [
+                    "site",
+                    "clock",
+                    "load",
+                    "sim_time",
+                    "frames",
+                    "sites",
+                    "trunks",
+                    "calls",
+                    "sims",
+                    "config",
+                    "nodes",
+                    "clusters",
+                    "trunkList",
+                    "callList",
+                    "history",
+                    "today",
+                    "lockHours",
+                    "daysShown"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/land": {
+      "get": {
+        "summary": "Land outlines (static, served from include_str!). Added after the audit began.",
+        "x-source": "RUST-RUNTIME/src/http.rs:272",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "number[][]",
+                  "type": "array",
+                  "items": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sites": {
+      "get": {
+        "summary": "The site list (sites.json).",
+        "x-source": "RUST-RUNTIME/src/http.rs:184",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Sites",
+                  "type": "object",
+                  "required": [
+                    "sites"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/globe/config": {
+      "get": {
+        "summary": "Globe view configuration.",
+        "x-source": "RUST-RUNTIME/src/http.rs:188",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "GlobeConfig",
+                  "type": "object",
+                  "required": [
+                    "rotate_deg_per_s",
+                    "tilt_deg",
+                    "show_capitals",
+                    "show_provinces",
+                    "show_cities",
+                    "graticule_deg",
+                    "projection",
+                    "zoom",
+                    "zones"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Replace the globe config.",
+        "x-source": "RUST-RUNTIME/src/http.rs:192",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "GlobeConfig"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "body is not a GlobeConfig",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "could not save",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "GlobeConfigInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/preferences": {
+      "get": {
+        "summary": "Recent preference changes.",
+        "x-source": "RUST-RUNTIME/src/http.rs:202",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Preference[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "seq",
+                      "at",
+                      "kind",
+                      "value"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/regions": {
+      "get": {
+        "summary": "Per-site usage with local clock and load.",
+        "x-source": "RUST-RUNTIME/src/http.rs:206",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Region[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "site",
+                      "slug",
+                      "country",
+                      "tier",
+                      "lat",
+                      "lon",
+                      "frames",
+                      "local_clock",
+                      "load",
+                      "calls",
+                      "trunks",
+                      "panels_live"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/captures": {
+      "get": {
+        "summary": "Current capture (samples cleared) and saved captures (samples cleared).",
+        "x-source": "RUST-RUNTIME/src/http.rs:233",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "CapturesList",
+                  "type": "object",
+                  "required": [
+                    "current",
+                    "captures"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/analyze/{id}": {
+      "get": {
+        "summary": "A capture or run by id, as a Capture, samples cleared.",
+        "x-source": "RUST-RUNTIME/src/http.rs:241",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Capture",
+                  "type": "object",
+                  "required": [
+                    "wire_version",
+                    "id",
+                    "note",
+                    "started_at",
+                    "started_sim",
+                    "started_clock",
+                    "fader",
+                    "frames",
+                    "sites",
+                    "summary",
+                    "buckets",
+                    "samples"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no capture or run with that id; GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Taken verbatim from the path; NOT percent-decoded by the server."
+          }
+        ]
+      }
+    },
+    "/api/capture/{id}": {
+      "get": {
+        "summary": "A capture or run by id, WITH samples.",
+        "x-source": "RUST-RUNTIME/src/http.rs:252",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Capture",
+                  "type": "object",
+                  "required": [
+                    "wire_version",
+                    "id",
+                    "note",
+                    "started_at",
+                    "started_sim",
+                    "started_clock",
+                    "fader",
+                    "frames",
+                    "sites",
+                    "summary",
+                    "buckets",
+                    "samples"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no capture or run with that id; GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Taken verbatim from the path; NOT percent-decoded by the server."
+          }
+        ]
+      }
+    },
+    "/api/phonebook": {
+      "get": {
+        "summary": "Everyone who has called, with labels and badges.",
+        "x-source": "RUST-RUNTIME/src/http.rs:260",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "PhoneBookEntry[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "who",
+                      "label",
+                      "panels",
+                      "sites",
+                      "calls",
+                      "live_now"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gpio/functions": {
+      "get": {
+        "summary": "GPIO key functions and their pins.",
+        "x-source": "RUST-RUNTIME/src/http.rs:264",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "GpioFunctionInfo[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "pin",
+                      "function",
+                      "label"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/topics": {
+      "get": {
+        "summary": "Header topic metrics, keyed by page path.",
+        "x-source": "RUST-RUNTIME/src/http.rs:268",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Topics",
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "required": [
+                      "label",
+                      "metric",
+                      "colour",
+                      "ink",
+                      "items"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/tree": {
+      "get": {
+        "summary": "Discovery tree: global -> continent -> country -> site -> device.",
+        "x-source": "RUST-RUNTIME/src/http.rs:273",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "DiscoveryTree",
+                  "type": "object",
+                  "required": [
+                    "global",
+                    "continents"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/device/{id}": {
+      "get": {
+        "summary": "One frame, centred: lines, trunks, events, labels.",
+        "x-source": "RUST-RUNTIME/src/http.rs:277",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "DeviceView",
+                  "type": "object",
+                  "required": [
+                    "frame",
+                    "site",
+                    "local_clock",
+                    "load",
+                    "lines",
+                    "trunks",
+                    "events",
+                    "labels",
+                    "last",
+                    "remote"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no frame with that id; GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Taken verbatim from the path; NOT percent-decoded by the server."
+          }
+        ]
+      }
+    },
+    "/api/bookings": {
+      "get": {
+        "summary": "The booking timeline.",
+        "x-source": "RUST-RUNTIME/src/http.rs:295",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Booking[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "frame",
+                      "port",
+                      "kind",
+                      "program",
+                      "who",
+                      "start",
+                      "end",
+                      "daily",
+                      "source",
+                      "status",
+                      "created_at"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Book a port for a program.",
+        "x-source": "RUST-RUNTIME/src/http.rs:299",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Booking"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad booking JSON, or the runtime refused it",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-persists": true,
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "BookingAsk"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/continents": {
+      "get": {
+        "summary": "Calls between continent pairs.",
+        "x-source": "RUST-RUNTIME/src/http.rs:327",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "ContinentTotal[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "from",
+                      "to",
+                      "ocean",
+                      "calls",
+                      "muted",
+                      "crossing"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/lines": {
+      "get": {
+        "summary": "Every live line with its lease, soonest-to-expire first.",
+        "x-source": "RUST-RUNTIME/src/http.rs:331",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "LeaseLine[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "who",
+                      "from",
+                      "to",
+                      "left",
+                      "lease",
+                      "state",
+                      "muted",
+                      "reconnects",
+                      "kind"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/runs": {
+      "get": {
+        "summary": "Current run (samples cleared) and the run index.",
+        "x-source": "RUST-RUNTIME/src/http.rs:335",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "RunsList",
+                  "type": "object",
+                  "required": [
+                    "current",
+                    "previous"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/runs/current": {
+      "get": {
+        "summary": "Current run with samples.",
+        "x-source": "RUST-RUNTIME/src/http.rs:341",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "SimRun",
+                  "type": "object",
+                  "required": [
+                    "wire_version",
+                    "id",
+                    "started_at",
+                    "started_sim",
+                    "reason",
+                    "fader",
+                    "frames",
+                    "sites",
+                    "summary",
+                    "samples"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/labels": {
+      "get": {
+        "summary": "Recent panel label events.",
+        "x-source": "RUST-RUNTIME/src/http.rs:345",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "LabelEvent[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "seq",
+                      "at",
+                      "frame",
+                      "port",
+                      "label",
+                      "over",
+                      "origin"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gains": {
+      "get": {
+        "summary": "Recent gain changes.",
+        "x-source": "RUST-RUNTIME/src/http.rs:349",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "GainEvent[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "seq",
+                      "at",
+                      "set",
+                      "was_db",
+                      "path_gain_db"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/taps": {
+      "get": {
+        "summary": "TAPS and Mixes: a strip per connected frame, a fader per closed crosspoint (gain, accent, live voice rate).",
+        "x-source": "RUST-RUNTIME/src/http.rs:363",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Taps",
+                  "type": "object",
+                  "required": [
+                    "frames",
+                    "crosspoints",
+                    "trimmed",
+                    "strips"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/taps/{frame}": {
+      "get": {
+        "summary": "One frame's TAPS strip (empty faders when nothing is crossed).",
+        "x-source": "RUST-RUNTIME/src/http.rs:367",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "TapStrip",
+                  "type": "object",
+                  "required": [
+                    "frame",
+                    "site",
+                    "protocol",
+                    "vendor",
+                    "accent",
+                    "kbps",
+                    "faders"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no frame with that id; GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "frame",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Taken verbatim from the path; NOT percent-decoded by the server."
+          }
+        ]
+      }
+    },
+    "/api/voices": {
+      "get": {
+        "summary": "Everything heard of the frames' voices: chunk and correction counters, live rate, newest recording per frame and kind.",
+        "x-source": "RUST-RUNTIME/src/http.rs:349",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "VoiceSummary",
+                  "type": "object",
+                  "required": [
+                    "chunks_in",
+                    "bad_chunks",
+                    "recordings",
+                    "corrected_seconds",
+                    "lost_seconds",
+                    "waiting",
+                    "kbps",
+                    "talking",
+                    "by_protocol_kbps",
+                    "link",
+                    "latest"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/voices/{frame}": {
+      "get": {
+        "summary": "One frame's voice: site, country, airport, accent, live rate, newest ident and call with their WAV paths.",
+        "x-source": "RUST-RUNTIME/src/http.rs:354",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "FrameVoice",
+                  "type": "object",
+                  "required": [
+                    "frame",
+                    "site",
+                    "country",
+                    "airport",
+                    "accent",
+                    "kbps",
+                    "bytes",
+                    "ident",
+                    "call",
+                    "ident_wav",
+                    "call_wav"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no frame with that id; GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "frame",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Taken verbatim from the path; NOT percent-decoded by the server."
+          }
+        ]
+      }
+    },
+    "/api/bandwidth": {
+      "get": {
+        "summary": "The bandwidth simulation: voice on the wire over the last window_s seconds, by protocol, by frame and spread over the trunks each call crosses.",
+        "x-source": "RUST-RUNTIME/src/http.rs:374",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Bandwidth",
+                  "type": "object",
+                  "required": [
+                    "window_s",
+                    "kbps",
+                    "carried_kbps",
+                    "talking",
+                    "bytes",
+                    "by_protocol",
+                    "frames",
+                    "trunks"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/airports": {
+      "get": {
+        "summary": "Every site with its IATA airport code and accent.",
+        "x-source": "RUST-RUNTIME/src/http.rs:380",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Airport[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "site",
+                      "country",
+                      "airport",
+                      "accent"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voices/{file}": {
+      "get": {
+        "summary": "A re-assembled recording (audio/wav, 8 kHz 16-bit mono): <frame>-ident.wav or <frame>-call.wav.",
+        "x-source": "RUST-RUNTIME/src/http.rs:395",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "audio/wav": {
+                "schema": {
+                  "x-ts-type": "binary (audio/wav)"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no such recording; GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "file",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Taken verbatim from the path; NOT percent-decoded by the server."
+          }
+        ]
+      }
+    },
+    "/api/relay/events": {
+      "get": {
+        "summary": "Recent relay (sound device) events.",
+        "x-source": "RUST-RUNTIME/src/http.rs:353",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "RelayEvent[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "seq",
+                      "at",
+                      "kind",
+                      "device_label"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/presets": {
+      "get": {
+        "summary": "Fader presets derived from the current fader.",
+        "x-source": "RUST-RUNTIME/src/http.rs:357",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Preset[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "name",
+                      "blurb",
+                      "fader",
+                      "surge_hour",
+                      "surge_utc",
+                      "lead_hours"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/productions": {
+      "get": {
+        "summary": "Per-production live sample, keyed by production name.",
+        "x-source": "RUST-RUNTIME/src/http.rs:361",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Record<string, ProductionSample>",
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "object",
+                    "required": [
+                      "offered",
+                      "answered",
+                      "busy",
+                      "live",
+                      "trunks_used",
+                      "trunks",
+                      "on_air",
+                      "studio"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/remotes": {
+      "get": {
+        "summary": "Remote (simulator) frames, by frame id.",
+        "x-source": "RUST-RUNTIME/src/http.rs:441",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "RemoteFrame[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "frame",
+                      "peer",
+                      "connected_at",
+                      "last_seen",
+                      "connected"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/relay": {
+      "get": {
+        "summary": "Relay snapshot: matrices, ports, crosspoints.",
+        "x-source": "RUST-RUNTIME/src/http.rs:445",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "RelaySnapshot",
+                  "type": "object",
+                  "required": [
+                    "wire_version",
+                    "host",
+                    "updated_at",
+                    "matrices"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gpio": {
+      "get": {
+        "summary": "Recent GPIO events.",
+        "x-source": "RUST-RUNTIME/src/http.rs:449",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "GpioEvent[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "seq",
+                      "at",
+                      "connection",
+                      "who",
+                      "pin",
+                      "state",
+                      "from_frame",
+                      "to_frame",
+                      "path",
+                      "trunks"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Send a GPIO command over a connection.",
+        "x-source": "RUST-RUNTIME/src/http.rs:471",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "GpioEvent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad JSON or runtime refused",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-persists": true,
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "GpioCommand"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/renames": {
+      "get": {
+        "summary": "Recent rename dispatches.",
+        "x-source": "RUST-RUNTIME/src/http.rs:453",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "RenameDispatch[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "seq",
+                      "at",
+                      "frame",
+                      "port",
+                      "new_name",
+                      "vendor",
+                      "transport",
+                      "detail",
+                      "sent"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/policy": {
+      "get": {
+        "summary": "Vendor rename policy.",
+        "x-source": "RUST-RUNTIME/src/http.rs:457",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "VendorPolicy",
+                  "type": "object",
+                  "required": [
+                    "renames"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/status": {
+      "get": {
+        "summary": "Runtime status.",
+        "x-source": "RUST-RUNTIME/src/http.rs:498",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Status",
+                  "type": "object",
+                  "required": [
+                    "wire_version",
+                    "root",
+                    "endpoint",
+                    "shape",
+                    "protocols",
+                    "frames",
+                    "trunks",
+                    "connections",
+                    "sim_time",
+                    "fader",
+                    "updated_at",
+                    "remote_frames",
+                    "remotes_connected",
+                    "sites",
+                    "clock",
+                    "blackout",
+                    "muted"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/advertisements": {
+      "get": {
+        "summary": "Every frame advertisement.",
+        "x-source": "RUST-RUNTIME/src/http.rs:502",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Frame[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "wire_version",
+                      "id",
+                      "protocol",
+                      "protocol_name",
+                      "family",
+                      "site",
+                      "implemented_by",
+                      "user_ports",
+                      "casters",
+                      "channels_per_trunk",
+                      "caster_status",
+                      "free_casters",
+                      "advertised_at"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/protocols": {
+      "get": {
+        "summary": "Discovered protocol repertoire.",
+        "x-source": "RUST-RUNTIME/src/http.rs:506",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Protocol[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "name",
+                      "family",
+                      "implementations",
+                      "documents",
+                      "digest"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/state": {
+      "get": {
+        "summary": "The whole routing state (frames, trunks, connections). Large.",
+        "x-source": "RUST-RUNTIME/src/http.rs:510",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "RoutingState",
+                  "type": "object",
+                  "required": [
+                    "shape",
+                    "frames",
+                    "trunks",
+                    "connections",
+                    "counters",
+                    "updated_at",
+                    "port_names",
+                    "port_labels",
+                    "last_activity",
+                    "next_trunk"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "summary": "Recent user records.",
+        "x-source": "RUST-RUNTIME/src/http.rs:514",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "UserRecord[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "wire_version",
+                      "id",
+                      "who",
+                      "whom",
+                      "from",
+                      "when",
+                      "status",
+                      "origin",
+                      "gpio_sent"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fader": {
+      "get": {
+        "summary": "Current fader.",
+        "x-source": "RUST-RUNTIME/src/http.rs:518",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Fader",
+                  "type": "object",
+                  "required": [
+                    "speed",
+                    "requests_per_minute",
+                    "mean_hold_seconds",
+                    "running",
+                    "seed",
+                    "day",
+                    "lease_seconds",
+                    "preset",
+                    "productions"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Replace the fader.",
+        "x-source": "RUST-RUNTIME/src/http.rs:578",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Fader"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "could not save",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "FaderInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/timeline": {
+      "get": {
+        "summary": "Sample timeline.",
+        "x-source": "RUST-RUNTIME/src/http.rs:522",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Timeline",
+                  "type": "object",
+                  "required": [
+                    "wire_version",
+                    "samples"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/seeks": {
+      "get": {
+        "summary": "Outstanding panel offers.",
+        "x-source": "RUST-RUNTIME/src/http.rs:526",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "PanelOffer[]",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "wire_version",
+                      "seek",
+                      "seek_id",
+                      "offered_at",
+                      "allowed_trunks"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crosspoints": {
+      "get": {
+        "summary": "Crosspoint settings, closed crosspoints (sorted) and recent events.",
+        "x-source": "RUST-RUNTIME/src/http.rs:530",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "CrosspointsView",
+                  "type": "object",
+                  "required": [
+                    "settings",
+                    "events_logged",
+                    "log_ended",
+                    "crosspoints",
+                    "recent_events"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crosscheck": {
+      "get": {
+        "summary": "Last crosscheck result.",
+        "x-source": "RUST-RUNTIME/src/http.rs:546",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "CrossCheck",
+                  "type": "object",
+                  "required": [
+                    "checked",
+                    "ok",
+                    "failures"
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/log": {
+      "get": {
+        "summary": "Runtime log lines, oldest first.",
+        "x-source": "RUST-RUNTIME/src/http.rs:550",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string[]",
+                  "type": "array",
+                  "items": {}
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/report": {
+      "get": {
+        "summary": "Markdown report (text/markdown).",
+        "x-source": "RUST-RUNTIME/src/http.rs:365",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/markdown; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/markdown)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/report.md": {
+      "get": {
+        "summary": "Markdown report (text/markdown).",
+        "x-source": "RUST-RUNTIME/src/http.rs:365",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/markdown; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/markdown)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-alias-of": "/api/report"
+      }
+    },
+    "/api/wardbeck": {
+      "get": {
+        "summary": "Recent Ward-Beck lines, newline-joined (text/plain).",
+        "x-source": "RUST-RUNTIME/src/http.rs:461",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/plain)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/checkin": {
+      "get": {
+        "summary": "Last check-in file, \"\" when missing (text/plain).",
+        "x-source": "RUST-RUNTIME/src/http.rs:466",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "string (text/plain)",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "GET to an unknown path",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/capture/start": {
+      "post": {
+        "summary": "Start a capture. Invalid JSON is silently treated as {}.",
+        "x-source": "RUST-RUNTIME/src/http.rs:215",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Capture"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "CaptureStartBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/capture/stop": {
+      "post": {
+        "summary": "Stop the capture in progress.",
+        "x-source": "RUST-RUNTIME/src/http.rs:223",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Capture"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "no capture in progress",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings/cancel": {
+      "post": {
+        "summary": "Cancel a booking. Missing id becomes \"\" and yields 404, not 400.",
+        "x-source": "RUST-RUNTIME/src/http.rs:312",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Cancelled"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no booking with that id (including a missing id)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-persists": true,
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "IdBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fader/preset": {
+      "post": {
+        "summary": "Apply a preset. Missing id becomes \"\" and yields 400 from the runtime.",
+        "x-source": "RUST-RUNTIME/src/http.rs:370",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Fader"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unknown preset",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "IdBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/fader/quick": {
+      "post": {
+        "summary": "Change speed and/or running. Invalid JSON is silently {}.",
+        "x-source": "RUST-RUNTIME/src/http.rs:379",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Fader"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "could not save fader",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "QuickFaderBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/clock": {
+      "post": {
+        "summary": "Scrub the simulated clock to an hour (wrapped mod 24). Starts a new run.",
+        "x-source": "RUST-RUNTIME/src/http.rs:387",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Status"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "hour missing or not a number",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "ClockBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gain": {
+      "post": {
+        "summary": "Set a gain: trunk+end (a caster), connection+hop (one hop of a call) or frame+input+output (one crosspoint, a TAPS fader).",
+        "x-source": "RUST-RUNTIME/src/http.rs:463",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "GainEvent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad JSON, no such point, or runtime refused",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "GainSet"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/taps/unity": {
+      "post": {
+        "summary": "Every crosspoint (of one frame, or of all when the body is empty) back to 0 dB; each change logged in gains.jsonl.",
+        "x-source": "RUST-RUNTIME/src/http.rs:453",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "TapsUnityResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad JSON or no such frame",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "TapsUnity"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/relay/bind": {
+      "post": {
+        "summary": "Bind a relay port to a sound device.",
+        "x-source": "RUST-RUNTIME/src/http.rs:409",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "RelayBinding"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad JSON or runtime refused",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "RelayBinding"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/relay/unbind": {
+      "post": {
+        "summary": "Unbind a relay port.",
+        "x-source": "RUST-RUNTIME/src/http.rs:419",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Unbound"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "matrix/port missing, or runtime refused",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "RelayUnbindBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/relay/event": {
+      "post": {
+        "summary": "Report a relay (sound device) event.",
+        "x-source": "RUST-RUNTIME/src/http.rs:433",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "RelayEvent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "RelayEventInput"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rename": {
+      "post": {
+        "summary": "Rename a user port; returns one dispatch per vendor transport.",
+        "x-source": "RUST-RUNTIME/src/http.rs:484",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "RenameDispatch[]"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad JSON or runtime refused",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-persists": true,
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "Rename"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/request": {
+      "post": {
+        "summary": "Ask for a connection. A denial is 200 with status \"denied\".",
+        "x-source": "RUST-RUNTIME/src/http.rs:555",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Reply"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-persists": true,
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "Request"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/release": {
+      "post": {
+        "summary": "Release a connection. Unknown id is 200 (Reply carries the outcome).",
+        "x-source": "RUST-RUNTIME/src/http.rs:564",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "Reply"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "id missing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-persists": true,
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "IdBody"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/panel-seek": {
+      "post": {
+        "summary": "Seek allowed trunks for a panel.",
+        "x-source": "RUST-RUNTIME/src/http.rs:591",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "PanelOffer"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-persists": true,
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "PanelSeek"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crosspoints/settings": {
+      "post": {
+        "summary": "Change crosspoint log settings.",
+        "x-source": "RUST-RUNTIME/src/http.rs:600",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "CrosspointSettings"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad JSON",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "could not save",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-persists": true,
+        "requestBody": {
+          "required": true,
+          "description": "Server ignores Content-Type and parses the body as JSON.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "x-ts-type": "CrosspointSettings"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/crosspoints/reset": {
+      "post": {
+        "summary": "Reset the crosspoint log.",
+        "x-source": "RUST-RUNTIME/src/http.rs:616",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json; charset=utf-8": {
+                "schema": {
+                  "x-ts-type": "ResetDone"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "could not reset",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        },
+        "x-persists": true
+      }
+    },
+    "/ws": {
+      "get": {
+        "summary": "Telemetry stream (RFC 6455, server->client text frames). No snapshot on connect: a `status` frame every >=500 ms and a `globe-delta` frame every >=2000 ms, only while at least one client is open. A plain GET without Sec-WebSocket-Key is 400.",
+        "x-source": "RUST-RUNTIME/src/http.rs:125",
+        "x-websocket-messages": [
+          "StatusMessage",
+          "GlobeDeltaMessage"
+        ],
+        "x-ts-module": "api/telemetry.ts",
+        "responses": {
+          "101": {
+            "description": "Switching Protocols"
+          },
+          "400": {
+            "description": "no Sec-WebSocket-Key header",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ApiError": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "speed": 60.0,
+  "requests_per_minute": 60.0,
+  "mean_hold_seconds": 401.0,
+  "crosscheck_every_seconds": 300.0,
+  "sample_every_seconds": 60.0,
+  "running": true,
+  "seed": 7,
+  "day": {
+    "enabled": true,
+    "start_hour": 0.0,
+    "hourly_news": 1.5,
+    "radio_prep": 1.5,
+    "newscasts": [],
+    "overnight": 0.3,
+    "blackout": {
+      "enabled": true,
+      "start_hour": 11.0,
+      "end_hour": 12.0
+    },
+    "olympics": {
+      "enabled": false,
+      "hour": 19.0,
+      "hours": 2.0,
+      "peak": 5.0,
+      "venue": "kyiv-01",
+      "trunks": 8,
+      "calls_per_minute": 3000.0,
+      "mean_hold_seconds": 120.0
+    }
+  },
+  "round_robin_seconds": 60.0,
+  "lease_seconds": 900.0,
+  "preset": "",
+  "productions": [
+    {
+      "enabled": true,
+      "name": "Phone-in",
+      "studio": "",
+      "trunks": 8,
+      "calls_per_minute": 20.0,
+      "mean_hold_seconds": 180.0,
+      "start_hour": 6.0,
+      "end_hour": 24.0,
+      "every_minutes": 60.0,
+      "at_minute": 30.0,
+      "for_minutes": 30.0
+    }
+  ],
+  "bookings_per_hour": 12.0,
+  "in_building_calls_per_hour": 20.0
+}

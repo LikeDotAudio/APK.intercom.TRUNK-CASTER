@@ -1,0 +1,121 @@
+{
+  "bind": "0.0.0.0",
+  "community": "public",
+  "trap_targets": [
+    "127.0.0.1:16200"
+  ],
+  "chaos": 0.0,
+  "map_port": 8080,
+  "devices": [
+    {
+      "type": "tm2000",
+      "name": "TM1",
+      "snmp_port": 16100,
+      "console_port": 17100,
+      "lat": 40.7128,
+      "lon": -73.92684
+    },
+    {
+      "type": "matrix",
+      "subtype": "adam",
+      "name": "ADM1",
+      "alpha": "ADM1",
+      "plan": [
+        [
+          "PANEL",
+          24
+        ],
+        [
+          "CAM",
+          10
+        ],
+        [
+          "LIGHT",
+          8
+        ],
+        [
+          "AUDIO",
+          8
+        ],
+        [
+          "FIELD",
+          8
+        ],
+        [
+          "IFB",
+          24
+        ],
+        [
+          "WLESS",
+          24
+        ]
+      ],
+      "audio_port": 18100,
+      "snmp_port": 16101,
+      "console_port": 17101,
+      "lat": 40.78888,
+      "lon": -73.97339
+    },
+    {
+      "type": "matrix",
+      "subtype": "cronus",
+      "name": "CRO1",
+      "alpha": "CRO1",
+      "plan": [
+        [
+          "PANEL",
+          24
+        ],
+        [
+          "CAM",
+          10
+        ],
+        [
+          "LIGHT",
+          8
+        ],
+        [
+          "AUDIO",
+          8
+        ],
+        [
+          "FIELD",
+          8
+        ],
+        [
+          "IFB",
+          24
+        ],
+        [
+          "WLESS",
+          24
+        ]
+      ],
+      "audio_port": 18101,
+      "snmp_port": 16102,
+      "console_port": 17102,
+      "lat": 40.77158,
+      "lon": -74.11273
+    },
+    {
+      "type": "rvon",
+      "subtype": "rvon16",
+      "name": "RVON16-1",
+      "snmp_port": 16103,
+      "console_port": 17103,
+      "lat": 40.67753,
+      "lon": -74.07004,
+      "partner": "RVON16-2"
+    },
+    {
+      "type": "rvon",
+      "subtype": "rvon16",
+      "name": "RVON16-2",
+      "snmp_port": 16104,
+      "console_port": 17104,
+      "lat": 40.63672,
+      "lon": -73.97339,
+      "partner": "RVON16-1"
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+<title>Trunk-Caster TypeScript Audit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column. Status strip → fix-first list (Rust, independent of TS) → the ten areas as a table → migration order. Same tokens as the per-area hand-offs. */
+:root{
+  --bg:#f6f7f9;--panel:#ffffff;--ink:#1b1f24;--muted:#5f6873;--line:#e3e6ea;
+  --accent:#1f6feb;--ok:#1a7f37;--warn:#9a5200;--bad:#c62828;--chip:#eef2f8;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1115;--panel:#171a21;--ink:#e6e8eb;--muted:#9aa3ad;--line:#2a2f38;
+  --accent:#5a9bff;--ok:#3fb950;--warn:#e3a35a;--bad:#ff6b6b;--chip:#1f2633;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1115;--panel:#171a21;--ink:#e6e8eb;--muted:#9aa3ad;--line:#2a2f38;
+  --accent:#5a9bff;--ok:#3fb950;--warn:#e3a35a;--bad:#ff6b6b;--chip:#1f2633;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:26px}
+header{display:flex;flex-direction:column;gap:8px}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:30px;line-height:1.15;margin:0;text-wrap:balance}
+h2{font-size:18px;margin:0 0 10px;text-wrap:balance}
+p{margin:0 0 10px;max-width:72ch}
+.lede{font-size:16px;color:var(--ink)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.fact{padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+.fact b{display:block;font:600 22px/1.2 var(--mono);font-variant-numeric:tabular-nums}
+.fact span{font-size:12px;color:var(--muted)}
+section{min-width:0}
+.table{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+td.n{font-family:var(--mono);color:var(--muted);white-space:nowrap}
+.pill{display:inline-block;font:600 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:5px 8px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.pill.convert{color:var(--ok)}.pill.partial{color:var(--warn)}.pill.keep{color:var(--bad)}
+a{color:var(--accent);text-decoration:none;font-weight:600}a:hover{text-decoration:underline}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+code{font:13px var(--mono);background:var(--chip);padding:1px 5px;border-radius:4px}
+.fix{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.fix li{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;padding:10px 12px;border:1px solid var(--line);border-left:4px solid var(--bad);border-radius:6px;background:var(--panel)}
+.fix li.warn{border-left-color:var(--warn)}
+.fix .sev{font:600 11px/1.6 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--bad)}
+.fix li.warn .sev{color:var(--warn)}
+.fix p{margin:0;min-width:0}
+.fix small{grid-column:2;color:var(--muted);font-size:12.5px}
+ol.order{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+</style>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Trunk-Caster → TypeScript · audit index · 2026-10-21</span>
+    <h1>Trunk-Caster TypeScript Audit</h1>
+    <p class="lede">Ten agents audited the codebase in parallel, one area each, and built the TypeScript version as they went. Everything lives in <code>TYPESCRIPT/</code>. No existing file was edited. Every integration step is written up in a hand-off or proposed as a <code>.patch</code>.</p>
+  </header>
+
+  <div class="facts">
+    <div class="fact"><b>8 · 1 · 1</b><span>convert · partial · keep in Rust</span></div>
+    <div class="fact"><b>~24,100</b><span>TS lines written (incl. tests)</span></div>
+    <div class="fact"><b class="ok">exit 0</b><span>tsc -b across all 10 areas</span></div>
+    <div class="fact"><b class="ok">222/222</b><span>tests pass</span></div>
+    <div class="fact"><b class="ok">66/66</b><span>live API checks vs :8080</span></div>
+  </div>
+
+  <section>
+    <h2>Fix first, in Rust and Python, whatever happens to TypeScript</h2>
+    <ul class="fix">
+      <li><span class="sev">Security</span><p><b>Path traversal through request ids.</b> <code>POST /api/request {"id":"../../x"}</code> writes a file outside its folder, and <code>/api/release</code> can delete one. CORS is open and Docker binds <code>0.0.0.0:8080</code>.</p><small>Area 05 · runtime.rs:948, 1066 · users.rs:10 · found by reading, not exploited</small></li>
+      <li><span class="sev">Security</span><p><b>Script injection in pages.</b> JSON is spliced into <code>&lt;script&gt;</code> without escaping <code>&lt;/</code> (<code>GLOBE_DATA</code>, <code>LIGHTS0</code>, <code>RELAY_*</code>), and <code>esc()</code> leaves <code>'</code> inside single-quoted <code>onclick</code> handlers. Renamed ports and caller names can run script.</p><small>Areas 01, 03, 09 · fix is a <code>json_island()</code> helper plus <code>'</code> → <code>&amp;#39;</code></small></li>
+      <li><span class="sev">Data loss</span><p><b>One typo wipes a config.</b> A <code>sites.json</code>, <code>globe.json</code> or <code>relay.json</code> that fails to parse is overwritten with defaults, and nothing is logged.</p><small>Area 10 · runtime.rs:134-149 · relay.rs:16-26</small></li>
+      <li><span class="sev">Stall</span><p><b>Via-2 route search is O(F²·T) under the global lock.</b> A JS copy took 8.6 s at 400 frames; the estimate for 710 is about 45 s per failing request, with HTTP, WS and Ward-Beck stalled. The TS port gets the same answers in 1.9 ms with three indexing changes Rust can copy.</p><small>Area 08 · routing.rs:492</small></li>
+      <li class="warn"><span class="sev">Logs</span><p><b>3,989 glued JSONL records</b> from two runtimes appending at once, and <code>renames.jsonl</code> at 206 MB, past the 100 MB cap.</p><small>Area 10 · <code>patches/util.rs.patch</code> ready</small></li>
+      <li class="warn"><span class="sev">Bugs</span><p>The Rust SDK's <code>HttpClient::rename</code> always fails because it expects the wrong reply type. A call with no hops stops the map drawing until reload. Pages stop responding after an in-place refresh. Quadrant panes scroll to the top on every refresh. Reclaim releases only one red line. Overnight quiet never applies.</p><small>Areas 04/05, 02, 03, 01, 08, 04</small></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>The ten areas</h2>
+    <div class="table"><table>
+      <tr><th>#</th><th>Area</th><th>Verdict</th><th>Built</th><th class="num">Tests</th></tr>
+      <tr><td class="n">01</td><td><a href="https://claude.ai/artifact/6BJvcnCLQvwhtheLYaewbe">Web core runtime</a></td><td><span class="pill convert">Convert</span></td><td>Shared page client as typed modules; 36 KB bundle that can replace the <code>JS</code> const</td><td class="num">15/15</td></tr>
+      <tr><td class="n">02</td><td><a href="https://claude.ai/artifact/AhxTVeoK2CcGitEZrL7bic">Map engine</a></td><td><span class="pill convert">Convert</span></td><td>GLOBE_JS with a typed layer registry; <code>GlobeData</code> matches live <code>/api/globe</code></td><td class="num">17/17</td></tr>
+      <tr><td class="n">03</td><td><a href="https://claude.ai/artifact/DLsyxeeKhYPn1d7bphoyCr">Page scripts</a></td><td><span class="pill convert">Convert</span></td><td>7 page bundles; 12 server-to-page injections catalogued, with JSON islands proposed</td><td class="num">tsc only</td></tr>
+      <tr><td class="n">04</td><td><a href="https://claude.ai/artifact/9XN1hMGzLVSSyWhYUXjH5y">SDK wire types</a></td><td><span class="pill convert">Convert</span></td><td>72 serde types, Ward-Beck parser, 6/8/16 labels, Node clients incl. TCP 7879; ts-rs plan</td><td class="num">61/61</td></tr>
+      <tr><td class="n">05</td><td><a href="https://claude.ai/artifact/3SqRaBDhw4ZxTrZjJBvqxD">HTTP + WebSocket API</a></td><td><span class="pill convert">Convert</span></td><td>63 routes typed, fetch and telemetry clients, OpenAPI catalogue, live smoke test</td><td class="num">12/12</td></tr>
+      <tr><td class="n">06</td><td><a href="https://claude.ai/artifact/MRJmmLaYa7n2TkZrn7F2EC">Python simulators</a></td><td><span class="pill convert">Convert</span></td><td>Codec, map server, launcher and RTS estate on Node; byte-identical to Python; frame-sim stays Rust</td><td class="num">37/37</td></tr>
+      <tr><td class="n">07</td><td><a href="https://claude.ai/artifact/WqJiAEZ8ArRBJ99FG3fKJa">Panels and Stream Deck</a></td><td><span class="pill convert">Convert</span></td><td>Panel schema types and validator, emulator, soft panel; audio through a browser bridge</td><td class="num">23/23</td></tr>
+      <tr><td class="n">08</td><td><a href="https://claude.ai/artifact/59SBrKyxFZaNCPrcvdS9jp">Broker core</a></td><td><span class="pill keep">Keep Rust</span></td><td>Route planner ported for browser previews; matches Rust on 3,000 fuzz cases and live state</td><td class="num">19/19</td></tr>
+      <tr><td class="n">09</td><td><a href="https://claude.ai/artifact/Ht8HsVTLRgsoa3F4zdpmUi">Server-side rendering</a></td><td><span class="pill partial">Partial</span></td><td>Auto-escaping <code>html</code> template; charts byte-exact against compiled Rust; Users page as proof</td><td class="num">20/20</td></tr>
+      <tr><td class="n">10</td><td><a href="https://claude.ai/artifact/AdLQgPuQWFbhZrZffePffC">Config, build and infra</a></td><td><span class="pill convert">Convert</span></td><td>Validators for 8 configs and 7 logs; build script; 8 patches behind a <code>ts-bundles</code> feature</td><td class="num">18/18</td></tr>
+    </table></div>
+  </section>
+
+  <section>
+    <h2>Suggested order of work</h2>
+    <ol class="order">
+      <li>Land the Rust fixes above. They don't depend on TypeScript.</li>
+      <li>Make <code>sdk/</code> the only home for wire types. Every other area holds local copies marked for dedup. Add ts-rs so the types are generated from Rust.</li>
+      <li>Apply the build patches behind the <code>ts-bundles</code> feature. Plain <code>cargo build</code> stays unchanged.</li>
+      <li>Swap the browser code page by page: web core, then the map engine, then the page scripts. Compare each against the inline version in a browser. None of the bundles has run in a browser yet.</li>
+      <li>Run the Node simulator and panels side by side with the Python ones (not at the same time on the same ports), then retire the Python.</li>
+      <li>Move page bodies to client rendering as the charts and Users proof show. Keep Rust rendering for first paint and the static snapshots.</li>
+    </ol>
+  </section>
+
+  <footer>Workspace: <code>TYPESCRIPT/</code> · <code>npm run typecheck</code> checks all ten areas · each area's <code>HANDOFF.md</code> is its source of truth</footer>
+</div>

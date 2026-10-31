@@ -1,0 +1,173 @@
+<title>TS · Map engine</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column, a verdict band up top, then scope → findings → built → integrate → risks → next. Palette borrows Trunk-Caster's own tokens. */
+:root{
+  --bg:#f6f7f9;--panel:#ffffff;--ink:#1b1f24;--muted:#5f6873;--line:#e3e6ea;
+  --accent:#1f6feb;--ok:#1a7f37;--warn:#9a5200;--bad:#c62828;--chip:#eef2f8;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1115;--panel:#171a21;--ink:#e6e8eb;--muted:#9aa3ad;--line:#2a2f38;
+  --accent:#5a9bff;--ok:#3fb950;--warn:#e3a35a;--bad:#ff6b6b;--chip:#1f2633;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1115;--panel:#171a21;--ink:#e6e8eb;--muted:#9aa3ad;--line:#2a2f38;
+  --accent:#5a9bff;--ok:#3fb950;--warn:#e3a35a;--bad:#ff6b6b;--chip:#1f2633;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+header{display:flex;flex-direction:column;gap:8px}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:28px;line-height:1.2;margin:0;text-wrap:balance}
+h2{font-size:17px;margin:0 0 8px;text-wrap:balance}
+h3{font-size:14px;margin:14px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+p{margin:0 0 10px;max-width:68ch}
+.verdict{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:14px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;background:var(--panel)}
+.verdict p{margin:0;flex:1 1 320px;min-width:0}
+.pill{font:600 12px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.pill.convert{color:var(--ok)}.pill.partial{color:var(--warn)}.pill.keep{color:var(--bad)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.fact{padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+.fact b{display:block;font:600 20px/1.2 var(--mono);font-variant-numeric:tabular-nums}
+.fact span{font-size:12px;color:var(--muted)}
+section{min-width:0}
+ul,ol{margin:0 0 10px;padding-left:20px}li{margin:3px 0}
+code{font:13px var(--mono);background:var(--chip);padding:1px 5px;border-radius:4px}
+pre{font:12.5px/1.5 var(--mono);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px;overflow-x:auto;margin:0 0 10px}
+pre code{background:none;padding:0}
+.table{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.muted{color:var(--muted)}
+footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+</style>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Trunk-Caster → TypeScript · area 02 of 10</span>
+    <h1>Map engine</h1>
+  </header>
+  <div class="verdict"><span class="pill convert">Convert</span><p>GLOBE_JS is about 400 lines of untyped, stateful canvas code that every map page depends on. It splits cleanly into pure maths, a typed layer registry, panels and an engine. The port typechecks under strict + <code>noUncheckedIndexedAccess</code>, bundles to a 38.7 KB IIFE, and keeps every sessionStorage key, DOM id, HTML string and draw call in the same order. It can therefore replace <code>&lt;script&gt;{GLOBE_JS}&lt;/script&gt;</code> without touching <code>map_block()</code>, <code>MAP_CSS</code> or <code>globe_data()</code>. The types also turned up a crash path, a config-wipe bug and stale telemetry.</p></div>
+  <div class="facts">
+    <div class="fact"><b>~600</b><span>source lines audited (GLOBE_JS 398, globe_data 139, map_block/MAP_CSS 17, globe_message 50)</span></div>
+    <div class="fact"><b>2,906</b><span>TS lines written (241 of them tests)</span></div>
+    <div class="fact"><b class="ok">pass</b><span>tsc -p globe (exit 0)</span></div>
+    <div class="fact"><b class="ok">17/17</b><span>unit tests</span></div>
+    <div class="fact"><b>38.7 KB</b><span>minified IIFE bundle</span></div>
+    <div class="fact"><b class="ok">8/8</b><span>JSON shapes match the live /api/globe</span></div>
+  </div>
+
+  <section><h2>Scope</h2>
+    <p>Line numbers are for the working tree on 2026-10-21. html.rs moves under concurrent edits. <code>git diff</code> shows GLOBE_JS itself unchanged.</p>
+    <div class="table"><table>
+      <tr><th>What</th><th>Where</th></tr>
+      <tr><td><code>globe_data()</code>, which defines the data shape</td><td><code>RUST-RUNTIME/src/html.rs:1009-1147</code></td></tr>
+      <tr><td><code>LAND_JSON</code> (now <code>pub</code>, also <code>GET /api/land</code>, http.rs:272)</td><td><code>html.rs:1151</code>, <code>land.json</code> (126 rings, 5,114 points)</td></tr>
+      <tr><td><code>MAP_CSS</code></td><td><code>html.rs:1153-1155</code></td></tr>
+      <tr><td><code>map_block()</code> and its callers</td><td><code>html.rs:1161-1169</code>; callers <code>:1602</code> globe, <code>:2474</code> continents, <code>:3147</code> aggregator (hub)</td></tr>
+      <tr><td><code>GLOBE_JS</code></td><td><code>html.rs:1171-1569</code></td></tr>
+      <tr><td><code>globe-delta</code> frame</td><td><code>runtime.rs:582-632</code></td></tr>
+      <tr><td>Status fields for the side panels</td><td><code>runtime.rs:559-580</code>, <code>continent_totals</code> ~2510-2537, <code>lines()</code> ~2662-2685</td></tr>
+      <tr><td>Wire structs</td><td><code>TRUNK-CASTER-SDK/src/types.rs</code> (Family, Badge, Frame, Connection/Hop, GlobeConfig/Zone), <code>sites.rs</code> (Tier), <code>RUST-RUNTIME/src/trends.rs</code> (TrunkTrend)</td></tr>
+      <tr><td>Shared client globals consumed</td><td><code>html.rs</code> JS const: api 111, num 116, esc 118, dur 119, TC 128, cacheGet 129, setText 134, predictedHour 138, ws dispatch 177, refreshMain 298-324</td></tr>
+    </table></div>
+  </section>
+
+  <section><h2>Findings</h2>
+    <h3>Bugs and hazards the types exposed</h3>
+    <ol>
+      <li><b class="bad">A call with no hops crashes the map for good.</b> <code>hops[NaN][0]</code> in the calls layer and <code>hops[0][0]</code> in <code>contAgg()</code> throw. <code>requestAnimationFrame</code> is the last line of <code>frame()</code>, so drawing stops until reload. Crosscheck already flags "no hops" (<code>routing.rs:722</code>), so the state can occur. <b>This is the port's only behavioural change:</b> such a call is skipped. Wrapping <code>frame()</code> in try/finally is recommended but not applied.</li>
+      <li><b class="bad">Saving the globe form wipes custom footer clocks.</b> The POST body has no <code>zones</code>, so serde fills in <code>default_zones()</code> and <code>set_globe</code> replaces the whole config. An empty <code>g_rot</code> or <code>g_grat</code> drops the key and gets a 400, and the form still says "saved".</li>
+      <li><b class="warn">A rotation-speed change never reaches an open page.</b> <code>onStatus</code> re-reads <code>data.config</code>, which is only replaced when the fleet size changes.</li>
+      <li><b class="warn">Deltas leave node fields stale.</b> Only <code>live</code> refreshes. <code>who</code>, <code>free</code>, <code>since</code>, <code>sim</code> and <code>load</code> drift, which affects the tooltips and the Data-ports colours. A refetch happens only when the frame <i>count</i> changes, so a fleet that swaps ids at the same size is never refetched. After a refetch the toolbar filter never rebuilds.</li>
+      <li><b class="warn">The continents cache key counts filter sizes, not contents.</b> The aggregate can be stale for up to 2 s.</li>
+      <li><b class="warn">Mixed time sources for the sun.</b> The hour comes from the simulated clock and the declination from the wall-clock date, so the season never follows the simulated calendar.</li>
+      <li>Zoom limits disagree: wheel 0.6–12, keys 0.6–8, the <code>g_zoom</code> input max 8.</li>
+      <li>The tilt sign is documented backwards in <code>GlobeConfig</code>. The unit-tested maths shows tilt = latitude centres that latitude, so −18 shows more of the south.</li>
+      <li>Dead or loose inputs: <code>GLOBE_FORCE_PROJECTION</code> is set nowhere, and the <code>cfg().projection</code> fallback is unreachable. An unknown <code>?view=</code> drew the uses arcs under the live legend. The port normalises it to <code>uses</code>, and an unknown stored mode to <code>globe</code>.</li>
+      <li><code>globe.view</code>/<code>globe.focus</code> are global while mode, layers and filter are per page. A focused trunk carries over to every map. Preserved.</li>
+      <li><code>LAND_JSON</code> (56 KB) is inlined into every map page, though <code>/api/land</code> now exists.</li>
+    </ol>
+    <h3>What TypeScript buys</h3>
+    <ul>
+      <li>A precise <code>GlobeData</code>/<code>GlobeDelta</code> contract. Checked against the live server (710 nodes): top level, config, node, site and protocol clusters, trunk, call and history key sets all match exactly, and every family and tier value seen is in the unions.</li>
+      <li>A typed <code>Layer</code> interface and registry. <code>registerLayer({key, draw}, {before, chip})</code> adds a layer, a toolbar chip and per-page persistence with no engine edits.</li>
+      <li>Pure, tested maths: orthographic and equirect, wrap and nearest copy, arc lift, Bézier, great-circle destination and small-circle cap, sub-solar point, solar altitude, the twilight smoothstep, the terminator raster, and the colour ramps.</li>
+    </ul>
+  </section>
+
+  <section><h2>What was built</h2>
+    <div class="table"><table>
+      <tr><th>File (TYPESCRIPT/globe/)</th><th>Lines</th><th>What</th></tr>
+      <tr><td><code>tsconfig.json</code></td><td class="num">10</td><td>extends base; DOM libs, node types for tests</td></tr>
+      <tr><td><code>globals.d.ts</code></td><td class="num">48</td><td>ambient TC, api, esc, setText, dur, num, cacheGet, predictedHour; window.GLOBE_*, TC_LAND</td></tr>
+      <tr><td><code>src/types.ts</code></td><td class="num">271</td><td>GlobeData and every nested shape, GlobeDelta, StatusMessage, ContinentTotal, LeaseLine, Hub, LandRing</td></tr>
+      <tr><td><code>src/math.ts</code></td><td class="num">291</td><td>pure maths and colours (no DOM)</td></tr>
+      <tr><td><code>src/layer.ts</code></td><td class="num">156</td><td>Layer, Scene, Engine, MapView, hit types, registry, chips</td></tr>
+      <tr><td><code>src/layers.ts</code></td><td class="num">692</td><td>sea, land, sun/night, graticule, trunks, data ports, hub, frames, calls, continents, labels</td></tr>
+      <tr><td><code>src/continents.ts</code></td><td class="num">110</td><td>pure continent aggregation</td></tr>
+      <tr><td><code>src/panels.ts</code></td><td class="num">241</td><td>tooltips, legend, side-trends, side-continents and side-lines</td></tr>
+      <tr><td><code>src/toolbar.ts</code></td><td class="num">73</td><td>#mapbar: view, colour, layer chips, protocol and vendor filter</td></tr>
+      <tr><td><code>src/state.ts</code></td><td class="num">96</td><td>sessionStorage (same keys), Filter</td></tr>
+      <tr><td><code>src/engine.ts</code></td><td class="num">682</td><td>Globe: panes and camera, loop, input, focus, telemetry, form</td></tr>
+      <tr><td><code>src/main.ts</code></td><td class="num">5</td><td>bundle entry: <code>bootGlobe()</code></td></tr>
+      <tr><td><code>src/math.test.ts</code></td><td class="num">241</td><td>17 tests: projections, wrap, lift, great circle, cap radius, sun, terminator, colours, aggregation</td></tr>
+      <tr><td><code>dist/globe.js</code>, <code>dist/globe.min.js</code></td><td class="num"></td><td>esbuild IIFE: 65.8 KB and 38.7 KB</td></tr>
+    </table></div>
+    <h3>Actual output (from TYPESCRIPT/)</h3>
+<pre><code>$ node node_modules/typescript/bin/tsc -p globe; echo EXIT $?
+EXIT 0
+
+$ node --test --experimental-strip-types globe/src/math.test.ts
+ℹ tests 17
+ℹ pass 17
+ℹ fail 0
+
+$ node_modules/.bin/esbuild globe/src/main.ts --bundle --format=iife --target=es2020 --minify --outfile=globe/dist/globe.min.js
+  globe\dist\globe.min.js  38.7kb</code></pre>
+  </section>
+
+  <section><h2>How to wire it in</h2>
+    <p class="warn">Nothing here has been applied.</p>
+    <ol>
+      <li>Build: from <code>TYPESCRIPT/</code>, run <code>node_modules/.bin/esbuild globe/src/main.ts --bundle --format=iife --target=es2020 --minify --outfile=globe/dist/globe.min.js</code>.</li>
+      <li>The Docker context only admits <code>RUST-RUNTIME/</code>, <code>TRUNK-CASTER-SDK/</code> and <code>TRUNK-SIMULATOR/frame-sim/</code> (<code>.dockerignore</code>). Copy the bundle to <code>RUST-RUNTIME/src/web/globe.min.js</code> from <code>rebuild.py</code> before <code>cargo build</code>. Alternatively, admit <code>TYPESCRIPT/*/dist/</code> in <code>.dockerignore</code> and add a COPY. This is a project-wide decision shared with the other agents.</li>
+      <li>In <code>html.rs</code>, replace the whole <code>const GLOBE_JS: &amp;str = r#" … "#;</code> (currently 1171-1569) with <code>const GLOBE_JS: &amp;str = include_str!("web/globe.min.js");</code>. The bundle has no <code>&lt;/script</code>. It is a <code>format!</code> argument, so braces need no escaping.</li>
+      <li>Keep <code>MAP_CSS</code>, <code>map_block()</code>, <code>globe_data()</code> and <code>LAND_JSON</code> unchanged. The shared client (<code>JS</code>) must still load first, as it does today.</li>
+      <li>Check by hand on <code>/</code> (both panes), the continents page (globe + sun, continents, grid) and the aggregator page (hub and Data ports chip). Check drag, shift-drag pan, wheel zoom, the m/t/arrow/Home keys, the frame, arc and continent tooltips, click-to-focus from arc and list, the filter, and that refreshMain keeps drawing.</li>
+    </ol>
+  </section>
+
+  <section><h2>Risks and open questions</h2>
+    <h3>Risks</h3>
+    <ul>
+      <li><b>No browser run yet.</b> Fidelity rests on a line-by-line port, tsc, the unit tests and the live JSON shape check. A side-by-side visual diff (old vs new on the same seed) is the missing proof.</li>
+      <li>One intentional behaviour change (empty hops are skipped) and two cosmetic normalisations (unknown <code>?view=</code> and unknown stored mode).</li>
+      <li><code>api</code> returns <code>unknown</code>. A full refetch is accepted only if it has a <code>nodes</code> array, the same check as <code>d &amp;&amp; d.nodes</code>.</li>
+      <li><code>globals.d.ts</code> duplicates agent 01's surface and <code>types.ts</code> duplicates agent 04's. They can drift until deduplicated.</li>
+      <li>Adds an esbuild step to a Rust-only Docker build.</li>
+    </ul>
+    <h3>Open questions</h3>
+    <ol>
+      <li>Should a trunk or call be hidden when <i>either</i> end is filtered? Today it is hidden only when both are.</li>
+      <li>Should the form send <code>zones</code> (or the server merge), and should "saved" depend on a 2xx?</li>
+      <li>Should <code>globe-delta</code> carry who/sim/free, or should the page refetch on a slower cadence?</li>
+      <li>Should the declination use the simulated day (<code>data.today</code>)?</li>
+      <li>Should the land be fetched from <code>/api/land</code> (cacheable) instead of inlined per page?</li>
+    </ol>
+  </section>
+
+  <section><h2>Next steps</h2>
+    <ol>
+      <li>Dedup <code>src/types.ts</code> against <code>TYPESCRIPT/sdk/</code> (agent 04) and <code>globals.d.ts</code> against <code>TYPESCRIPT/web-core/</code> (agent 01).</li>
+      <li>Run a visual parity check in a browser, then apply the wiring steps in one commit.</li>
+      <li>Fix Findings 2–4 server-side (Rust), then remove the "preserved" comments.</li>
+      <li>Wrap <code>frame()</code> so an exception cannot stop the loop.</li>
+    </ol>
+  </section>
+  <footer>Built 2026-10-21 · source of truth: <code>TYPESCRIPT/globe/HANDOFF.md</code></footer>
+</div>

@@ -1,0 +1,55 @@
+{
+  "name": "Director XL",
+  "device": {"model": "streamdeck-xl", "rows": 4, "cols": 8, "key_px": 96},
+  "matrix": "LOND",
+  "port": 0,
+  "api": "http://127.0.0.1:8180",
+  "name_on_matrix": "Stream Deck XL",
+  "poll_ms": 1000,
+  "buttons": [
+    {"row": 0, "col": 0, "label": "CAM 1",  "action": "talk", "target": "CAM01"},
+    {"row": 0, "col": 1, "label": "CAM 2",  "action": "talk", "target": "CAM02"},
+    {"row": 0, "col": 2, "label": "CAM 3",  "action": "talk", "target": "CAM03"},
+    {"row": 0, "col": 3, "label": "CAM 4",  "action": "talk", "target": "CAM04"},
+    {"row": 0, "col": 4, "label": "CAM 5",  "action": "talk", "target": "CAM05"},
+    {"row": 0, "col": 5, "label": "CAM 6",  "action": "talk", "target": "CAM06"},
+    {"row": 0, "col": 6, "label": "ALL\nCAMS", "action": "talk", "target": "CAM07"},
+    {"row": 0, "col": 7, "label": "REPLY",  "action": "reply", "colors": {"idle": "#1f3b57"}},
+
+    {"row": 1, "col": 0, "label": "IFB 1",  "action": "talk", "target": "IFB01"},
+    {"row": 1, "col": 1, "label": "IFB 2",  "action": "talk", "target": "IFB02"},
+    {"row": 1, "col": 2, "label": "IFB 3",  "action": "talk", "target": "IFB03"},
+    {"row": 1, "col": 3, "label": "IFB 4",  "action": "talk", "target": "IFB04"},
+    {"row": 1, "col": 4, "label": "LX",     "action": "talk", "target": "LGT01"},
+    {"row": 1, "col": 5, "label": "AUDIO",  "action": "talk", "target": "AUD01"},
+    {"row": 1, "col": 6, "label": "FIELD 1","action": "talk", "target": "FLD01"},
+    {"row": 1, "col": 7, "label": "FIELD 2","action": "talk", "target": "FLD02"},
+
+    {"row": 2, "col": 0, "label": "TD",     "action": "talk", "target": "PNL02"},
+    {"row": 2, "col": 1, "label": "PROD",   "action": "talk", "target": "PNL03"},
+    {"row": 2, "col": 2, "label": "AD",     "action": "talk", "target": "PNL04"},
+    {"row": 2, "col": 3, "label": "GFX",    "action": "talk", "target": "PNL05"},
+    {"row": 2, "col": 4, "label": "REPLAY", "action": "talk", "target": "PNL06"},
+    {"row": 2, "col": 5, "label": "EIC",    "action": "talk", "target": "PNL07"},
+    {"row": 2, "col": 6, "label": "PARIS\nDIR", "action": "call", "target": "PARI:1", "mode": "latch", "colors": {"idle": "#3a2a5a"}},
+    {"row": 2, "col": 7, "label": "HANG\nUP", "action": "hangup", "colors": {"idle": "#5a2a2a"}},
+
+    {"row": 3, "col": 0, "label": "MON\nIFB1", "action": "listen", "target": "IFB01", "mode": "latch", "colors": {"active": "#2e9e4f"}},
+    {"row": 3, "col": 1, "label": "MON\nIFB2", "action": "listen", "target": "IFB02", "mode": "latch", "colors": {"active": "#2e9e4f"}},
+    {"row": 3, "col": 2, "label": "MON\nWLS1", "action": "listen", "target": "WLS01", "mode": "latch", "colors": {"active": "#2e9e4f"}},
+    {"row": 3, "col": 3, "label": "MON\nWLS2", "action": "listen", "target": "WLS02", "mode": "latch", "colors": {"active": "#2e9e4f"}},
+    {"row": 3, "col": 4, "label": "MON\nCAM1", "action": "listen", "target": "CAM01", "mode": "latch", "colors": {"active": "#2e9e4f"}},
+    {"row": 3, "col": 5, "label": "MON\nTD",   "action": "listen", "target": "PNL02", "mode": "latch", "colors": {"active": "#2e9e4f"}},
+    {"row": 3, "col": 6, "label": "",          "action": "none"},
+    {"row": 3, "col": 7, "label": "PAGE 2",    "action": "page", "target": "cams2", "colors": {"idle": "#444444"}}
+  ],
+  "pages": {
+    "cams2": [
+      {"row": 0, "col": 0, "label": "CAM 7",  "action": "talk", "target": "CAM07"},
+      {"row": 0, "col": 1, "label": "CAM 8",  "action": "talk", "target": "CAM08"},
+      {"row": 0, "col": 2, "label": "CAM 9",  "action": "talk", "target": "CAM09"},
+      {"row": 0, "col": 3, "label": "CAM 10", "action": "talk", "target": "CAM10"},
+      {"row": 3, "col": 7, "label": "MAIN",   "action": "page", "target": "main", "colors": {"idle": "#444444"}}
+    ]
+  }
+}

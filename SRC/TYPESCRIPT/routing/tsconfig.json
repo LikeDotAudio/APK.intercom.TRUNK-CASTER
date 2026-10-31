@@ -1,0 +1,10 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "types": ["node"],
+    "rootDir": ".",
+    "tsBuildInfoFile": "../node_modules/.cache/tsbuildinfo/routing.tsbuildinfo"
+  },
+  "include": ["src/**/*.ts"]
+}

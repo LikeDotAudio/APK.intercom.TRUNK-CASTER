@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "trunk-caster/panels/panel.schema.json",
+  "title": "Trunk-Caster button panel",
+  "description": "A grid of buttons that acts as a keypanel on one port of one matrix. Used by Stream Deck (via Companion), by streamdeck_emulator.py, and by anything else that can press keys over the HTTP API.",
+  "type": "object",
+  "required": ["name", "device", "matrix", "port", "buttons"],
+  "properties": {
+    "name": {"type": "string", "description": "Human name of this panel."},
+    "device": {
+      "type": "object",
+      "description": "The physical or emulated button device.",
+      "required": ["model", "rows", "cols"],
+      "properties": {
+        "model": {"type": "string", "enum": ["streamdeck-mini", "streamdeck-mk2", "streamdeck-xl", "streamdeck-plus", "streamdeck-neo", "loupedeck-live", "razer-stream-controller", "xkeys", "companion", "browser", "generic"]},
+        "rows": {"type": "integer", "minimum": 1, "maximum": 16},
+        "cols": {"type": "integer", "minimum": 1, "maximum": 16},
+        "key_px": {"type": "integer", "description": "Key image size in pixels (72 for classic Stream Deck keys, 96 for XL/MK2, 120 for Plus).", "default": 72},
+        "encoders": {"type": "integer", "description": "Rotary encoders on the device (Stream Deck Plus has 4).", "default": 0},
+        "serial": {"type": "string", "description": "Optional hardware serial so a profile sticks to one deck."}
+      }
+    },
+    "matrix": {"type": "string", "description": "Alpha of the matrix this panel lives on, e.g. LOND."},
+    "port": {"type": "integer", "minimum": 0, "description": "Port number this panel occupies on that matrix. 0 = claim the next free keypanel port on connect."},
+    "api": {"type": "string", "format": "uri", "description": "Base URL of the matrix API, e.g. http://127.0.0.1:8080. May be overridden on the command line."},
+    "name_on_matrix": {"type": "string", "description": "How the panel introduces itself when it claims a port."},
+    "poll_ms": {"type": "integer", "default": 1000, "description": "How often to poll /api/port for feedback (incoming calls)."},
+    "pages": {
+      "type": "object",
+      "description": "Optional extra pages of buttons, keyed by page name. The top-level buttons array is page 'main'.",
+      "additionalProperties": {"type": "array", "items": {"$ref": "#/$defs/button"}}
+    },
+    "buttons": {"type": "array", "items": {"$ref": "#/$defs/button"}},
+    "encoders": {
+      "type": "array",
+      "description": "Stream Deck Plus dials.",
+      "items": {
+        "type": "object",
+        "required": ["index", "action"],
+        "properties": {
+          "index": {"type": "integer", "minimum": 0},
+          "label": {"type": "string"},
+          "action": {"type": "string", "enum": ["listen_level", "mic_level", "scroll_targets", "none"]},
+          "target": {"type": "string"}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "button": {
+      "type": "object",
+      "required": ["row", "col", "action"],
+      "properties": {
+        "row": {"type": "integer", "minimum": 0},
+        "col": {"type": "integer", "minimum": 0},
+        "label": {"type": "string", "description": "Text on the key. Use \\n for a second line. If omitted the target alpha is shown."},
+        "action": {"type": "string", "enum": ["talk", "listen", "call", "hangup", "reply", "page", "none"]},
+        "target": {
+          "type": "string",
+          "description": "Port number or alpha on the same matrix (talk/listen), 'ICOM:port' for call (e.g. PARI:5), page name for page."
+        },
+        "mode": {"type": "string", "enum": ["momentary", "latch"], "default": "momentary"},
+        "colors": {
+          "type": "object",
+          "properties": {
+            "idle": {"type": "string", "default": "#2b2b2b"},
+            "active": {"type": "string", "default": "#d9342b"},
+            "incoming": {"type": "string", "default": "#f0b429"},
+            "text": {"type": "string", "default": "#ffffff"}
+          }
+        },
+        "icon": {"type": "string", "description": "Optional PNG path for the key face (72x72 / 96x96 / 120x120)."},
+        "hold_to_latch_ms": {"type": "integer", "description": "Momentary keys become latched if held longer than this.", "default": 0}
+      }
+    }
+  }
+}

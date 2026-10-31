@@ -1,0 +1,104 @@
+Telex-REG DEFINITIONS ::= BEGIN
+
+IMPORTS
+	MODULE-IDENTITY,
+	enterprises
+		FROM SNMPv2-SMI;
+
+telexREG MODULE-IDENTITY
+	LAST-UPDATED	"201006221630Z"
+	ORGANIZATION	"Telex Communications, Inc."
+	CONTACT-INFO
+		"James Puttick
+		Kerr Vayne Systems Ltd.
+		1 Valleywood Drive, Suite 201
+		Markham, Ontario
+		L3R 5L9
+		Canada
+
+		Phone:  +1 905 475 6161
+		Email:  snmp_info@kvs.com"
+	DESCRIPTION
+		"Central OID registry for Telex Communications.
+
+		Copyright 2006 by Telex Communications, Inc. All
+		rights reserved. Reproduction, in whole or in part,
+		without prior written permission from Telex is prohibited."
+
+	REVISION
+		"201006221630Z"
+	DESCRIPTION
+		"Added OID for ZEUS-III Lite."
+	REVISION
+		"201002181900Z"
+	DESCRIPTION
+		"Added OIDs for ZEUS-III and RVON-16."
+	REVISION
+		"200610301700Z"
+	DESCRIPTION
+		"Renamed .mi2 files to .mib"
+	REVISION
+		"200602011700Z"
+	DESCRIPTION
+		"Added OIDs for various RVON devices.
+		Renamed telex.experimental to telex.telexExper to avoid
+		conflict with .iso.org.dod.internet.experimental.
+		Added Copyright statement."
+	REVISION
+		"200512161700Z"
+	DESCRIPTION
+		"Moved OIDs into enterprises.telex tree.
+		Eliminated 'family' subtree. Defined applicable device
+		types under telex.intercom.objIdTree (returned as the value
+		of sysObjectID.0)."
+	REVISION
+		"200509161700Z"
+	DESCRIPTION
+		"Initial implementation."
+	::= { telexModules 1 }
+
+--------------------------------------------------------------------------------
+-- The Telex group
+--------------------------------------------------------------------------------
+
+telex				OBJECT IDENTIFIER ::= { enterprises 24287 }
+    telexModules		OBJECT IDENTIFIER ::= {   telex 1 }
+    objectGroups		OBJECT IDENTIFIER ::= {   telex 2 }
+    agentCapabs			OBJECT IDENTIFIER ::= {   telex 3 }
+    compliance			OBJECT IDENTIFIER ::= {   telex 4 }
+    telexExper			OBJECT IDENTIFIER ::= {   telex 5 }
+	telexModsExper		OBJECT IDENTIFIER ::= {     telexExper 1 }
+	objGroupsExper		OBJECT IDENTIFIER ::= {     telexExper 2 }
+        agentCapabsExper	OBJECT IDENTIFIER ::= {     telexExper 3 }
+        complianceExper		OBJECT IDENTIFIER ::= {     telexExper 4 }
+	--			OBJECT IDENTIFIER ::= {     telexExper 5 }
+        icomExper		OBJECT IDENTIFIER ::= {     telexExper 6 }
+            tmExper		OBJECT IDENTIFIER ::= {       icomExper 4 }
+    intercom			OBJECT IDENTIFIER ::= {   telex 6 }
+        objIdTree		OBJECT IDENTIFIER ::= {     intercom 1 }
+        matrix			OBJECT IDENTIFIER ::= {     intercom 2 }
+        rvon			OBJECT IDENTIFIER ::= {     intercom 3 }
+        trunkMaster		OBJECT IDENTIFIER ::= {     intercom 4 }
+
+--------------------------------------------------------------------------------
+-- System Type
+--
+-- OIDs under objIdTree represent the different system/device types which
+-- can be returned as values for sysObjectID.
+--------------------------------------------------------------------------------
+
+sysTypeMatrix 		OBJECT IDENTIFIER ::= { objIdTree 1 }
+    objIdMtx1Frame	OBJECT IDENTIFIER ::= {   sysTypeMatrix 1 }
+    objIdMtxBusExpanded	OBJECT IDENTIFIER ::= {   sysTypeMatrix 2 }
+    objIdMtxCronus	OBJECT IDENTIFIER ::= {   sysTypeMatrix 3 }
+    objIdMtxZeusIII	OBJECT IDENTIFIER ::= {   sysTypeMatrix 4 }
+    objIdMtxZeusIIILite	OBJECT IDENTIFIER ::= {   sysTypeMatrix 5 }
+sysTypeRvon		OBJECT IDENTIFIER ::= { objIdTree 2 }
+    objIdRvon1		OBJECT IDENTIFIER ::= {   sysTypeRvon 1 }
+    objIdRvon8		OBJECT IDENTIFIER ::= {   sysTypeRvon 2 }
+    objIdRvonC		OBJECT IDENTIFIER ::= {   sysTypeRvon 3 }
+    objIdRvonIo		OBJECT IDENTIFIER ::= {   sysTypeRvon 4 }
+    objIdRvon16		OBJECT IDENTIFIER ::= {   sysTypeRvon 5 }
+sysTypeTM2000		OBJECT IDENTIFIER ::= { objIdTree 3 }
+
+END

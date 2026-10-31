@@ -1,0 +1,31 @@
+{
+  "host": "CA-FDLB6M3",
+  "protocol_name": "Local Relay",
+  "matrices": [
+    {
+      "id": "relay-a",
+      "label": "Relay 8x8 A",
+      "io": 8,
+      "casters": 8,
+      "port_names": {}
+    },
+    {
+      "id": "relay-b",
+      "label": "Relay 8x8 B",
+      "io": 8,
+      "casters": 8,
+      "port_names": {}
+    },
+    {
+      "id": "relay-2x2",
+      "label": "akuzub",
+      "io": 2,
+      "casters": 2,
+      "port_names": {
+        "U00": "akuzub mic",
+        "U01": "akuzub speakers"
+      }
+    }
+  ],
+  "over_threshold_dbfs": -6.0
+}

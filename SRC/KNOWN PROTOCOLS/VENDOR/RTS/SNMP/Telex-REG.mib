@@ -1,0 +1,977 @@
+Telex-RVON-MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+	MODULE-IDENTITY, NOTIFICATION-TYPE, OBJECT-TYPE,
+	Counter32, IpAddress, Integer32, Unsigned32
+		FROM SNMPv2-SMI
+	TruthValue
+		FROM SNMPv2-TC
+	MODULE-COMPLIANCE, NOTIFICATION-GROUP, OBJECT-GROUP
+		FROM SNMPv2-CONF
+	compliance, objectGroups, rvon, telexModules
+		FROM Telex-REG
+	RvonCodec, RvonDevice, RvonDescription
+		FROM Telex-Icom-TC;
+
+telexRvonMIB MODULE-IDENTITY
+	LAST-UPDATED	"200611131700Z"
+	ORGANIZATION	"Telex Communications, Inc."
+	CONTACT-INFO
+		"James Puttick
+		Kerr Vayne Systems Ltd.
+		1 Valleywood Drive, Suite 201
+		Markham, Ontario
+		L3R 5L9
+		Canada
+
+		Phone:  +1 905 475 6161
+		Email:  snmp_info@kvs.com"
+	DESCRIPTION
+		"The MIB module for Telex RVON devices.
+
+		Copyright 2006 by Telex Communications, Inc. All
+		rights reserved. Reproduction, in whole or in part,
+		without prior written permission from Telex is prohibited."
+
+	REVISION
+		"200611131700Z"
+	DESCRIPTION
+		"Renamed .mi2 files to .mib
+		Eliminated versionString (available as sysDescr).
+		Added device, channel descriptions.
+		VAD is now per-channel.
+		Pass-through configuration, statistics moved into a table
+		to allow for devices with more than 1 serial port.
+		Network errors are per-channel, not per-device.
+		Put objects into multiple groups, rather than 1 large group.
+		Added compliance statement."
+	REVISION
+		"200601091700Z"
+	DESCRIPTION
+		"Initial implementation."
+	::= { telexModules 6 }
+
+--------------------------------------------------------------------------------
+-- Top Level of RVON MIB
+--------------------------------------------------------------------------------
+
+rvConfig	OBJECT IDENTIFIER ::= { rvon 1 }
+rvStatus	OBJECT IDENTIFIER ::= { rvon 2 }
+rvEvents	OBJECT IDENTIFIER ::= { rvon 3 }
+
+--------------------------------------------------------------------------------
+-- Configuration
+--------------------------------------------------------------------------------
+
+--versionString
+--	::= { rvConfig 1 }
+
+numGpioInputs OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of general-purpose inputs supported by this device."
+	::= { rvConfig 2 }
+
+numGpioOutputs OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of general-purpose outputs supported by this device."
+	::= { rvConfig 3 }
+
+chanCfgTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF ChanCfgEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION
+		"A table defining the configuration of each audio channel."
+	::= { rvConfig 4 }
+
+chanCfgEntry OBJECT-TYPE
+	SYNTAX		ChanCfgEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"Audio configuration for one VOIP channel."
+	INDEX		{ ccChan }
+	::= { chanCfgTable 1 }
+
+ChanCfgEntry ::= SEQUENCE
+		{
+			ccChan		Integer32,
+			ccPartnerIp	IpAddress,
+			ccPartnerType	RvonDevice,
+			ccPartnerChan	Integer32,
+			ccCodec		RvonCodec,
+			ccPktSizeMsec	Integer32,
+			ccPktSizeBytes	Integer32,
+			ccVad		TruthValue,
+			ccVadThreshold	Integer32,
+			ccDescription	RvonDescription
+		}
+
+ccChan OBJECT-TYPE
+	SYNTAX		Integer32 (1..100)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The VOIP channel number."
+	::= { chanCfgEntry 1 }
+
+ccPartnerIp OBJECT-TYPE
+	SYNTAX		IpAddress
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The IP address of the RVON device to which this channel
+		connects."
+	::= { chanCfgEntry 2 }
+
+ccPartnerType OBJECT-TYPE
+	SYNTAX		RvonDevice
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The type of RVON device to which this channel connects."
+	::= { chanCfgEntry 3 }
+
+ccPartnerChan OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The VOIP channel of the RVON device to which this channel
+		connects."
+	::= { chanCfgEntry 4 }
+
+ccCodec OBJECT-TYPE
+	SYNTAX		RvonCodec
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The preferred codec to use."
+	::= { chanCfgEntry 5 }
+
+ccPktSizeMsec OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The preferred packet size to use (in mSec)"
+	::= { chanCfgEntry 6 }
+
+ccPktSizeBytes OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The preferred packet size to use (in bytes)"
+	::= { chanCfgEntry 7 }
+
+ccVad OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"Should VAD be enabled for this channel?"
+	::= { chanCfgEntry 8 }
+
+ccVadThreshold OBJECT-TYPE
+	SYNTAX		Integer32
+	UNITS		"dBm"
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The VAD threshold. The valid range is -60dBm to -30dBm.
+		A value of -99 indicates that the threshold is set to adaptive."
+	::= { chanCfgEntry 9 }
+
+ccDescription OBJECT-TYPE
+	SYNTAX		RvonDescription
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"A text string, used to provide identifying information about
+		the channel."
+	::= { chanCfgEntry 10 }
+
+ioGainTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF IoGainEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The current gain settings for each channel."
+	::= { rvConfig 5 }
+
+ioGainEntry OBJECT-TYPE
+	SYNTAX		IoGainEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The current gain settings for one VOIP channel."
+	INDEX		{ iogChan }
+	::= { ioGainTable 1 }
+
+IoGainEntry ::= SEQUENCE
+		{
+			iogChan		Integer32,
+			iogGainNetRx	Integer32,
+			iogGainNetTx	Integer32
+		}
+
+iogChan OBJECT-TYPE
+	SYNTAX		Integer32 (1..100)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The VOIP channel number."
+	::= { ioGainEntry 1 }
+
+iogGainNetRx OBJECT-TYPE
+	SYNTAX		Integer32
+	UNITS		"tenths of a dB"
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The gain (or loss) applied to audio received from the
+		network. A loss of -2.5dB would be represented as a value
+		of -25."
+	::= { ioGainEntry 2 }
+
+iogGainNetTx OBJECT-TYPE
+	SYNTAX		Integer32
+	UNITS		"tenths of a dB"
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The gain (or loss) applied to audio transmitted to the
+		network. A loss of -2.5dB would be represented as a value
+		of -25."
+	::= { ioGainEntry 3 }
+
+passthroughCfgTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF PassthroughCfgEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION
+		"A table defining the configuration of the pass-through
+		serial ports."
+	::= { rvConfig 6 }
+
+passthroughCfgEntry OBJECT-TYPE
+	SYNTAX		PassthroughCfgEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"Configuration of one pass-through serial port."
+	INDEX		{ ptcfgPort }
+	::= { passthroughCfgTable 1 }
+
+PassthroughCfgEntry ::= SEQUENCE
+		{
+			ptcfgPort	Integer32,
+			ptcfgIp		IpAddress,
+			ptcfgSpeed	Integer32
+		}
+
+ptcfgPort OBJECT-TYPE
+	SYNTAX		Integer32 (1..2)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The pass-through channel number"
+	::= { passthroughCfgEntry 1 }
+
+ptcfgIp OBJECT-TYPE
+	SYNTAX		IpAddress
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The IP address of the partner RVON device for serial
+		pass-through data."
+	::= { passthroughCfgEntry 2 }
+
+ptcfgSpeed OBJECT-TYPE
+	SYNTAX		Integer32
+	UNITS		"Baud"
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The configured speed of the serial port."
+	::= { passthroughCfgEntry 3 }
+
+--vadThreshold
+--	::= { rvConfig 7 }
+
+deviceDescription OBJECT-TYPE
+	SYNTAX		RvonDescription
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"A text string, used to provide identifying information about
+		the RVON device."
+	::= { rvConfig 8 }
+
+numPassthroughPorts OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of pass-through serial ports in this device."
+	::= { rvConfig 9 }
+
+--------------------------------------------------------------------------------
+-- Status
+--------------------------------------------------------------------------------
+
+chanStatTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF ChanStatEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION
+		"A table giving the current connection status of all channels."
+	::= { rvStatus 1 }
+
+chanStatEntry OBJECT-TYPE
+	SYNTAX		ChanStatEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The current connection status for one VOIP channel."
+	INDEX		{ csChan }
+	::= { chanStatTable 1 }
+
+ChanStatEntry ::= SEQUENCE
+		{
+			csChan				Integer32,
+			csPortNum			Integer32,
+			csIsUp				TruthValue,
+			csPanelPresent			TruthValue,
+			csUpTime			Unsigned32,
+			csCodec				RvonCodec,
+			csPktSizeMsec			Integer32,
+			csPktSizeBytes			Integer32,
+			csVad				TruthValue,
+			csNumConnects			Counter32,
+			csNumUnderruns			Counter32,
+			csNumOverruns			Counter32,
+			csNumMissedSeqPkts		Counter32,
+			csNumReplayedPkts		Counter32,
+			csAvgJitter			Integer32,
+			csPlayoutBufferSize		Integer32,
+			csNomPlayoutDelay		Integer32,
+			csAvgPlayoutDelay		Integer32,
+			csVoicePktsTxd			Counter32,
+			csVoicePktsRxd			Counter32,
+			csDtmfRelayPktsTxd		Counter32,
+			csDtmfRelayPktsRxd		Counter32,
+			csSilenceDetectedPktsTxd	Counter32,
+			csSilenceDetectedPktsRxd	Counter32,
+			csSuppressedSilencePktsTx	Counter32,
+			csMinPktIntervalTimeRx		Integer32,
+			csMaxPktIntervalTimeRx		Integer32
+		}
+
+csChan OBJECT-TYPE
+	SYNTAX		Integer32 (1..100)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The VOIP channel number."
+	::= { chanStatEntry 1 }
+
+csPortNum OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The intercom port number, if known; 0 otherwise.
+
+		For devices which do not plug into an intercom frame, such
+		as the RVON-1 and the RVON-IO, csPortNum reports 0."
+	::= { chanStatEntry 2 }
+
+csIsUp OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"Is this VOIP channel up?"
+	::= { chanStatEntry 3 }
+
+csPanelPresent OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"Is there a keypanel connected on this channel?"
+	::= { chanStatEntry 4 }
+
+csUpTime OBJECT-TYPE
+	SYNTAX		Unsigned32
+	UNITS		"seconds"
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"How long the VOIP channel has been up. If the VOIP channel
+		is not currently up, csUpTime reports 0."
+	::= { chanStatEntry 5 }
+
+csCodec OBJECT-TYPE
+	SYNTAX		RvonCodec
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The codec in use. This may differ from ccCodec if the devices
+		at the two ends of the channel are not configured with the
+		same codec."
+	::= { chanStatEntry 6 }
+
+csPktSizeMsec OBJECT-TYPE
+	SYNTAX		Integer32
+	UNITS		"mSec"
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The size of each packet, expressed in mSec. This may differ
+		from ccPktSizeMsec if the devices at the two ends of the
+		channel are not configured identically."
+	::= { chanStatEntry 7 }
+
+csPktSizeBytes OBJECT-TYPE
+	SYNTAX		Integer32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of bytes of audio data in each packet. This
+		depends purely on csCodec and csPktSizeMsec."
+	::= { chanStatEntry 8 }
+
+csVad OBJECT-TYPE
+	SYNTAX		TruthValue
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"Is VAD currently in use for this channel?"
+	::= { chanStatEntry 9 }
+
+csNumConnects OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of times the VOIP connection has been established."
+	::= { chanStatEntry 10 }
+
+csNumUnderruns OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of times an underrun occurred because there was
+		no packet available to play. Note that packet underruns
+		will occur continuously during periods of low audio level
+		if VAD is enabled."
+	::= { chanStatEntry 11 }
+
+csNumOverruns OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of packets which were discarded because the
+		playout buffer was full."
+	::= { chanStatEntry 12 }
+
+csNumMissedSeqPkts OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of packets which were missed, calculated based
+		on packet sequence numbers."
+	::= { chanStatEntry 13 }
+
+csNumReplayedPkts OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The number of packets which were replayed."
+	::= { chanStatEntry 14 }
+
+csAvgJitter OBJECT-TYPE
+	SYNTAX		Integer32
+	UNITS		"mSec"
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The average jitter time, which is an indication of how
+		much variation there is in packet arrival time."
+	::= { chanStatEntry 15 }
+
+csPlayoutBufferSize OBJECT-TYPE
+	SYNTAX		Integer32
+	UNITS		"mSec"
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The playout buffer size. This indicates how many packets
+		can be received and held pending playout before an overrun
+		error occurs."
+	::= { chanStatEntry 16 }
+
+csNomPlayoutDelay OBJECT-TYPE
+	SYNTAX		Integer32
+	UNITS		"mSec"
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"How much audio must be received before playout begins."
+	::= { chanStatEntry 17 }
+
+csAvgPlayoutDelay OBJECT-TYPE
+	SYNTAX		Integer32
+	UNITS		"mSec"
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The average delay between when an audio sample is received
+		and when it starts playing."
+	::= { chanStatEntry 18 }
+
+csVoicePktsTxd OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The number of audio packets transmitted."
+	::= { chanStatEntry 19 }
+
+csVoicePktsRxd OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The number of audio packets received."
+	::= { chanStatEntry 20 }
+
+csDtmfRelayPktsTxd OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of DTMF relay packets transmitted. DTMF relay
+		packets are used to transmit DTMF information, reducing the
+		required audio bandwidth."
+	::= { chanStatEntry 21 }
+
+csDtmfRelayPktsRxd OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of DTMF relay packets received. DTMF relay
+		packets are used to transmit DTMF information, reducing the
+		required audio bandwidth."
+	::= { chanStatEntry 22 }
+
+csSilenceDetectedPktsTxd OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of times a silence packet was transmitted instead
+		of a normal audio packet. Silence packets are only sent if
+		VAD is enabled."
+	::= { chanStatEntry 23 }
+
+csSilenceDetectedPktsRxd OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of silence packets received. Silence packets
+		are only sent if VAD is enabled."
+	::= { chanStatEntry 24 }
+
+csSuppressedSilencePktsTx OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of audio packets which were discarded instead of
+		being sent because they only contained silence."
+	::= { chanStatEntry 25 }
+
+csMinPktIntervalTimeRx OBJECT-TYPE
+	SYNTAX		Integer32
+	UNITS		"mSec"
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The minimum arrival time between consecutive received
+		audio packets."
+	::= { chanStatEntry 26 }
+
+csMaxPktIntervalTimeRx OBJECT-TYPE
+	SYNTAX		Integer32
+	UNITS		"mSec"
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The maximum arrival time between consecutive received
+		audio packets."
+	::= { chanStatEntry 27 }
+
+--nwErrors
+--	::= { rvStatus 2 }
+
+passthroughStatTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF PassthroughStatEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION
+		"A table providing statistics for the pass-through
+		serial ports (seral-to-network and network-to-serial)."
+	::= { rvStatus 3 }
+
+passthroughStatEntry OBJECT-TYPE
+	SYNTAX		PassthroughStatEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"Pass-through statistics for one serial port."
+	INDEX		{ ptstatPort }
+	::= { passthroughStatTable 1 }
+
+PassthroughStatEntry ::= SEQUENCE
+		{
+			ptstatPort	Integer32,
+			ptstatSnBytes	Counter32,
+			ptstatSnErrors	Counter32,
+			ptstatNsBytes	Counter32,
+			ptstatNsErrors	Counter32
+		}
+
+ptstatPort OBJECT-TYPE
+	SYNTAX		Integer32 (1..2)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The pass-through channel number"
+	::= { passthroughStatEntry 1 }
+
+ptstatSnBytes OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of bytes received from the serial port and
+		forwarded on the network to another RVON device."
+	::= { passthroughStatEntry 2 }
+
+ptstatSnErrors OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of errors that occurred in trying to receive
+		data on the serial port."
+	::= { passthroughStatEntry 3 }
+
+ptstatNsBytes OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of bytes received via the network and transmitted
+		on the serial port."
+	::= { passthroughStatEntry 4 }
+
+ptstatNsErrors OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of errors that occurred in trying to transmit
+		data (received from the network) on the serial port."
+	::= { passthroughStatEntry 5 }
+
+gpioStat OBJECT IDENTIFIER ::= { rvStatus 4 }
+
+gsInputs OBJECT-TYPE
+	SYNTAX		OCTET STRING
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The status of the local general purpose inputs.
+
+		The status is sent as a sequence of octets. The mapping of
+		octet string bits to GPI status is as follows:
+
+		          Octet #1      Octet #2     ...
+		        MSB ... LSB   MSB ... LSB    ...
+		        -----------   -----------    ---
+		GPI #:	 8  ...  1     16 ...  9     ...
+
+		numGpioInputs can be used to determine the total number of
+		octets in the response, and the number of significant bits
+		in the last octet."
+	::= { gpioStat 1 }
+
+gsOutputs OBJECT-TYPE
+	SYNTAX		OCTET STRING
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The status of the local general purpose outputs.
+
+		The status is sent as a sequence of octets. The mapping of
+		octet string bits to GPI status is as follows:
+
+		          Octet #1      Octet #2     ...
+		        MSB ... LSB   MSB ... LSB    ...
+		        -----------   -----------    ---
+		GPI #:	 8  ...  1     16 ...  9     ...
+
+		numGpioOutputs can be used to determine the total number of
+		octets in the response, and the number of significant bits
+		in the last octet."
+	::= { gpioStat 2 }
+
+nwErrTable OBJECT-TYPE
+	SYNTAX		SEQUENCE OF NwErrEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION
+		"A table listing various network-related errors for each
+		channel."
+	::= { rvStatus 5 }
+
+nwErrEntry OBJECT-TYPE
+	SYNTAX		NwErrEntry
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"Network error counters for one VOIP channel."
+	INDEX		{ nwChan }
+	::= { nwErrTable 1 }
+
+NwErrEntry ::= SEQUENCE
+		{
+			nwChan		Integer32,
+			nweBadHeader	Counter32,
+			nweBadMAC	Counter32,
+			nweBadSSRC	Counter32,
+			nweBadPayload	Counter32,
+			nweBadDest	Counter32,
+			nweLostPkts	Counter32,
+			nweMicroOverrun	Counter32
+		}
+
+nwChan OBJECT-TYPE
+	SYNTAX		Integer32 (1..100)
+	MAX-ACCESS	not-accessible
+	STATUS		current
+	DESCRIPTION	"The VOIP channel number."
+	::= { nwErrEntry 1 }
+
+nweBadHeader OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of packets discarded due to invalid data in
+		the message header."
+	::= { nwErrEntry 2 }
+
+nweBadMAC OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of packets discarded because of an invalid
+		authentication code in the header."
+	::= { nwErrEntry 3 }
+
+nweBadSSRC OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of packets discarded because of an invalid
+		SSRC field."
+	::= { nwErrEntry 4 }
+
+nweBadPayload OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of packets discarded because the data was
+		formatted incorrectly."
+	::= { nwErrEntry 5 }
+
+nweBadDest OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of packets discarded because they specified
+		no destination."
+	::= { nwErrEntry 6 }
+
+nweLostPkts OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION	"The number of packets never received from the network."
+	::= { nwErrEntry 7 }
+
+nweMicroOverrun OBJECT-TYPE
+	SYNTAX		Counter32
+	MAX-ACCESS	read-only
+	STATUS		current
+	DESCRIPTION
+		"The number of packets which were handled by the DSP but then
+		lost because the processor was too busy to handle them."
+	::= { nwErrEntry 8 }
+
+--------------------------------------------------------------------------------
+-- Notification events
+--------------------------------------------------------------------------------
+
+rvonEventsV2 OBJECT IDENTIFIER ::= { rvEvents 0 }
+
+rvLinkStatChgd NOTIFICATION-TYPE
+	OBJECTS		{ csIsUp }
+	STATUS		current
+	DESCRIPTION
+		"A notification that an audio connection was established
+		or terminated."
+	::= { rvonEventsV2 1 }
+
+rvPanelStatChgd NOTIFICATION-TYPE
+	OBJECTS		{ csPanelPresent }
+	STATUS		current
+	DESCRIPTION
+		"A notification that a locally-connected keypanel started or
+		stopped responding."
+	::= { rvonEventsV2 2 }
+
+--------------------------------------------------------------------------------
+-- Object groups
+--------------------------------------------------------------------------------
+
+rvonGroups OBJECT IDENTIFIER ::= { objectGroups 6 }
+
+rvonDescrGroup OBJECT-GROUP
+	OBJECTS
+		{
+			deviceDescription, ccDescription
+		}
+	STATUS		current
+	DESCRIPTION	"Device and channel descriptions."
+	::= { rvonGroups 1 }
+
+rvonGpioGroup OBJECT-GROUP
+	OBJECTS
+		{
+			numGpioInputs, numGpioOutputs,
+			gsInputs, gsOutputs
+		}
+	STATUS		current
+	DESCRIPTION	"Objects related to general-purpose inputs & outputs."
+	::= { rvonGroups 2 }
+
+rvonPassthroughGroup OBJECT-GROUP
+	OBJECTS
+		{
+			ptcfgIp, ptcfgSpeed, numPassthroughPorts,
+			ptstatSnBytes, ptstatSnErrors,
+			ptstatNsBytes, ptstatNsErrors
+		}
+	STATUS		current
+	DESCRIPTION
+		"Configuration and statistics for serial pass-through ports."
+	::= { rvonGroups 3 }
+
+rvonChanCfgGroup OBJECT-GROUP
+	OBJECTS
+		{
+			ccPartnerIp, ccPartnerType, ccPartnerChan,
+			ccCodec, ccPktSizeMsec, ccPktSizeBytes,
+			ccVad, ccVadThreshold
+		}
+	STATUS		current
+	DESCRIPTION	"RVON channel configuration objects."
+	::= { rvonGroups 4 }
+
+rvonIoGainGroup OBJECT-GROUP
+	OBJECTS
+		{
+			iogGainNetRx, iogGainNetTx
+		}
+	STATUS		current
+	DESCRIPTION	"Input and output audio gain controls."
+	::= { rvonGroups 5 }
+
+rvonChanStatGroup OBJECT-GROUP
+	OBJECTS
+		{
+			csPortNum, csIsUp, csPanelPresent, csUpTime,
+			csCodec, csPktSizeMsec, csPktSizeBytes, csVad,
+			csNumConnects
+		}
+	STATUS		current
+	DESCRIPTION	"Channel status related to connections."
+	::= { rvonGroups 6 }
+
+rvonVoipStatGroup OBJECT-GROUP
+	OBJECTS
+		{
+			csNumUnderruns, csNumOverruns,
+			csNumMissedSeqPkts, csNumReplayedPkts, csAvgJitter,
+			csPlayoutBufferSize,
+			csNomPlayoutDelay, csAvgPlayoutDelay
+		}
+	STATUS		current
+	DESCRIPTION	"Channel status related to VOIP audio transport."
+	::= { rvonGroups 7 }
+
+rvonNwStatGroup OBJECT-GROUP
+	OBJECTS
+		{
+			csVoicePktsTxd, csVoicePktsRxd,
+			csDtmfRelayPktsTxd, csDtmfRelayPktsRxd,
+			csSilenceDetectedPktsTxd, csSilenceDetectedPktsRxd,
+			csSuppressedSilencePktsTx,
+			csMinPktIntervalTimeRx, csMaxPktIntervalTimeRx
+		}
+	STATUS		current
+	DESCRIPTION	"Network statistics."
+	::= { rvonGroups 8 }
+
+rvonNwErrGroup OBJECT-GROUP
+	OBJECTS
+		{
+			nweBadHeader, nweBadMAC, nweBadSSRC, nweBadPayload,
+			nweBadDest, nweLostPkts, nweMicroOverrun
+		}
+	STATUS		current
+	DESCRIPTION	"Network error statistics."
+	::= { rvonGroups 9 }
+
+rvonEventGroups OBJECT IDENTIFIER ::= { objectGroups 7 }
+
+rvonBasicEventsGroup NOTIFICATION-GROUP
+	NOTIFICATIONS
+		{
+			rvLinkStatChgd, rvPanelStatChgd
+		}
+	STATUS		current
+	DESCRIPTION
+		"Event notifications reported by RVON devices."
+	::= { rvonEventGroups 1 }
+
+--------------------------------------------------------------------------------
+-- Compliance
+--------------------------------------------------------------------------------
+
+rvonCompliance OBJECT IDENTIFIER ::= { compliance 4 }
+
+rvonBasicCompliance MODULE-COMPLIANCE
+	STATUS		current
+	DESCRIPTION
+		"The basic implementation requirements for RVON devices."
+	MODULE		-- This module
+	    MANDATORY-GROUPS
+		{
+			rvonDescrGroup, rvonGpioGroup, rvonPassthroughGroup,
+			rvonChanCfgGroup, rvonIoGainGroup, rvonChanStatGroup,
+			rvonVoipStatGroup, rvonNwStatGroup, rvonNwErrGroup,
+			rvonBasicEventsGroup
+		}
+	::= { rvonCompliance 1 }
+
+END

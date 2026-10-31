@@ -1,0 +1,13 @@
+[package]
+name = "frame-sim"
+version = "0.1.0"
+edition = "2021"
+description = "One intercom simulator: hosts the frames of one protocol and speaks Ward-Beck crosspoint lines to the caster."
+
+[[bin]]
+name = "frame-sim"
+path = "src/main.rs"
+
+[dependencies]
+trunk-caster-sdk = { path = "../../TRUNK-CASTER-SDK" }
+serde_json = "1"

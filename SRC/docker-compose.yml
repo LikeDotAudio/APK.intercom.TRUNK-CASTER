@@ -1,0 +1,72 @@
+# Trunk-Caster: one interface for everything at http://127.0.0.1:8080/
+#
+#   docker compose up --build -d                   # the caster
+#   docker compose --profile sims up --build -d    # plus one intercom simulator per protocol
+#   docker compose logs -f trunk-caster            # grants, renames, check-ins, remotes
+#   docker compose --profile sims down
+#
+# The whole project folder is mounted at /data, so the container reads the
+# manuals and writes advertisements, logs and pages into the same TRUNK-*
+# folders you see in Explorer. The MQTT broker carries a second copy of every
+# Ward-Beck line in parallel with the high-speed TCP port; simulators apply a
+# line only when both copies agree. The simulators are generated into
+# docker-compose.sims.yml by `trunk-caster compose`; re-run it when the
+# manuals change.
+
+include:
+  - docker-compose.sims.yml
+
+services:
+  trunk-caster:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: caster
+    image: trunk-caster:latest
+    container_name: trunk-caster
+    restart: unless-stopped
+    ports:
+      - "8080:8080"   # pages + API: the one interface
+      - "7879:7879"   # Ward-Beck port, so simulators or real frames outside Docker can connect too
+    depends_on:
+      - mqtt
+    environment:
+      TRUNK_SITE: ${TRUNK_SITE:-HQ}
+      TRUNK_MQTT: mqtt:1883
+      TRUNK_PUBLIC_URL: http://127.0.0.1:8080
+      # The frames' voices (a WAV per frame, rewritten as calls change) live
+      # on a Docker volume, not in the synced project folder.
+      TRUNK_VOICES_DIR: /voices
+    volumes:
+      - .:/data
+      - voices:/voices
+    # Windows/OneDrive mounts can be slow to flush; keep ticks modest.
+    command: ["serve", "--tick-ms", "500"]
+
+  # The parallel transport: every Ward-Beck line also goes over MQTT and is
+  # double validated by the simulator that receives it.
+  mqtt:
+    image: eclipse-mosquitto:2
+    container_name: trunk-mqtt
+    hostname: mqtt
+    restart: unless-stopped
+    ports:
+      - "1883:1883"   # so simulators or tools outside Docker can subscribe too
+    volumes:
+      - ./TRUNK-SIMULATOR/mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+
+  # Builds the simulator image once; the sim-* services (profile "sims") run it.
+  # This service itself only prints the simulator's help and exits.
+  frame-sim-image:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: frame-sim
+    image: trunk-caster-frame-sim:latest
+    container_name: frame-sim-image
+    restart: "no"
+    command: ["--help"]
+    profiles: ["sims"]
+
+volumes:
+  voices:

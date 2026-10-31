@@ -1,0 +1,31 @@
+diff --git a/Dockerfile b/Dockerfile
+index 7292d0c..4ac29e0 100644
+--- a/Dockerfile
++++ b/Dockerfile
+@@ -13,13 +13,25 @@
+ #   docker compose --profile sims up --build -d   # plus one container per protocol
+ #   open http://127.0.0.1:8080/
+ 
++# ---- web stage: the page scripts, from TypeScript ---------------------------
++# Typechecks every TYPESCRIPT/ area and bundles the browser entries into
++# TYPESCRIPT/dist/web (config/build.ts). Only dist/ leaves this stage; node is
++# not in the final images.
++FROM node:24-bookworm-slim AS web
++WORKDIR /src/TYPESCRIPT
++COPY TYPESCRIPT/package.json TYPESCRIPT/package-lock.json ./
++RUN npm ci --no-audit --no-fund
++COPY TYPESCRIPT/ ./
++RUN npm run typecheck && npm run build
++
+ # ---- build stage ----------------------------------------------------------
+ FROM rust:1-slim-bookworm AS build
+ WORKDIR /src
+ COPY TRUNK-CASTER-SDK TRUNK-CASTER-SDK
+ COPY RUST-RUNTIME RUST-RUNTIME
+ COPY TRUNK-SIMULATOR/frame-sim TRUNK-SIMULATOR/frame-sim
+-RUN cd RUST-RUNTIME && cargo build --release && cargo test --release 2>&1 | tail -2
++COPY --from=web /src/TYPESCRIPT/dist TYPESCRIPT/dist
++RUN cd RUST-RUNTIME && cargo build --release --features ts-bundles && cargo test --release --features ts-bundles 2>&1 | tail -2
+ RUN cd TRUNK-SIMULATOR/frame-sim && cargo build --release
+ 
+ # ---- caster ---------------------------------------------------------------

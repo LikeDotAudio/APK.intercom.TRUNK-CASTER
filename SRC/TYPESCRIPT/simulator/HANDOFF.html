@@ -1,0 +1,159 @@
+<title>TS · Python simulators</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column, a verdict band up top, then scope → findings → built → integrate → risks → next. Palette borrows Trunk-Caster's own tokens. */
+:root{
+  --bg:#f6f7f9;--panel:#ffffff;--ink:#1b1f24;--muted:#5f6873;--line:#e3e6ea;
+  --accent:#1f6feb;--ok:#1a7f37;--warn:#9a5200;--bad:#c62828;--chip:#eef2f8;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1115;--panel:#171a21;--ink:#e6e8eb;--muted:#9aa3ad;--line:#2a2f38;
+  --accent:#5a9bff;--ok:#3fb950;--warn:#e3a35a;--bad:#ff6b6b;--chip:#1f2633;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1115;--panel:#171a21;--ink:#e6e8eb;--muted:#9aa3ad;--line:#2a2f38;
+  --accent:#5a9bff;--ok:#3fb950;--warn:#e3a35a;--bad:#ff6b6b;--chip:#1f2633;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+header{display:flex;flex-direction:column;gap:8px}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:28px;line-height:1.2;margin:0;text-wrap:balance}
+h2{font-size:17px;margin:0 0 8px;text-wrap:balance}
+h3{font-size:14px;margin:14px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+p{margin:0 0 10px;max-width:68ch}
+.verdict{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:14px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;background:var(--panel)}
+.verdict p{margin:0;flex:1 1 320px;min-width:0}
+.pill{font:600 12px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.pill.convert{color:var(--ok)}.pill.partial{color:var(--warn)}.pill.keep{color:var(--bad)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.fact{padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+.fact b{display:block;font:600 20px/1.2 var(--mono);font-variant-numeric:tabular-nums}
+.fact span{font-size:12px;color:var(--muted)}
+section{min-width:0}
+ul,ol{margin:0 0 10px;padding-left:20px}li{margin:3px 0}
+code{font:13px var(--mono);background:var(--chip);padding:1px 5px;border-radius:4px}
+pre{font:12.5px/1.5 var(--mono);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px;overflow-x:auto;margin:0 0 10px}
+pre code{background:none;padding:0}
+.table{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.muted{color:var(--muted)}
+footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+</style>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Trunk-Caster → TypeScript · area 06 of 10</span>
+    <h1>Python simulators: codec, map server, launcher, RTS estate</h1>
+  </header>
+  <div class="verdict"><span class="pill convert">Convert</span><p>All four Python pieces now run as strict TypeScript on Node 24 with <code>--experimental-strip-types</code>: <code>tc_protocol</code>, <code>tc_map</code>, <code>launch_all</code> and the 2,485-line RTS intercom estate. Python fixtures confirm that the codec bytes, the BER bytes, <code>--dump-oids</code>, <code>--check-mibs</code>, the generated keypanels and the world/spawn configs are identical, and that the full 188-device world matches. The Rust <code>frame-sim</code> should stay in Rust.</p></div>
+  <div class="facts">
+    <div class="fact"><b>3,864</b><span>source lines audited</span></div>
+    <div class="fact"><b>4,695</b><span>TS lines written (+592 test)</span></div>
+    <div class="fact"><b class="ok">pass</b><span>tsc --noEmit</span></div>
+    <div class="fact"><b class="ok">37/37</b><span>node --test</span></div>
+    <div class="fact"><b>0</b><span>files touched outside simulator/</span></div>
+  </div>
+
+  <section><h2>Scope</h2>
+    <div class="table"><table>
+      <tr><th>Python / Rust source</th><th>Lines</th><th>TypeScript</th></tr>
+      <tr><td><code>TRUNK-SIMULATOR/tc_protocol.py</code></td><td>1-108</td><td><code>src/tc-protocol.ts</code></td></tr>
+      <tr><td><code>TRUNK-SIMULATOR/tc_map.py</code></td><td>1-68 geojson · 70-447 HTML · 450-564 server</td><td><code>src/tc-map.ts</code> + <code>src/map-page.html</code></td></tr>
+      <tr><td><code>TRUNK-SIMULATOR/launch_all.py</code> + <code>emulators.json</code></td><td>1-255 · 1-109</td><td><code>src/launch-all.ts</code></td></tr>
+      <tr><td><code>rts_intercom_sim.py</code> BER</td><td>88-262</td><td><code>src/rts/ber.ts</code></td></tr>
+      <tr><td><code>rts_intercom_sim.py</code> MIB parser</td><td>265-453</td><td><code>src/rts/mib.ts</code></td></tr>
+      <tr><td><code>rts_intercom_sim.py</code> plans, capitals, panels, configs</td><td>456-695 · 2199-2280</td><td><code>src/rts/world.ts</code></td></tr>
+      <tr><td><code>rts_intercom_sim.py</code> devices, audio, TM-2000</td><td>697-1985</td><td><code>src/rts/devices.ts</code></td></tr>
+      <tr><td><code>rts_intercom_sim.py</code> estate, client, reports, CLI</td><td>1988-2485</td><td><code>src/rts/estate.ts</code>, <code>src/rts/main.ts</code></td></tr>
+      <tr><td><code>TRUNK-SIMULATOR/frame-sim/src/main.rs</code></td><td>1-253</td><td class="muted">audit only</td></tr>
+    </table></div>
+  </section>
+
+  <section><h2>Findings</h2>
+    <ol>
+      <li><b>The Python sims never speak Ward-Beck and never use TCP 7879.</b> They speak SNMP, a telnet console, <code>tc_protocol</code> UDP and HTTP. Only the Rust <code>frame-sim</code> talks to the caster on 7879, and <code>docker-compose.sims.yml</code> runs only that.</li>
+      <li><b>The port plan matches the brief, and tests check it.</b> Capital i uses 16100+i, 17100+i and 20000+256i. 8x8 frame k uses 36000+k, 37000+k and 43000+16k.</li>
+      <li class="bad"><b>Python bug: the console <code>walk</code> always fails</b> with <code>'str' object has no attribute 'hex'</code> (<code>fmt_value</code> on str values). The TS port prints the value instead.</li>
+      <li class="warn"><b>launch_all turns an emulator's 400 into a 500 with the text "HTTP Error 400"</b>, because urllib raises before reading the body, and the <code>ok</code> check is dead code. I kept this faithfully and pinned it in a test.</li>
+      <li><b>The MIB regex registers a bogus <code>IMPORTS</code> object.</b> The owner lookup by device name has no <code>break</code>, so the last match wins. Both are kept for parity.</li>
+      <li><b>Docs disagree with the code about ports.</b> The README says the per-vendor maps are on 8081-8085, but the registry uses 8181-8185. Docstrings say the combined map is on 8080, but the registry uses 8180.</li>
+      <li><b>Python behaviours that do not map cleanly:</b>
+        <ul>
+          <li>Threads become the event loop.</li>
+          <li><code>threading.Timer</code> becomes <code>setTimeout</code> with <code>unref</code>.</li>
+          <li>Unbounded ints become BigInt in the BER code.</li>
+          <li><code>random.Random(1234)</code> becomes <code>PyRandom</code> (an MT19937 port).</li>
+          <li><code>json.dumps</code> becomes <code>pyJson</code>.</li>
+          <li><code>str(KeyError)</code> quoting becomes <code>PyKeyError.pyStr</code>.</li>
+          <li>numpy is optional in Python, so audio was optional; in TS the audio series is always on.</li>
+        </ul>
+      </li>
+    </ol>
+  </section>
+
+  <section><h2>What was built</h2>
+    <div class="table"><table>
+      <tr><th>File</th><th>What</th><th>Lines</th><th>Status</th></tr>
+      <tr><td><code>src/py.ts</code></td><td>Python shims: errors, int/float, json.dumps, repr, MT19937, time</td><td class="num">343</td><td class="ok">tested</td></tr>
+      <tr><td><code>src/tc-protocol.ts</code></td><td>codec and local wire types</td><td class="num">159</td><td class="ok">byte-identical</td></tr>
+      <tr><td><code>src/tc-map.ts</code> + <code>map-page.html</code></td><td>GeoJSON and node:http map/API server</td><td class="num">280</td><td class="ok">tested</td></tr>
+      <tr><td><code>src/launch-all.ts</code></td><td>child_process orchestration, merged state, API routing, <code>--runtime node|python</code></td><td class="num">429</td><td class="ok">tested incl. real spawn</td></tr>
+      <tr><td><code>src/rts/ber.ts</code></td><td>BER / SNMP v1/v2c</td><td class="num">297</td><td class="ok">byte-identical</td></tr>
+      <tr><td><code>src/rts/mib.ts</code></td><td>Telex MIB parser</td><td class="num">285</td><td class="ok">dump identical</td></tr>
+      <tr><td><code>src/rts/world.ts</code></td><td>56 capitals, 131 state frames, port plan, panels, configs</td><td class="num">492</td><td class="ok">identical</td></tr>
+      <tr><td><code>src/rts/devices.ts</code></td><td>SNMP agent (dgram), console (net), 256-socket audio series and mixer, Matrix/RVON/TM-2000</td><td class="num">1,728</td><td class="ok">tested live</td></tr>
+      <tr><td><code>src/rts/estate.ts</code></td><td>scenarios, button API, state, SNMP client, trap listener</td><td class="num">395</td><td class="ok">tested</td></tr>
+      <tr><td><code>src/rts/main.ts</code></td><td>CLI with the same flags as the Python script</td><td class="num">250</td><td class="ok">smoke-tested on :18999</td></tr>
+      <tr><td><code>src/**/*.test.ts</code>, <code>fixtures/</code></td><td>37 tests and Python-generated parity data</td><td class="num">592</td><td class="ok">37/37</td></tr>
+    </table></div>
+    <h3>Output</h3>
+<pre><code>$ node node_modules/typescript/bin/tsc -p simulator
+exit 0
+$ node --test --experimental-strip-types simulator/src/*.test.ts simulator/src/rts/*.test.ts
+ℹ tests 37
+ℹ pass 37
+ℹ fail 0</code></pre>
+  </section>
+
+  <section><h2>How to wire it in</h2>
+    <p class="muted">None of these steps has been applied.</p>
+    <ol>
+      <li><b>Stop the Python launcher first.</b> It holds ports 8180-8185 and every world port.</li>
+      <li><b>Run the launcher from Node.</b> <code>cd TYPESCRIPT && node --experimental-strip-types simulator/src/launch-all.ts</code> uses the same <code>emulators.json</code> and the same ports. <code>--list</code> shows which runtime each vendor gets, and <code>--runtime python</code> restores the old behaviour.</li>
+      <li><b>Run the RTS estate directly.</b> Use <code>node --experimental-strip-types TYPESCRIPT/simulator/src/rts/main.ts</code> with the same flags as <code>rts_intercom_sim.py</code>.</li>
+      <li><b>Leave <code>docker-compose.sims.yml</code> alone.</b> It runs the Rust frame-sim, not Python. A <code>node:24-alpine</code> service sketch is in HANDOFF.md, if the estate should ever run in Docker.</li>
+      <li><b>Nothing changes for existing clients.</b> <code>trunk_panel.py</code> and the PANELS Stream Deck clients get identical frames and HTTP shapes.</li>
+      <li><b>For an esbuild bundle,</b> ship <code>map-page.html</code> next to the bundle or load it as text.</li>
+    </ol>
+  </section>
+
+  <section><h2>Risks and open questions</h2>
+    <ul>
+      <li><b>Socket scale.</b> A full world in one process is about 7.2k UDP sockets plus 376 SNMP and TCP sockets. Per-vendor processes keep RTS at about 2k. Each live matrix mixer runs a 20 ms <code>setTimeout</code> chain, which is subject to Windows timer jitter.</li>
+      <li><b>Windows <code>reuseAddr</code>.</b> Both stacks can silently double-bind UDP ports, so do not run Python and Node emulators at once.</li>
+      <li><b>Type dedup with agent 04.</b> These types are defined locally and should move to the sdk: <code>HelloAck</code>, <code>PortState</code>, <code>EstateState</code>, <code>MapDevice</code>, <code>MapLink</code>, <code>Scenario</code>.</li>
+      <li><b>Open:</b> should the vendor emulators speak Ward-Beck to 7879, as the brief assumes?</li>
+      <li><b>Open:</b> should the <code>walk</code> crash and the 400→500 problem be fixed in Python too?</li>
+      <li><b>Open:</b> when, if ever, to retire <code>--runtime python</code>?</li>
+    </ul>
+    <h3>frame-sim (Rust): keep it in Rust</h3>
+    <p>It is 253 lines and already right for its job. It shares <code>trunk_caster_sdk::wardbeck</code> with the caster, so parse and format stay single-sourced. One small static image serves 27 compose services. Minor issues to fix in Rust: <code>now()</code> returns epoch seconds, not ISO time, and reconnect backoff has no jitter.</p>
+  </section>
+
+  <section><h2>Next steps</h2>
+    <ol>
+      <li>Soak-test <code>launch-all.ts</code> with the Python stack stopped, and compare <code>/state</code> totals with Python's.</li>
+      <li>Decide on the two Python bugs, then update or drop the parity pin.</li>
+      <li>Dedup the wire types with <code>TYPESCRIPT/sdk</code>.</li>
+      <li>Optionally port <code>trunk_panel.py</code>; the codec it needs is ready.</li>
+      <li>Fix the README and docstring port drift.</li>
+    </ol>
+  </section>
+  <footer>Built 2026-10-21 · source of truth: <code>TYPESCRIPT/simulator/HANDOFF.md</code></footer>
+</div>

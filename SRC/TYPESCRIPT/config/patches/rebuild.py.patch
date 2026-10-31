@@ -1,0 +1,75 @@
+diff --git a/rebuild.py b/rebuild.py
+index 7e88f4a..bb1c74f 100644
+--- a/rebuild.py
++++ b/rebuild.py
+@@ -11,7 +11,7 @@ caster to answer on its API again. Can also publish the public page snapshot.
+     python rebuild.py --sims         ... with one simulator per protocol
+     python rebuild.py --no-sims      caster only; stops any simulators
+     python rebuild.py --sims-yml     regenerate docker-compose.sims.yml from the manuals first
+-    python rebuild.py --no-check     skip the local cargo check
++    python rebuild.py --no-check     skip the local TypeScript build and cargo check
+     python rebuild.py --no-cache     build the images from scratch
+     python rebuild.py --prune        drop the dangling images old builds leave behind
+     python rebuild.py --open         open the pages in the browser once healthy
+@@ -44,6 +44,7 @@ import webbrowser
+ 
+ ROOT = os.path.dirname(os.path.abspath(__file__))
+ CRATES = ["RUST-RUNTIME", os.path.join("TRUNK-SIMULATOR", "frame-sim")]
++TS_DIR = os.path.join(ROOT, "TYPESCRIPT")
+ SIMS_YML = os.path.join(ROOT, "docker-compose.sims.yml")
+ PAGES = pathlib.Path(ROOT) / ".pages"
+ CASTER = "trunk-caster"
+@@ -172,7 +173,30 @@ def preflight():
+ # rebuild steps
+ # ---------------------------------------------------------------------------
+ 
+-def cargo_check():
++def ts_build():
++    """Typecheck the TypeScript areas, validate the configs and bundle the page
++    scripts into TYPESCRIPT/dist/web, so cargo check --features ts-bundles sees
++    them. Docker builds its own copy; this is the seconds-fast local gate.
++    Returns True when the bundles were built."""
++    if not os.path.isfile(os.path.join(TS_DIR, "package.json")):
++        return False
++    npm = shutil.which("npm")
++    if npm is None:
++        log("npm not found on this machine; skipping the TypeScript build (Docker will build it)")
++        return False
++    if not os.path.isdir(os.path.join(TS_DIR, "node_modules")):
++        log("npm ci  TYPESCRIPT")
++        if subprocess.run([npm, "ci", "--no-audit", "--no-fund"], cwd=TS_DIR).returncode != 0:
++            die("npm ci failed in TYPESCRIPT; the containers were left as they are")
++    for script in ("typecheck", "validate-config", "build"):
++        log("npm run %s" % script)
++        if subprocess.run([npm, "run", "--silent", script], cwd=TS_DIR).returncode != 0:
++            die("npm run %s failed; the containers were left as they are" % script)
++    log("TypeScript builds")
++    return True
++
++
++def cargo_check(features=None):
+     if shutil.which("cargo") is None:
+         log("cargo not found on this machine; skipping the local check (Docker will compile)")
+         return
+@@ -182,7 +206,10 @@ def cargo_check():
+             log("no Cargo.toml in %s; skipping" % crate)
+             continue
+         log("cargo check  %s" % crate)
+-        r = subprocess.run(["cargo", "check", "--quiet"], cwd=path)
++        cmd = ["cargo", "check", "--quiet"]
++        if features and crate == "RUST-RUNTIME":
++            cmd += ["--features", features]
++        r = subprocess.run(cmd, cwd=path)
+         if r.returncode != 0:
+             die("%s does not compile; the containers were left as they are" % crate)
+     log("crates compile")
+@@ -463,7 +490,8 @@ def main():
+         return
+ 
+     if not args.no_check:
+-        cargo_check()
++        web = ts_build()
++        cargo_check("ts-bundles" if web else None)
+ 
+     running = running_services()
+     with_sims = decide_sims(args, running)

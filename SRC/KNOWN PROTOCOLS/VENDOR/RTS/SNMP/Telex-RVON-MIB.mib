@@ -1,0 +1,339 @@
+Telex-Icom-TC DEFINITIONS ::= BEGIN
+
+IMPORTS
+	MODULE-IDENTITY,
+	Gauge32
+		FROM SNMPv2-SMI
+	TEXTUAL-CONVENTION
+		FROM SNMPv2-TC
+	telexModules
+		FROM Telex-REG;
+
+telexIcomTC MODULE-IDENTITY
+	LAST-UPDATED	"201006221630Z"
+	ORGANIZATION	"Telex Communications, Inc."
+	CONTACT-INFO
+		"James Puttick
+		Kerr Vayne Systems Ltd.
+		1 Valleywood Drive, Suite 201
+		Markham, Ontario
+		L3R 5L9
+		Canada
+
+		Phone:  +1 905 475 6161
+		Email:  snmp_info@kvs.com"
+	DESCRIPTION
+		"Textual conventions for MIBs for Telex intercoms.
+
+		Copyright 2006 by Telex Communications, Inc. All
+		rights reserved. Reproduction, in whole or in part,
+		without prior written permission from Telex is prohibited."
+
+	REVISION
+		"201102151630Z"
+	DESCRIPTION
+		"Added new trunk state: Out Of Service (trunk connects to
+		an unavailable port, e.g. in a frame which is powered off)."
+	REVISION
+		"201006221630Z"
+	DESCRIPTION
+		"Added new device sub-type: ZEUS-III Lite."
+	REVISION
+		"201002181900Z"
+	DESCRIPTION
+		"Added new device sub-types: ZEUS-III, RVON-16, Tri-Bus,
+		MADI-64, and ARP-32.
+		Added new RVON device type: RVON-16."
+	REVISION
+		"200611131700Z"
+	DESCRIPTION
+		"Renamed .mi2 files to .mib"
+	REVISION
+		"200602011700Z"
+	DESCRIPTION
+		"Added display hint for ErrorRate.
+		Added new device sub-type: RVON-C.
+		Added textual conventions for RVON and Trunk Master devices.
+		Added Copyright statement."
+	REVISION
+		"200512161700Z"
+	DESCRIPTION
+		"ErrorRate should be a Gauge32. Minimum value is 0, not 1.
+		Added icResourceTypes: ioCards."
+	REVISION
+		"200509161700Z"
+	DESCRIPTION
+		"Initial implementation."
+	::= { telexModules 2 }
+
+--------------------------------------------------------------------------------
+-- Textual Conventions
+--------------------------------------------------------------------------------
+
+Alpha4 ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION	"The 4-character alpha name of a resource."
+	SYNTAX		OCTET STRING (SIZE (4))
+
+Alpha6 ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION	"The 6-character alpha name of a resource."
+	SYNTAX		OCTET STRING (SIZE (6))
+
+Alpha8 ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION	"The 8-character alpha name of a resource."
+	SYNTAX		OCTET STRING (SIZE (8))
+
+Alpha8U ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION
+		"A Unicode alpha consists of 8 Unicode characters, which
+		are transmitted via UTF-8 encoding. Each Unicode character
+		is in the range '0000'h through 'ffff'h, and hence requires
+		1, 2, or 3 bytes when encoded in UTF-8."
+	SYNTAX		OCTET STRING (SIZE (8..24))
+
+Description ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION
+		" A description consists of a fixed number of characters; a
+		description shorter than this length is blank padded.
+
+		Currently, this length is fixed at 24 characters. However,
+		this value is not specified within the MIB (but can
+		be determined by reading the variable icDescrLength),
+		since the description length may become configurable in
+		the future.
+
+		For an intercom which does not support Unicode, each
+		character in the description consists of a single byte.
+
+		For an intercom which supports Unicode, each character
+		in the description consists of a Unicode character in
+		the range '0000'h through 'ffff'h.
+
+		The description is transmitted via UTF-8 encoding. Hence, each
+		character requires up to 3 bytes when encoded in UTF-8."
+	SYNTAX		OCTET STRING
+
+ErrorRate ::= TEXTUAL-CONVENTION
+	DISPLAY-HINT	"d"
+	STATUS		current
+	DESCRIPTION
+		"For each device, error counters are kept for communications
+		errors for messages to that device, and messages from the
+		device.
+
+		In addition, the intercom tracks error rates. The error
+		rate is the number of errors that have occurred in the last
+		10 minutes; however, if we have less than 10 minutes' worth
+		of errors, the count is pro-rated. So if we clear the
+		error counters, and then we record 3 errors in the
+		next 2 minutes, the reported error rate at that point would
+		be 15.
+
+		As a consequence of this, the error rate will be reported
+		as 0 if no errors have been recorded in the last 10 minutes."
+	SYNTAX		Gauge32 (0..255)
+
+IcCapabTypes ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION
+		"This data type is used to denote the various capabilities
+		which may or may not be supported in an intercom."
+	SYNTAX		INTEGER
+			{
+				standbyMc(1),
+				slaveFrameMc(2),
+				rvon(3),
+				unicode(4),
+				inputAlphas(5)
+		       }
+
+IcDeviceSubType ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION
+		"For a particular device (device type + instance), more details
+		about the specific hardware, if available."
+	SYNTAX		INTEGER
+			{
+				-- Devices for which subtype information is
+				-- not available or not applicable
+				default(1),	-- e.g. no subtype
+				unknown(2),	-- e.g. device not present
+
+				-- Controllers and standby controllers
+				adamMcIIe(11),
+				adamPeriphIIe(12),
+				cronus(13),
+				zeus3(14),
+				zeus3Lite(15),
+
+				-- I/O cards
+				aio8(21),
+				aio16(22),
+				aes8(23),
+				rvon8(24),
+				dbx(25),
+				rvonC(26),
+				rvon16(27),
+				tbx(28),
+				madi64(29)
+
+				-- keypanels
+				stdPanel(31),
+				tif(32),	-- Telephone Interface
+
+				-- PAPs
+				stdPAP(41),	-- PAP-940/951/952
+				pap32(42),
+				lcp102(43),
+				arp32(44)
+
+				-- UIO-256
+				-- Subtype info n/a
+
+				-- Trunk Master
+				-- Subtype info n/a (can't tell the difference
+				-- between FR9589-based TM and the TM-2000)
+			}
+
+IcDeviceType ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION
+		"The various types of hardware which appear in the intercom."
+	SYNTAX		INTEGER
+			{
+				controller(1),
+				standbyController(2),
+				ioCard(3),
+				keypanel(4),
+				papLCP(5),
+				uio256(6),
+				trunkMaster(7)
+			}
+
+IcResourceTypes ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION
+		"This data type is used to denote the various configurable
+		resources within an intercom."
+	SYNTAX		INTEGER
+			{
+				ports(1),
+				partyLines(2),
+				ifbs(3),
+				specialLists(4),
+				relays(5),
+				cameraIsos(6),
+				uplResources(7),
+				assignGroups(8),
+				ifbSpecialLists(9),
+				groupsJ6(10),		-- groups (J6 only)
+				autoDials(11),		-- J6 only
+				dimTables(12),
+				digitalInputs(13),
+				papsLCPs(14),
+				uio256s(15),
+				ioCards(16)
+		       }
+
+LinkAorB ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION
+		"For a DBX card, used to identify the 2 links coming into
+		the card.
+
+		For a Cronus frame, used to identify the 2 links coming into
+		the frame. (Link A is the 'upstream' link connecting to the
+		lower-numbered frame, link B is the 'downstream' link.)"
+	SYNTAX		INTEGER { linkA(0), linkB(1) }
+
+McSlot ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION
+		"Which slot a controller card is in."
+	SYNTAX		INTEGER
+			{
+				left(1),
+				right(2),
+				unknown(3)	-- e.g. no active/standby
+			}
+
+RvonCodec ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION	"The different codecs supported by RVON devices."
+	SYNTAX		INTEGER
+			{
+				g711a (1),	-- A-law
+				g711u (2),	-- u-law
+				g729 (3),
+				g726r16 (4),	-- 16 Kbps
+				g726r24 (5),	-- 24 Kbps
+				g726r32 (6),	-- 32 Kbps
+				g726r40 (7),	-- 40 Kbps
+				g723r5 (8),	-- 5.3 Kbps
+				g723r6 (9)	-- 6.3 Kbps
+			}
+
+RvonDescription ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION
+		"An RVON description consists a string of printable
+		characters, of up to 63 characters. An RVON device has
+		a device description, as well as a channel description
+		for each of its audio channels."
+	SYNTAX		OCTET STRING (SIZE (0..63))
+
+RvonDevice ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION	"The various types of RVON devices."
+	SYNTAX		INTEGER
+			{
+				rvon1 (1),
+				rvon8 (2),
+				rvonC (3),
+				rvonIo (4),
+				rvon16 (5)
+			}
+
+TmCapabTypes ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION
+		"This data type is used to denote the various capabilities
+		which the Trunk Master may or may not support.
+
+		Note that the Trunk Master may support a particular feature,
+		even though that feature is not supported by one or more of
+		the intercoms connected to the TM."
+	SYNTAX		INTEGER
+			{
+				-- Can the Trunk Allocation timeout be
+				-- specified in seconds?
+				tkAllocSecs (1),
+
+				-- IFB Special Lists
+				ifbSl (2),
+
+				-- Is a license required for TM operation?
+				licensing (3),
+
+				-- Unicode alphas?
+				unicode (4)
+			}
+
+TrunkState ::= TEXTUAL-CONVENTION
+	STATUS		current
+	DESCRIPTION	"The possible states a trunk can be in."
+	SYNTAX		INTEGER
+			{
+				undefined (1),
+				idle (2),
+				allocd (3),
+				inUse (4),
+				inMaintenanceMode (5),
+				outOfService (6)
+			}
+
+END

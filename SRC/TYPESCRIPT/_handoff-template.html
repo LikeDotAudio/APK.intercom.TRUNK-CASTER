@@ -1,0 +1,67 @@
+<title>TS · AREA NAME</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column, a verdict band up top, then scope → findings → built → integrate → risks → next. Palette borrows Trunk-Caster's own tokens. */
+:root{
+  --bg:#f6f7f9;--panel:#ffffff;--ink:#1b1f24;--muted:#5f6873;--line:#e3e6ea;
+  --accent:#1f6feb;--ok:#1a7f37;--warn:#9a5200;--bad:#c62828;--chip:#eef2f8;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1115;--panel:#171a21;--ink:#e6e8eb;--muted:#9aa3ad;--line:#2a2f38;
+  --accent:#5a9bff;--ok:#3fb950;--warn:#e3a35a;--bad:#ff6b6b;--chip:#1f2633;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1115;--panel:#171a21;--ink:#e6e8eb;--muted:#9aa3ad;--line:#2a2f38;
+  --accent:#5a9bff;--ok:#3fb950;--warn:#e3a35a;--bad:#ff6b6b;--chip:#1f2633;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 48px}
+.wrap{max-width:860px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+header{display:flex;flex-direction:column;gap:8px}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:28px;line-height:1.2;margin:0;text-wrap:balance}
+h2{font-size:17px;margin:0 0 8px;text-wrap:balance}
+h3{font-size:14px;margin:14px 0 6px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+p{margin:0 0 10px;max-width:68ch}
+.verdict{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:14px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;background:var(--panel)}
+.verdict p{margin:0;flex:1 1 320px;min-width:0}
+.pill{font:600 12px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:6px 10px;border-radius:999px;border:1px solid currentColor;white-space:nowrap}
+.pill.convert{color:var(--ok)}.pill.partial{color:var(--warn)}.pill.keep{color:var(--bad)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.fact{padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--panel)}
+.fact b{display:block;font:600 20px/1.2 var(--mono);font-variant-numeric:tabular-nums}
+.fact span{font-size:12px;color:var(--muted)}
+section{min-width:0}
+ul,ol{margin:0 0 10px;padding-left:20px}li{margin:3px 0}
+code{font:13px var(--mono);background:var(--chip);padding:1px 5px;border-radius:4px}
+pre{font:12.5px/1.5 var(--mono);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:12px;overflow-x:auto;margin:0 0 10px}
+pre code{background:none;padding:0}
+.table{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.muted{color:var(--muted)}
+footer{font-size:12.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+</style>
+<div class="wrap">
+  <header>
+    <span class="eyebrow">Trunk-Caster → TypeScript · area NN of 10</span>
+    <h1>AREA NAME</h1>
+  </header>
+  <div class="verdict"><span class="pill convert">Convert</span><!-- or: <span class="pill partial">Partial</span> / <span class="pill keep">Keep in Rust/Python</span> --><p>One-paragraph verdict.</p></div>
+  <div class="facts">
+    <div class="fact"><b>0</b><span>source lines audited</span></div>
+    <div class="fact"><b>0</b><span>TS lines written</span></div>
+    <div class="fact"><b class="ok">pass</b><span>tsc --noEmit</span></div>
+  </div>
+  <section><h2>Scope</h2><!-- files + line ranges audited --></section>
+  <section><h2>Findings</h2><!-- what TS buys here; bugs/untyped hazards found in the original --></section>
+  <section><h2>What was built</h2><!-- table of new files under TYPESCRIPT/<area>/, what each does, status --></section>
+  <section><h2>How to wire it in</h2><!-- exact steps to swap the original for the TS version; nothing here has been applied --></section>
+  <section><h2>Risks and open questions</h2></section>
+  <section><h2>Next steps</h2></section>
+  <footer>Built 2026-10-21 · source of truth: <code>TYPESCRIPT/&lt;area&gt;/HANDOFF.md</code></footer>
+</div>

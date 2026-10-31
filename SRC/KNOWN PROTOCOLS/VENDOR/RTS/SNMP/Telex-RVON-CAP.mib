@@ -1,0 +1,118 @@
+Telex-ADAM-CAP DEFINITIONS ::= BEGIN
+
+IMPORTS
+	MODULE-IDENTITY
+		FROM SNMPv2-SMI
+	AGENT-CAPABILITIES
+		FROM SNMPv2-CONF
+	agentCapabs, telexModules
+		FROM Telex-REG;
+
+telexADAMCap MODULE-IDENTITY
+	LAST-UPDATED	"200602011700Z"
+	ORGANIZATION	"Telex Communications, Inc."
+	CONTACT-INFO
+		"James Puttick
+		Kerr Vayne Systems Ltd.
+		1 Valleywood Drive, Suite 201
+		Markham, Ontario
+		L3R 5L9
+		Canada
+
+		Phone:  +1 905 475 6161
+		Email:  snmp_info@kvs.com"
+	DESCRIPTION
+		"Capabilities for the ADAM Intercom.
+
+		Copyright 2006 by Telex Communications, Inc. All
+		rights reserved. Reproduction, in whole or in part,
+		without prior written permission from Telex is prohibited."
+
+	REVISION
+		"200602011700Z"
+	DESCRIPTION
+		"Added Copyright statement."
+	REVISION
+		"200512161700Z"
+	DESCRIPTION
+		"Updated AGENT-CAPABILITIES statement."
+	REVISION
+		"200509161700Z"
+	DESCRIPTION
+		"Initial implementation."
+	::= { telexModules 4 }
+
+--------------------------------------------------------------------------------
+-- ADAM Intercom - Basic capabilities
+--------------------------------------------------------------------------------
+
+telexADAMBasicCap AGENT-CAPABILITIES
+	PRODUCT-RELEASE	"SNMP agent version 0.1"
+	STATUS		current
+	DESCRIPTION	"SNMP agent for ADAM intercoms."
+
+	SUPPORTS	SNMPv2-MIB
+	    INCLUDES
+		{
+			snmpGroup, snmpSetGroup, systemGroup,
+			snmpBasicNotificationsGroup,
+			snmpCommunityGroup,
+			snmpNotificationGroup,
+			snmpWarmStartNotificationGroup
+		}
+
+	SUPPORTS	IF-MIB
+	    INCLUDES
+		{
+			ifGeneralInformationGroup,
+			linkUpDownNotificationsGroup,
+			ifHCPacketGroup,
+			ifCounterDiscontinuityGroup
+		}
+	    VARIATION		ifPromiscuousMode
+	        ACCESS		read-only
+		DESCRIPTION	"Promiscuous mode not supported"
+	    VARIATION		ifAdminStatus
+	        ACCESS		read-only
+		DESCRIPTION	"Write access not implemented"
+	    VARIATION		ifAlias
+	        ACCESS		read-only
+		DESCRIPTION	"Write access not implemented"
+
+	SUPPORTS	IP-MIB
+	    INCLUDES
+		{
+			ipGroup, icmpGroup
+		}
+	    VARIATION		ipForwarding
+	        ACCESS		read-only
+		DESCRIPTION	"IP forwarding not supported"
+	    VARIATION		ipNetToMediaIfIndex
+	        ACCESS		read-only
+		DESCRIPTION	"Net-to-media table is read-only"
+	    VARIATION		ipNetToMediaPhysAddress
+	        ACCESS		read-only
+		DESCRIPTION	"Net-to-media table is read-only"
+	    VARIATION		ipNetToMediaNetAddress
+	        ACCESS		read-only
+		DESCRIPTION	"Net-to-media table is read-only"
+	    VARIATION		ipNetToMediaType
+	        ACCESS		read-only
+		DESCRIPTION	"Net-to-media table is read-only"
+
+	SUPPORTS	UDP-MIB
+	    INCLUDES
+		{
+			udpGroup
+		}
+
+	SUPPORTS	Telex-Icom-MIB
+	    INCLUDES
+		{
+			archGroup, capabsGroup, configGroup, statusGroup,
+			basicEventsGroup
+		}
+
+	::= { agentCapabs 1 }
+
+END
