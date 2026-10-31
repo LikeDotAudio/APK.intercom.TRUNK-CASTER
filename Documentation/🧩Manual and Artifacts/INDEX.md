@@ -8,4 +8,5 @@ How to use it and how it is built.
 | Page | What |
 |---|---|
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Architecture of INTERCOM.Caster |
+| [SMOKE.md](SMOKE.md) | Smoke test — INTERCOM.Caster |
 <!-- /wiki:index -->

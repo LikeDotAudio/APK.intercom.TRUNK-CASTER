@@ -6,7 +6,7 @@ The documentation for `INTERCOM.Caster`, in the same lanes as the APK.audio mono
 | Lane | Pages | What |
 |---|---:|---|
 | [🏛Philosophy](%F0%9F%8F%9BPhilosophy/INDEX.md) | 1 | The principles this code keeps, each pointed at the code that keeps it. |
-| [🧩Manual and Artifacts](%F0%9F%A7%A9Manual%20and%20Artifacts/INDEX.md) | 1 | How to use it and how it is built. |
+| [🧩Manual and Artifacts](%F0%9F%A7%A9Manual%20and%20Artifacts/INDEX.md) | 2 | How to use it and how it is built. |
 | [🌍Publishing](%F0%9F%8C%8DPublishing/INDEX.md) | 1 | How it is built, shipped, and where it lands — its delivery. |
 | [🔍Audits](%F0%9F%94%8DAudits/INDEX.md) | 0 | Findings against the built thing; known issues, measured. |
 | [🛣Roadmap](%F0%9F%9B%A3Roadmap/INDEX.md) | 0 | Plans are not kept here: every plan is a card in the APK.audio monorepo's `Documentation/🛣Roadmap/roadmap.htm`. |
