@@ -1,7 +1,9 @@
 # RTS simulator
 
-A stand-alone pretend RTS / Telex intercom estate. One Python file, standard
-library only (numpy is optional and only needed for the audio port).
+A stand-alone pretend RTS / Telex intercom estate. One script,
+`rts_intercom_sim.py`, with its parts in the `rts_sim/` package beside it (mib,
+devices, matrix, trunk master, audio engine, estate); standard library only
+(numpy is optional and only needed for the audio port).
 
 It reads the MIB files in `../SNMP` and pretends to be the devices those MIBs
 describe, plus a matrix frame with a full port plan, generated keypanels, tone
